@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+var dsv = require("./index");
+
+console.log(JSON.stringify({
+  "name": "dsv",
+  "version": dsv.version,
+  "description": "A parser and formatter for DSV (CSV and TSV) files.",
+  "keywords": [
+    "dsv",
+    "csv",
+    "tsv"
+  ],
+  "author": {
+    "name": "Mike Bostock",
+    "url": "http://bost.ocks.org/mike"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mbostock/dsv.git"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "uglify-js": "2.2.x",
+    "vows": "0.7.x"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/vows"
+  }
+}, null, 2));

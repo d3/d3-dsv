@@ -24,6 +24,9 @@ console.log(JSON.stringify({
     "uglify-js": "2.2.x",
     "vows": "0.7.x"
   },
+  "bin": {
+    "csv2tsv": "./bin/csv2tsv"
+  },
   "scripts": {
     "test": "node_modules/.bin/vows"
   }

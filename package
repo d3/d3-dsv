@@ -29,5 +29,8 @@ console.log(JSON.stringify({
   },
   "scripts": {
     "test": "node_modules/.bin/vows"
+  },
+  "browserify": {
+    "transform": ["brfs"]
   }
 }, null, 2));

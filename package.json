@@ -25,5 +25,10 @@
   },
   "scripts": {
     "test": "node_modules/.bin/vows"
+  },
+  "browserify": {
+    "transform": [
+      "brfs"
+    ]
   }
 }

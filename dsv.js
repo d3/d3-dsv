@@ -1,4 +1,4 @@
-dsv.version = "0.0.2";
+dsv.version = "0.0.3";
 
 dsv.tsv = dsv("\t");
 dsv.csv = dsv(",");

@@ -21,7 +21,8 @@
     "vows": "0.7.x"
   },
   "bin": {
-    "csv2tsv": "./bin/csv2tsv"
+    "csv2tsv": "./bin/csv2tsv",
+    "tsv2json": "./bin/tsv2json"
   },
   "scripts": {
     "test": "node_modules/.bin/vows"

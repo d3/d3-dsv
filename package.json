@@ -1,6 +1,6 @@
 {
   "name": "d3-dsv",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A parser and formatter for DSV (CSV and TSV) files.",
   "keywords": [
     "d3",
@@ -17,7 +17,10 @@
   "main": "build/dsv",
   "jsnext:main": "index.js",
   "bin": {
-    "csv2tsv": "./bin/csv2tsv"
+    "csv2tsv": "./bin/csv2tsv",
+    "csv2json": "./bin/csv2json",
+    "tsv2csv": "./bin/tsv2csv",
+    "tsv2json": "./bin/tsv2json"
   },
   "repository": {
     "type": "git",
@@ -33,5 +36,8 @@
     "faucet": "0.0",
     "tape": "4",
     "uglifyjs": "2"
+  },
+  "dependencies": {
+    "rw": "~0.1.4"
   }
 }

@@ -19,4 +19,4 @@ console.log(dsv.csv.parse("foo,bar\n1,2")); // [{foo: "1", bar: "2"}]
 </script>
 ```
 
-For more usage, see [D3's wiki page](https://github.com/mbostock/d3/wiki/CSV).
+For more usage, see [D3’s wiki page](https://github.com/mbostock/d3/wiki/CSV).

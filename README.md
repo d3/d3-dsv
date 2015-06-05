@@ -1,14 +1,11 @@
 # DSV Parser and Formatter
 
-Extracted from [D3](http://d3js.org).
-
-To use in Node.js, `npm install dsv`, and then:
+To use in Node.js, `npm install d3-dsv`, and then:
 
 ```js
-var dsv = require("dsv"),
-    csv = dsv(",");
+var dsv = require("d3-dsv");
 
-console.log(csv.parse("foo\n1")); // [{foo: 1}]
+console.log(dsv.csv.parse("foo,bar\n1,2")); // [{foo: "1", bar: "2"}]
 ```
 
 To use in the browser:
@@ -17,9 +14,7 @@ To use in the browser:
 <script src="dsv.js"></script>
 <script>
 
-var csv = dsv(",");
-
-console.log(csv.parse("foo\n1"));
+console.log(dsv.csv.parse("foo,bar\n1,2")); // [{foo: "1", bar: "2"}]
 
 </script>
 ```

@@ -1,3 +1,5 @@
-var fs = require("fs");
+import dsv from "./src/dsv";
 
-module.exports = new Function(fs.readFileSync(__dirname + "/dsv.js", "utf8") + ";return dsv")();
+export var csv = dsv(",");
+export var tsv = dsv("\t");
+export default dsv;

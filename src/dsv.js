@@ -1,25 +1,19 @@
-dsv.version = "0.0.4";
-
-dsv.tsv = dsv("\t");
-dsv.csv = dsv(",");
-
-function dsv(delimiter) {
-  var dsv = {},
-      reFormat = new RegExp("[\"" + delimiter + "\n]"),
+export default function(delimiter) {
+  var reFormat = new RegExp("[\"" + delimiter + "\n]"),
       delimiterCode = delimiter.charCodeAt(0);
 
-  dsv.parse = function(text, f) {
+  function parse(text, f) {
     var o;
-    return dsv.parseRows(text, function(row, i) {
+    return parseRows(text, function(row, i) {
       if (o) return o(row, i - 1);
       var a = new Function("d", "return {" + row.map(function(name, i) {
         return JSON.stringify(name) + ": d[" + i + "]";
       }).join(",") + "}");
       o = f ? function(row, i) { return f(a(row), i); } : a;
     });
-  };
+  }
 
-  dsv.parseRows = function(text, f) {
+  function parseRows(text, f) {
     var EOL = {}, // sentinel value for end-of-line
         EOF = {}, // sentinel value for end-of-file
         rows = [], // output rows
@@ -78,16 +72,16 @@ function dsv(delimiter) {
     }
 
     return rows;
-  };
+  }
 
-  dsv.format = function(rows) {
-    if (Array.isArray(rows[0])) return dsv.formatRows(rows); // deprecated; use formatRows
-    var fieldSet = {}, fields = [];
+  function format(rows) {
+    if (Array.isArray(rows[0])) return formatRows(rows); // deprecated; use formatRows
+    var fieldSet = Object.create(null), fields = [];
 
     // Compute unique fields in order of discovery.
     rows.forEach(function(row) {
       for (var field in row) {
-        if (!(field in fieldSet)) {
+        if (!((field += "") in fieldSet)) {
           fields.push(fieldSet[field] = field);
         }
       }
@@ -98,11 +92,11 @@ function dsv(delimiter) {
         return formatValue(row[field]);
       }).join(delimiter);
     })).join("\n");
-  };
+  }
 
-  dsv.formatRows = function(rows) {
+  function formatRows(rows) {
     return rows.map(formatRow).join("\n");
-  };
+  }
 
   function formatRow(row) {
     return row.map(formatValue).join(delimiter);
@@ -112,5 +106,10 @@ function dsv(delimiter) {
     return reFormat.test(text) ? "\"" + text.replace(/\"/g, "\"\"") + "\"" : text;
   }
 
-  return dsv;
-}
+  return {
+    parse: parse,
+    parseRows: parseRows,
+    format: format,
+    formatRows: formatRows
+  };
+};

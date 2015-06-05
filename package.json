@@ -1,34 +1,37 @@
 {
-  "name": "dsv",
-  "version": "0.0.4",
+  "name": "d3-dsv",
+  "version": "0.1.0",
   "description": "A parser and formatter for DSV (CSV and TSV) files.",
   "keywords": [
+    "d3",
     "dsv",
     "csv",
     "tsv"
   ],
+  "homepage": "https://github.com/d3/d3-dsv",
+  "license" : "BSD-3-Clause",
   "author": {
     "name": "Mike Bostock",
     "url": "http://bost.ocks.org/mike"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mbostock/dsv.git"
-  },
-  "main": "index.js",
-  "devDependencies": {
-    "uglify-js": "2.2.x",
-    "vows": "0.7.x"
-  },
+  "main": "build/dsv",
+  "jsnext:main": "index.js",
   "bin": {
     "csv2tsv": "./bin/csv2tsv"
   },
-  "scripts": {
-    "test": "node_modules/.bin/vows"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d3/d3-dsv.git"
   },
-  "browserify": {
-    "transform": [
-      "brfs"
-    ]
+  "scripts": {
+    "pretest": "mkdir -p build && d3-bundler --format=umd --name=dsv -- index.js > build/dsv.js",
+    "test": "faucet `find test -name '*-test.js'`",
+    "prepublish": "npm run test && uglifyjs build/dsv.js -c -m -o build/dsv.min.js"
+  },
+  "devDependencies": {
+    "d3-bundler": "~0.2.5",
+    "faucet": "0.0",
+    "tape": "4",
+    "uglifyjs": "2"
   }
 }

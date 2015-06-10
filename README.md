@@ -30,7 +30,7 @@ A parser and formatter for tab-separated values (TSV), defined as:
 var tsv = dsv("\t");
 ```
 
-<a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>accessor</i>])
+<a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>converter</i>])
 
 Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of objects representing the parsed rows.
 
@@ -51,7 +51,7 @@ The resulting JavaScript array is:
 ]
 ```
 
-Field values are always strings; they will not be automatically converted to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator). By specifying an <i>accessor</i> function, you can convert the strings to numbers or other specific types, such as dates:
+Field values are always strings; they will not be automatically converted to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator). By specifying an <i>converter</i> function, you can convert the strings to numbers or other specific types, such as dates:
 
 ```js
 var data = csv.parse(string, function(d) {
@@ -66,7 +66,7 @@ var data = csv.parse(string, function(d) {
 
 Using `+` rather than [parseInt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseInt) or [parseFloat](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseFloat) is typically faster, though more restrictive. For example, `"30px"` when coerced using `+` returns `NaN`, while parseInt and parseFloat return `30`.
 
-<a name="dsv_parseRows" href="#dsv_parseRows">#</a> <i>dsv</i>.<b>parseRows</b>(<i>string</i>[, <i>accessor</i>])
+<a name="dsv_parseRows" href="#dsv_parseRows">#</a> <i>dsv</i>.<b>parseRows</b>(<i>string</i>[, <i>converter</i>])
 
 Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of arrays representing the parsed rows.
 
@@ -86,7 +86,7 @@ The resulting JavaScript array is:
 ]
 ```
 
-Field values are always strings; they will not be automatically converted to numbers. See [*dsv*.parse](#dsv_parse) for details. An optional *accessor* function may be specified as the second argument to convert types and filter rows. For example:
+Field values are always strings; they will not be automatically converted to numbers. See [*dsv*.parse](#dsv_parse) for details. An optional *converter* function may be specified as the second argument to convert types and filter rows. For example:
 
 ```js
 var data = csv.parseRows(string, function(d, i) {
@@ -99,7 +99,7 @@ var data = csv.parseRows(string, function(d, i) {
 });
 ```
 
-The accessor function is invoked for each row in the DSV content, being passed the current row’s array of field values (`d`) and index (`i`) as arguments. The return value of the function replaces the element in the returned array of rows; if the function returns null or undefined, the row is stripped from the returned array of rows. In effect, the accessor is similar to applying a [map](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map) and [filter](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter) operator to the returned rows.
+The converter function is invoked for each row in the DSV content, being passed the current row’s array of field values (`d`) and index (`i`) as arguments. The return value of the function replaces the element in the returned array of rows; if the function returns null or undefined, the row is stripped from the returned array of rows. In effect, the converter is similar to applying a [map](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map) and [filter](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter) operator to the returned rows.
 
 <a name="dsv_format" href="#dsv_format">#</a> <i>dsv</i>.<b>format</b>(<i>rows</i>)
 

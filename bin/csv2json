@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 
-var rw = require("rw"),
-    dsv = require("../");
+var os = require("os"),
+    dsv = require("../"),
+    read = require("../lib/read");
 
-console.log(JSON.stringify(dsv.csv.parse(rw.readFileSync(process.argv[2] || "/dev/stdin", "utf8"))));
+read(process.argv[2], function(error, text) {
+  if (error) throw error;
+  process.stdout.write(JSON.stringify(dsv.csv.parse(text)));
+  process.stdout.write(os.EOL);
+});

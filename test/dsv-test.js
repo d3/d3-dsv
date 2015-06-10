@@ -40,22 +40,22 @@ tape("dsv(\"|\").parse(string) observes Unix, Mac and DOS newlines", function(te
   test.end();
 });
 
-tape("dsv(\"|\").parse(string, convert) returns the expected converted objects", function(test) {
-  function convert(row) { row.Hello = -row.Hello; return row; }
-  test.deepEqual(psv.parse(fs.readFileSync("test/data/sample.psv", "utf-8"), convert), [{Hello: -42, World: "\"fish\""}]);
-  test.deepEqual(psv.parse("a|b|c\n1|2|3\n", function(row) { return row; }), [{a: "1", b: "2", c: "3"}]);
+tape("dsv(\"|\").parse(string, row) returns the expected converted objects", function(test) {
+  function row(d) { d.Hello = -d.Hello; return d; }
+  test.deepEqual(psv.parse(fs.readFileSync("test/data/sample.psv", "utf-8"), row), [{Hello: -42, World: "\"fish\""}]);
+  test.deepEqual(psv.parse("a|b|c\n1|2|3\n", function(d) { return d; }), [{a: "1", b: "2", c: "3"}]);
   test.end();
 });
 
-tape("dsv(\"|\").parse(string, convert) skips rows if convert returns null or undefined", function(test) {
-  function convert(row, i) { return [row, null, undefined, false][i]; }
-  test.deepEqual(psv.parse("field\n42\n\n\n\n", convert), [{field: "42"}, false]);
-  test.deepEqual(psv.parse("a|b|c\n1|2|3\n2|3|4", function(row) { return row.a & 1 ? null : row; }), [{a: "2", b: "3", c: "4"}]);
-  test.deepEqual(psv.parse("a|b|c\n1|2|3\n2|3|4", function(row) { return row.a & 1 ? undefined : row; }), [{a: "2", b: "3", c: "4"}]);
+tape("dsv(\"|\").parse(string, row) skips rows if row returns null or undefined", function(test) {
+  function row(d, i) { return [d, null, undefined, false][i]; }
+  test.deepEqual(psv.parse("field\n42\n\n\n\n", row), [{field: "42"}, false]);
+  test.deepEqual(psv.parse("a|b|c\n1|2|3\n2|3|4", function(d) { return d.a & 1 ? null : d; }), [{a: "2", b: "3", c: "4"}]);
+  test.deepEqual(psv.parse("a|b|c\n1|2|3\n2|3|4", function(d) { return d.a & 1 ? undefined : d; }), [{a: "2", b: "3", c: "4"}]);
   test.end();
 });
 
-tape("dsv(\"|\").parse(string, convert) invokes convert for every row in order", function(test) {
+tape("dsv(\"|\").parse(string, row) invokes row(d, i) for each row d, in order", function(test) {
   var rows = [];
   psv.parse("a\n1\n2\n3\n4", function(d, i) { rows.push({d: d, i: i}); });
   test.deepEqual(rows, [{d: {a: "1"}, i: 0}, {d: {a: "2"}, i: 1}, {d: {a: "3"}, i: 2}, {d: {a: "4"}, i: 3}]);
@@ -92,22 +92,22 @@ tape("dsv(\"|\").parseRows(string) parses Unix, Mac and DOS newlines", function(
   test.end();
 });
 
-tape("dsv(\"|\").parseRows(string, convert) returns the expected converted array of array of string", function(test) {
-  function convert(row, i) { if (i) row[0] = -row[0]; return row; }
-  test.deepEqual(psv.parseRows(fs.readFileSync("test/data/sample.psv", "utf-8"), convert), [["Hello", "World"], [-42, "\"fish\""]]);
-  test.deepEqual(psv.parseRows("a|b|c\n1|2|3\n", function(row) { return row; }), [["a", "b", "c"], ["1", "2", "3"]]);
+tape("dsv(\"|\").parseRows(string, row) returns the expected converted array of array of string", function(test) {
+  function row(d, i) { if (i) d[0] = -d[0]; return d; }
+  test.deepEqual(psv.parseRows(fs.readFileSync("test/data/sample.psv", "utf-8"), row), [["Hello", "World"], [-42, "\"fish\""]]);
+  test.deepEqual(psv.parseRows("a|b|c\n1|2|3\n", function(d) { return d; }), [["a", "b", "c"], ["1", "2", "3"]]);
   test.end();
 });
 
-tape("dsv(\"|\").parseRows(string, convert) skips rows if convert returns null or undefined", function(test) {
-  function convert(row, i) { return [row, null, undefined, false][i]; }
-  test.deepEqual(psv.parseRows("field\n42\n\n\n", convert), [["field"], false]);
-  test.deepEqual(psv.parseRows("a|b|c\n1|2|3\n2|3|4", function(row, i) { return i & 1 ? null : row; }), [["a", "b", "c"], ["2", "3", "4"]]);
-  test.deepEqual(psv.parseRows("a|b|c\n1|2|3\n2|3|4", function(row, i) { return i & 1 ? undefined : row; }), [["a", "b", "c"], ["2", "3", "4"]]);
+tape("dsv(\"|\").parseRows(string, row) skips rows if row returns null or undefined", function(test) {
+  function row(d, i) { return [d, null, undefined, false][i]; }
+  test.deepEqual(psv.parseRows("field\n42\n\n\n", row), [["field"], false]);
+  test.deepEqual(psv.parseRows("a|b|c\n1|2|3\n2|3|4", function(d, i) { return i & 1 ? null : d; }), [["a", "b", "c"], ["2", "3", "4"]]);
+  test.deepEqual(psv.parseRows("a|b|c\n1|2|3\n2|3|4", function(d, i) { return i & 1 ? undefined : d; }), [["a", "b", "c"], ["2", "3", "4"]]);
   test.end();
 });
 
-tape("dsv(\"|\").parseRows(string, convert) invokes convert for every row in order", function(test) {
+tape("dsv(\"|\").parseRows(string, row) invokes row(d, i) for each row d, in order", function(test) {
   var rows = [];
   psv.parseRows("a\n1\n2\n3\n4", function(d, i) { rows.push({d: d, i: i}); });
   test.deepEqual(rows, [{d: ["a"], i: 0}, {d: ["1"], i: 1}, {d: ["2"], i: 2}, {d: ["3"], i: 3}, {d: ["4"], i: 4}]);

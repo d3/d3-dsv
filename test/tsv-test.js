@@ -38,22 +38,22 @@ tape("tsv.parse(string) observes Unix, Mac and DOS newlines", function(test) {
   test.end();
 });
 
-tape("tsv.parse(string, convert) returns the expected converted objects", function(test) {
-  function convert(row) { row.Hello = -row.Hello; return row; }
-  test.deepEqual(dsv.tsv.parse(fs.readFileSync("test/data/sample.tsv", "utf-8"), convert), [{Hello: -42, World: "\"fish\""}]);
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n", function(row) { return row; }), [{a: "1", b: "2", c: "3"}]);
+tape("tsv.parse(string, row) returns the expected converted objects", function(test) {
+  function row(d) { d.Hello = -d.Hello; return d; }
+  test.deepEqual(dsv.tsv.parse(fs.readFileSync("test/data/sample.tsv", "utf-8"), row), [{Hello: -42, World: "\"fish\""}]);
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n", function(d) { return d; }), [{a: "1", b: "2", c: "3"}]);
   test.end();
 });
 
-tape("tsv.parse(string, convert) skips rows if convert returns null or undefined", function(test) {
-  function convert(row, i) { return [row, null, undefined, false][i]; }
-  test.deepEqual(dsv.tsv.parse("field\n42\n\n\n\n", convert), [{field: "42"}, false]);
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n2\t3\t4", function(row) { return row.a & 1 ? null : row; }), [{a: "2", b: "3", c: "4"}]);
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n2\t3\t4", function(row) { return row.a & 1 ? undefined : row; }), [{a: "2", b: "3", c: "4"}]);
+tape("tsv.parse(string, row) skips rows if row returns null or undefined", function(test) {
+  function row(d, i) { return [d, null, undefined, false][i]; }
+  test.deepEqual(dsv.tsv.parse("field\n42\n\n\n\n", row), [{field: "42"}, false]);
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n2\t3\t4", function(d) { return d.a & 1 ? null : d; }), [{a: "2", b: "3", c: "4"}]);
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n2\t3\t4", function(d) { return d.a & 1 ? undefined : d; }), [{a: "2", b: "3", c: "4"}]);
   test.end();
 });
 
-tape("tsv.parse(string, convert) invokes convert for every row in order", function(test) {
+tape("tsv.parse(string, row) invokes row(d, i) for each row d, in order", function(test) {
   var rows = [];
   dsv.tsv.parse("a\n1\n2\n3\n4", function(d, i) { rows.push({d: d, i: i}); });
   test.deepEqual(rows, [{d: {a: "1"}, i: 0}, {d: {a: "2"}, i: 1}, {d: {a: "3"}, i: 2}, {d: {a: "4"}, i: 3}]);
@@ -90,22 +90,22 @@ tape("tsv.parseRows(string) parses Unix, Mac and DOS newlines", function(test) {
   test.end();
 });
 
-tape("tsv.parseRows(string, convert) returns the expected converted array of array of string", function(test) {
-  function convert(row, i) { if (i) row[0] = -row[0]; return row; }
-  test.deepEqual(dsv.tsv.parseRows(fs.readFileSync("test/data/sample.tsv", "utf-8"), convert), [["Hello", "World"], [-42, "\"fish\""]]);
-  test.deepEqual(dsv.tsv.parseRows("a\tb\tc\n1\t2\t3\n", function(row) { return row; }), [["a", "b", "c"], ["1", "2", "3"]]);
+tape("tsv.parseRows(string, row) returns the expected converted array of array of string", function(test) {
+  function row(d, i) { if (i) d[0] = -d[0]; return d; }
+  test.deepEqual(dsv.tsv.parseRows(fs.readFileSync("test/data/sample.tsv", "utf-8"), row), [["Hello", "World"], [-42, "\"fish\""]]);
+  test.deepEqual(dsv.tsv.parseRows("a\tb\tc\n1\t2\t3\n", function(d) { return d; }), [["a", "b", "c"], ["1", "2", "3"]]);
   test.end();
 });
 
-tape("tsv.parseRows(string, convert) skips rows if convert returns null or undefined", function(test) {
-  function convert(row, i) { return [row, null, undefined, false][i]; }
-  test.deepEqual(dsv.tsv.parseRows("field\n42\n\n\n", convert), [["field"], false]);
-  test.deepEqual(dsv.tsv.parseRows("a\tb\tc\n1\t2\t3\n2\t3\t4", function(row, i) { return i & 1 ? null : row; }), [["a", "b", "c"], ["2", "3", "4"]]);
-  test.deepEqual(dsv.tsv.parseRows("a\tb\tc\n1\t2\t3\n2\t3\t4", function(row, i) { return i & 1 ? undefined : row; }), [["a", "b", "c"], ["2", "3", "4"]]);
+tape("tsv.parseRows(string, row) skips rows if row returns null or undefined", function(test) {
+  function row(d, i) { return [d, null, undefined, false][i]; }
+  test.deepEqual(dsv.tsv.parseRows("field\n42\n\n\n", row), [["field"], false]);
+  test.deepEqual(dsv.tsv.parseRows("a\tb\tc\n1\t2\t3\n2\t3\t4", function(d, i) { return i & 1 ? null : d; }), [["a", "b", "c"], ["2", "3", "4"]]);
+  test.deepEqual(dsv.tsv.parseRows("a\tb\tc\n1\t2\t3\n2\t3\t4", function(d, i) { return i & 1 ? undefined : d; }), [["a", "b", "c"], ["2", "3", "4"]]);
   test.end();
 });
 
-tape("tsv.parseRows(string, convert) invokes convert for every row in order", function(test) {
+tape("tsv.parseRows(string, row) invokes row(d, i) for each row d, in order", function(test) {
   var rows = [];
   dsv.tsv.parseRows("a\n1\n2\n3\n4", function(d, i) { rows.push({d: d, i: i}); });
   test.deepEqual(rows, [{d: ["a"], i: 0}, {d: ["1"], i: 1}, {d: ["2"], i: 2}, {d: ["3"], i: 3}, {d: ["4"], i: 4}]);

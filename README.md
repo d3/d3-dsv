@@ -87,9 +87,9 @@ Using `+` rather than [parseInt](https://developer.mozilla.org/en/JavaScript/Ref
 
 <a name="dsv_parseRows" href="#dsv_parseRows">#</a> <i>dsv</i>.<b>parseRows</b>(<i>string</i>[, <i>accessor</i>])
 
-Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of arrays representing the parsed rows. The string is assumed to be [RFC4180-compliant](http://tools.ietf.org/html/rfc4180).
+Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of arrays representing the parsed rows.
 
-Unlike [*dsv*.parse](#dsv_parse), this method treats the header line as a standard row, and should be used whenever DSV content does not contain a header. Each row is represented as an array rather than an object. Rows may have variable length. For example, consider the following CSV file:
+Unlike [*dsv*.parse](#dsv_parse), this method treats the header line as a standard row, and should be used whenever DSV content does not contain a header. Each row is represented as an array rather than an object. Rows may have variable length. For example, consider the following CSV file, which notably lacks a header line:
 
 ```
 1997,Ford,E350,2.34
@@ -105,9 +105,20 @@ The resulting JavaScript array is:
 ]
 ```
 
-Field values are always strings; they will not be automatically converted to numbers. See [*dsv*.parse](#dsv_parse) for details.
+Field values are always strings; they will not be automatically converted to numbers. See [*dsv*.parse](#dsv_parse) for details. An optional *accessor* function may be specified as the second argument to convert types and filter rows. For example:
 
-An optional *accessor* function may be specified as the second argument. This function is invoked for each row in the DSV content, being passed the current row and index as two arguments. The return value of the function replaces the element in the returned array of rows; if the function returns null, the row is stripped from the returned array of rows. In effect, the accessor is similar to applying a [map](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map) and [filter](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter) operator to the returned rows. The accessor function is used by [*dsv*.parse](#dsv_parse) to convert each row to an object with named attributes.
+```js
+var data = csv.parseRows(string, function(d, i) {
+  return {
+    year: new Date(+d[0], 0, 1), // convert first colum column to Date
+    make: d[1],
+    model: d[2],
+    length: +d[3] // convert fourth column to number
+  };
+});
+```
+
+The accessor function is invoked for each row in the DSV content, being passed the current row’s array of field values (`d`) and index (`i`) as arguments. The return value of the function replaces the element in the returned array of rows; if the function returns null or undefined, the row is stripped from the returned array of rows. In effect, the accessor is similar to applying a [map](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map) and [filter](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter) operator to the returned rows.
 
 <a name="dsv_format" href="#dsv_format">#</a> <i>dsv</i>.<b>format</b>(<i>rows</i>)
 

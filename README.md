@@ -5,7 +5,7 @@ A parser and formatter for delimiter-separated values, most commonly [comma-sepa
 Supports [comma-](#csv) and [tab-](#tsv)separated values out of the box. To define a new delimiter, such as `"|"` for pipe-separated values, use the [dsv constructor](#dsv):
 
 ```js
-var psv = dsv.dsv("|");
+var psv = dsv("|");
 
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}]
 ```

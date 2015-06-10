@@ -21,7 +21,7 @@ var dsv = require("d3-dsv");
 console.log(dsv.csv.parse("foo,bar\n1,2")); // [{foo: "1", bar: "2"}]
 ```
 
-To define a new delimiter, use the [dsv constructor](#dsv):
+Supports [CSV](#csv) and [TSV](#tsv) out of the box. To define a new delimiter, use the [dsv constructor](#dsv):
 
 ```js
 var psv = dsv.dsv("|");

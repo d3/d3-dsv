@@ -2,26 +2,7 @@
 
 A parser and formatter for delimiter-separated values, most commonly [comma-separated values](https://en.wikipedia.org/wiki/Comma-separated_values) (CSV) and tab-separated values (TSV). These tabular formats are popular with spreadsheet programs such as Microsoft Excel, and are often more space-efficient than JSON for large datasets. This implementation is based on [RFC 4180](http://tools.ietf.org/html/rfc4180).
 
-To use in the browser:
-
-```html
-<script src="dsv.js"></script>
-<script>
-
-console.log(dsv.csv.parse("foo,bar\n1,2")); // [{foo: "1", bar: "2"}]
-
-</script>
-```
-
-To use in Node.js, `npm install d3-dsv`, and:
-
-```js
-var dsv = require("d3-dsv");
-
-console.log(dsv.csv.parse("foo,bar\n1,2")); // [{foo: "1", bar: "2"}]
-```
-
-Supports [CSV](#csv) and [TSV](#tsv) out of the box. To define a new delimiter, use the [dsv constructor](#dsv):
+Supports [comma-](#csv) and [tab-](#tsv)separated values out of the box. To define a new delimiter, such as `"|"` for pipe-separated values, use the [dsv constructor](#dsv):
 
 ```js
 var psv = dsv.dsv("|");

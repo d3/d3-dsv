@@ -30,7 +30,7 @@ A parser and formatter for tab-separated values (TSV), defined as:
 var tsv = dsv("\t");
 ```
 
-<a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>converter</i>])
+<a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>convert</i>])
 
 Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of objects representing the parsed rows.
 
@@ -51,7 +51,7 @@ The resulting JavaScript array is:
 ]
 ```
 
-Field values are always strings; they will not be automatically converted to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator). By specifying an <i>converter</i> function, you can convert the strings to numbers or other specific types, such as dates:
+Field values are always strings; they will not be automatically converted to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator). By specifying a <i>convert</i> function, you can convert the strings to numbers or other specific types, such as dates:
 
 ```js
 var data = csv.parse(string, function(d) {
@@ -66,7 +66,7 @@ var data = csv.parse(string, function(d) {
 
 Using `+` rather than [parseInt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseInt) or [parseFloat](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseFloat) is typically faster, though more restrictive. For example, `"30px"` when coerced using `+` returns `NaN`, while parseInt and parseFloat return `30`.
 
-<a name="dsv_parseRows" href="#dsv_parseRows">#</a> <i>dsv</i>.<b>parseRows</b>(<i>string</i>[, <i>converter</i>])
+<a name="dsv_parseRows" href="#dsv_parseRows">#</a> <i>dsv</i>.<b>parseRows</b>(<i>string</i>[, <i>convert</i>])
 
 Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of arrays representing the parsed rows.
 
@@ -86,7 +86,7 @@ The resulting JavaScript array is:
 ]
 ```
 
-Field values are always strings; they will not be automatically converted to numbers. See [*dsv*.parse](#dsv_parse) for details. An optional *converter* function may be specified as the second argument to convert types and filter rows. For example:
+Field values are always strings; they will not be automatically converted to numbers. See [*dsv*.parse](#dsv_parse) for details. An optional *convert* function may be specified as the second argument to convert types and filter rows. For example:
 
 ```js
 var data = csv.parseRows(string, function(d, i) {
@@ -99,17 +99,17 @@ var data = csv.parseRows(string, function(d, i) {
 });
 ```
 
-The converter function is invoked for each row in the DSV content, being passed the current row’s array of field values (`d`) and index (`i`) as arguments. The return value of the function replaces the element in the returned array of rows; if the function returns null or undefined, the row is stripped from the returned array of rows. In effect, the converter is similar to applying a [map](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map) and [filter](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter) operator to the returned rows.
+The *convert* function is invoked for each row in the DSV content, being passed the current row’s array of field values (`d`) and index (`i`) as arguments. The return value of the function replaces the element in the returned array of rows; if the function returns null or undefined, the row is stripped from the returned array of rows. In effect, *convert* is similar to applying a [map](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map) and [filter](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter) operator to the returned rows.
 
 <a name="dsv_format" href="#dsv_format">#</a> <i>dsv</i>.<b>format</b>(<i>rows</i>)
 
-Converts the specified array of *rows* into delimiter-separated values format, returning a string. This operation is the inverse of [*dsv*.parse](#dsv_parse). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (`"`) or a newline will be escaped using double-quotes.
+Formats the specified array of object *rows* as delimiter-separated values, returning a string. This operation is the inverse of [*dsv*.parse](#dsv_parse). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (`"`) or a newline will be escaped using double-quotes.
 
-Each row should be an object, and all object properties will be converted into fields. For greater control over which properties are converted, convert the rows into arrays containing only the properties that should be converted and use [*dsv*.formatRows](#dsv_formatRows).
+The header row is determined by the union of all properties on all objects in *rows*. The order of header columns is nondeterministic. All properties on each row object will be coerced to strings. For more control over which and how fields are formatted, first map *rows* to an array of array of string, and then use [*dsv*.formatRows](#dsv_formatRows).
 
 <a name="dsv_formatRows" href="#dsv_formatRows">#</a> <i>dsv</i>.<b>formatRows</b>(<i>rows</i>)
 
-Converts the specified array of *rows* into delimiter-separated values format, returning a string. This operation is the reverse of [*dsv*.parseRows](#dsv_parseRows). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (") or a newline will be escaped using double-quotes.
+Formats the specified array of array of string *rows* as delimiter-separated values, returning a string. This operation is the reverse of [*dsv*.parseRows](#dsv_parseRows). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (") or a newline will be escaped using double-quotes.
 
 ### Content Security Policy
 

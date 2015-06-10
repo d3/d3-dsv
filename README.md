@@ -14,22 +14,6 @@ console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}]
 
 Constructs a new DSV parser and formatter for the specified *delimiter*.
 
-<a name="csv" href="#csv">#</a> <b>csv</b>
-
-A parser and formatter for comma-separated values (CSV), defined as:
-
-```js
-var csv = dsv(",");
-```
-
-<a name="tsv" href="#tsv">#</a> <b>tsv</b>
-
-A parser and formatter for tab-separated values (TSV), defined as:
-
-```js
-var tsv = dsv("\t");
-```
-
 <a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>row</i>])
 
 Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of objects representing the parsed rows.
@@ -110,6 +94,22 @@ The header row is determined by the union of all properties on all objects in *r
 <a name="dsv_formatRows" href="#dsv_formatRows">#</a> <i>dsv</i>.<b>formatRows</b>(<i>rows</i>)
 
 Formats the specified array of array of string *rows* as delimiter-separated values, returning a string. This operation is the reverse of [*dsv*.parseRows](#dsv_parseRows). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (") or a newline will be escaped using double-quotes.
+
+<a name="csv" href="#csv">#</a> <b>csv</b>
+
+A parser and formatter for comma-separated values (CSV), defined as:
+
+```js
+var csv = dsv(",");
+```
+
+<a name="tsv" href="#tsv">#</a> <b>tsv</b>
+
+A parser and formatter for tab-separated values (TSV), defined as:
+
+```js
+var tsv = dsv("\t");
+```
 
 ### Content Security Policy
 

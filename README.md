@@ -10,6 +10,12 @@ var psv = dsv("|");
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}]
 ```
 
+## Installing
+
+If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](https://github.com/d3/d3-dsv/releases/latest).
+
+## API Reference
+
 <a name="dsv" href="#dsv">#</a> <b>dsv</b>(<i>delimiter</i>)
 
 Constructs a new DSV parser and formatter for the specified *delimiter*.

@@ -120,3 +120,20 @@ var tsv = dsv("\t");
 ### Content Security Policy
 
 If a [content security policy](http://www.w3.org/TR/CSP/) is in place, note that [*dsv*.parse](#dsv_parse) requires `unsafe-eval` in the `script-src` directive, due to the (safe) use of dynamic code generation for fast parsing. (See [source](https://github.com/d3/d3-dsv/blob/master/src/dsv.js).) Alternatively, use [*dsv*.parseRows](#dsv_parseRows).
+
+## Command Line Reference
+
+The d3-dsv module comes with a few binaries to convert DSV files:
+
+* csv2json
+* csv2tsv
+* tsv2csv
+* tsv2json
+
+These programs either take a single file as an argument or read from stdin, and write to stdout. For example, these statements are all equivalent:
+
+```
+csv2json file.csv > file.json
+csv2json < file.csv > file.json
+cat file.csv | csv2json - > file.json
+```

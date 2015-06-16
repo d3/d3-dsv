@@ -1,6 +1,6 @@
 {
   "name": "d3-dsv",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A parser and formatter for delimiter-separated values, such as CSV and TSV",
   "keywords": [
     "d3",
@@ -29,7 +29,7 @@
   "scripts": {
     "pretest": "mkdir -p build && d3-bundler --format=umd --name=dsv -- index.js > build/dsv.js",
     "test": "faucet `find test -name '*-test.js'`",
-    "prepublish": "npm run test && uglifyjs build/dsv.js -c -m -o build/dsv.min.js"
+    "prepublish": "npm run test && uglifyjs build/dsv.js -c -m -o build/dsv.min.js && rm -f build/dsv.zip && zip -j build/dsv.zip -- LICENSE README.md build/dsv.js build/dsv.min.js"
   },
   "devDependencies": {
     "d3-bundler": "~0.2.5",

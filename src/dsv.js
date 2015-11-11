@@ -1,19 +1,23 @@
-export default function(delimiter) {
+function dsv(delimiter) {
+  return new Dsv(delimiter);
+}
+
+function Dsv(delimiter) {
   var reFormat = new RegExp("[\"" + delimiter + "\n]"),
       delimiterCode = delimiter.charCodeAt(0);
 
-  function parse(text, f) {
+  this.parse = function(text, f) {
     var o;
-    return parseRows(text, function(row, i) {
+    return this.parseRows(text, function(row, i) {
       if (o) return o(row, i - 1);
       var a = new Function("d", "return {" + row.map(function(name, i) {
         return JSON.stringify(name) + ": d[" + i + "]";
       }).join(",") + "}");
       o = f ? function(row, i) { return f(a(row), i); } : a;
     });
-  }
+  };
 
-  function parseRows(text, f) {
+  this.parseRows = function(text, f) {
     var EOL = {}, // sentinel value for end-of-line
         EOF = {}, // sentinel value for end-of-file
         rows = [], // output rows
@@ -74,8 +78,8 @@ export default function(delimiter) {
     return rows;
   }
 
-  function format(rows) {
-    if (Array.isArray(rows[0])) return formatRows(rows); // deprecated; use formatRows
+  this.format = function(rows) {
+    if (Array.isArray(rows[0])) return this.formatRows(rows); // deprecated; use formatRows
     var fieldSet = Object.create(null), fields = [];
 
     // Compute unique fields in order of discovery.
@@ -92,11 +96,11 @@ export default function(delimiter) {
         return formatValue(row[field]);
       }).join(delimiter);
     })).join("\n");
-  }
+  };
 
-  function formatRows(rows) {
+  this.formatRows = function(rows) {
     return rows.map(formatRow).join("\n");
-  }
+  };
 
   function formatRow(row) {
     return row.map(formatValue).join(delimiter);
@@ -105,11 +109,8 @@ export default function(delimiter) {
   function formatValue(text) {
     return reFormat.test(text) ? "\"" + text.replace(/\"/g, "\"\"") + "\"" : text;
   }
-
-  return {
-    parse: parse,
-    parseRows: parseRows,
-    format: format,
-    formatRows: formatRows
-  };
 };
+
+dsv.prototype = Dsv.prototype;
+
+export default dsv;

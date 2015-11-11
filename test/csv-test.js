@@ -2,6 +2,11 @@ var tape = require("tape"),
     dsv = require("../"),
     fs = require("fs");
 
+tape("csv is an instanceof dsv", function(test) {
+  test.ok(dsv.csv instanceof dsv.dsv);
+  test.end();
+});
+
 tape("csv.parse(string) returns the expected objects", function(test) {
   test.deepEqual(dsv.csv.parse("a,b,c\n1,2,3\n"), [{a: "1", b: "2", c: "3"}]);
   test.deepEqual(dsv.csv.parse(fs.readFileSync("test/data/sample.csv", "utf-8")), [{Hello: "42", World: "\"fish\""}]);

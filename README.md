@@ -99,7 +99,18 @@ The header row is determined by the union of all properties on all objects in *r
 
 <a name="dsv_formatRows" href="#dsv_formatRows">#</a> <i>dsv</i>.<b>formatRows</b>(<i>rows</i>)
 
-Formats the specified array of array of string *rows* as delimiter-separated values, returning a string. This operation is the reverse of [*dsv*.parseRows](#dsv_parseRows). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (") or a newline will be escaped using double-quotes.
+Formats the specified array of array of string *rows* as delimiter-separated values, returning a string. This operation is the reverse of [*dsv*.parseRows](#dsv_parseRows). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (") or a newline will be escaped using double-quotes. For example:
+
+```js
+var string = csv.formatRows(data.map(function(d, i) {
+  return [
+    d.year.getFullYear(), // Assuming d.year is a Date object.
+    d.make,
+    d.model,
+    d.length
+  ];
+});
+```
 
 <a name="csv" href="#csv">#</a> <b>csv</b>
 

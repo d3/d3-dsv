@@ -111,20 +111,20 @@ var string = csv.formatRows(data.map(function(d, i) {
     d.model,
     d.length
   ];
-});
+}));
 ```
 
 If you like, you can also [array.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) this result with an array of column names to generate the first row:
 
 ```js
-var string = csv.formatRows(["year", "make", "model", "length"].concat(data.map(function(d, i) {
+var string = csv.formatRows([["year", "make", "model", "length"]].concat(data.map(function(d, i) {
   return [
     d.year.getFullYear(), // Assuming d.year is a Date object.
     d.make,
     d.model,
     d.length
   ];
-}));
+})));
 ```
 
 <a name="csv" href="#csv">#</a> <b>csv</b>

@@ -139,6 +139,14 @@ tape("tsv.format(array) orders fields by first-seen", function(test) {
   test.end();
 });
 
+tape("tsv(\"|\").format(array, columns) observes the specified array of column names", function(test) {
+  test.deepEqual(dsv.tsv.format([{a: 1, b: 2, c: 3}], ["c", "b", "a"]), "c\tb\ta\n3\t2\t1");
+  test.deepEqual(dsv.tsv.format([{a: 1, b: 2, c: 3}], ["c", "a"]), "c\ta\n3\t1");
+  test.deepEqual(dsv.tsv.format([{a: 1, b: 2, c: 3}], []), "\n");
+  test.deepEqual(dsv.tsv.format([{a: 1, b: 2, c: 3}], ["d"]), "d\n");
+  test.end();
+});
+
 tape("tsv.formatRows(array) takes an array of array of string as input", function(test) {
   test.deepEqual(dsv.tsv.formatRows([["a", "b", "c"], ["1", "2", "3"]]), "a\tb\tc\n1\t2\t3");
   test.end();

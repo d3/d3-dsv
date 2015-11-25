@@ -15,6 +15,22 @@ function customConverter(columns, f) {
   };
 }
 
+// Compute unique columns in order of discovery.
+function inferColumns(rows) {
+  var columnSet = Object.create(null),
+      columns = [];
+
+  rows.forEach(function(row) {
+    for (var column in row) {
+      if (!(column in columnSet)) {
+        columns.push(columnSet[column] = column);
+      }
+    }
+  });
+
+  return columns;
+}
+
 function Dsv(delimiter) {
   var reFormat = new RegExp("[\"" + delimiter + "\n]"),
       delimiterCode = delimiter.charCodeAt(0);
@@ -89,22 +105,11 @@ function Dsv(delimiter) {
     return rows;
   }
 
-  this.format = function(rows) {
-    if (Array.isArray(rows[0])) return this.formatRows(rows); // deprecated; use formatRows
-    var fieldSet = Object.create(null), fields = [];
-
-    // Compute unique fields in order of discovery.
-    rows.forEach(function(row) {
-      for (var field in row) {
-        if (!((field += "") in fieldSet)) {
-          fields.push(fieldSet[field] = field);
-        }
-      }
-    });
-
-    return [fields.map(formatValue).join(delimiter)].concat(rows.map(function(row) {
-      return fields.map(function(field) {
-        return formatValue(row[field]);
+  this.format = function(rows, columns) {
+    if (arguments.length < 2) columns = inferColumns(rows);
+    return [columns.map(formatValue).join(delimiter)].concat(rows.map(function(row) {
+      return columns.map(function(column) {
+        return formatValue(row[column]);
       }).join(delimiter);
     })).join("\n");
   };

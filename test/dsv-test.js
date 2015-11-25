@@ -136,6 +136,14 @@ tape("dsv(\"|\").format(array) orders fields by first-seen", function(test) {
   test.end();
 });
 
+tape("dsv(\"|\").format(array, columns) observes the specified array of column names", function(test) {
+  test.deepEqual(psv.format([{a: 1, b: 2, c: 3}], ["c", "b", "a"]), "c|b|a\n3|2|1");
+  test.deepEqual(psv.format([{a: 1, b: 2, c: 3}], ["c", "a"]), "c|a\n3|1");
+  test.deepEqual(psv.format([{a: 1, b: 2, c: 3}], []), "\n");
+  test.deepEqual(psv.format([{a: 1, b: 2, c: 3}], ["d"]), "d\n");
+  test.end();
+});
+
 tape("dsv(\"|\").formatRows(array) takes an array of array of string as input", function(test) {
   test.deepEqual(psv.formatRows([["a", "b", "c"], ["1", "2", "3"]]), "a|b|c\n1|2|3");
   test.end();

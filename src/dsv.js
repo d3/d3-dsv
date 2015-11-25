@@ -7,14 +7,16 @@ function Dsv(delimiter) {
       delimiterCode = delimiter.charCodeAt(0);
 
   this.parse = function(text, f) {
-    var o;
-    return this.parseRows(text, function(row, i) {
+    var o, columns, rows = this.parseRows(text, function(row, i) {
       if (o) return o(row, i - 1);
       var a = new Function("d", "return {" + row.map(function(name, i) {
         return JSON.stringify(name) + ": d[" + i + "]";
       }).join(",") + "}");
+      columns = row;
       o = f ? function(row, i) { return f(a(row), i); } : a;
     });
+    rows.columns = columns;
+    return rows;
   };
 
   this.parseRows = function(text, f) {

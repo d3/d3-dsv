@@ -1,6 +1,7 @@
 var tape = require("tape"),
     dsv = require("../"),
-    fs = require("fs");
+    fs = require("fs"),
+    table = require("./table");
 
 tape("tsv is an instanceof dsv", function(test) {
   test.ok(dsv.tsv instanceof dsv.dsv);
@@ -8,53 +9,53 @@ tape("tsv is an instanceof dsv", function(test) {
 });
 
 tape("tsv.parse(string) returns the expected objects", function(test) {
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n"), [{a: "1", b: "2", c: "3"}]);
-  test.deepEqual(dsv.tsv.parse(fs.readFileSync("test/data/sample.tsv", "utf-8")), [{Hello: "42", World: "\"fish\""}]);
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.tsv.parse(fs.readFileSync("test/data/sample.tsv", "utf-8")), table([{Hello: "42", World: "\"fish\""}], ["Hello", "World"]));
   test.end();
 });
 
 tape("tsv.parse(string) does not strip whitespace", function(test) {
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n 1\t 2\t3\n"), [{a: " 1", b: " 2", c: "3"}]);
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n 1\t 2\t3\n"), table([{a: " 1", b: " 2", c: "3"}], ["a", "b", "c"]));
   test.end();
 });
 
 tape("tsv.parse(string) parses quoted values", function(test) {
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n\"1\"\t2\t3"), [{a: "1", b: "2", c: "3"}]);
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n\"1\"\t2\t3\n"), [{a: "1", b: "2", c: "3"}]);
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n\"1\"\t2\t3"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n\"1\"\t2\t3\n"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
   test.end();
 });
 
 tape("tsv.parse(string) parses quoted values with quotes", function(test) {
-  test.deepEqual(dsv.tsv.parse("a\n\"\"\"hello\"\"\""), [{a: "\"hello\""}]);
+  test.deepEqual(dsv.tsv.parse("a\n\"\"\"hello\"\"\""), table([{a: "\"hello\""}], ["a"]));
   test.end();
 });
 
 tape("tsv.parse(string) parses quoted values with newlines", function(test) {
-  test.deepEqual(dsv.tsv.parse("a\n\"new\nline\""), [{a: "new\nline"}]);
-  test.deepEqual(dsv.tsv.parse("a\n\"new\rline\""), [{a: "new\rline"}]);
-  test.deepEqual(dsv.tsv.parse("a\n\"new\r\nline\""), [{a: "new\r\nline"}]);
+  test.deepEqual(dsv.tsv.parse("a\n\"new\nline\""), table([{a: "new\nline"}], ["a"]));
+  test.deepEqual(dsv.tsv.parse("a\n\"new\rline\""), table([{a: "new\rline"}], ["a"]));
+  test.deepEqual(dsv.tsv.parse("a\n\"new\r\nline\""), table([{a: "new\r\nline"}], ["a"]));
   test.end();
 });
 
 tape("tsv.parse(string) observes Unix, Mac and DOS newlines", function(test) {
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n4\t5\t\"6\"\n7\t8\t9"), [{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}]);
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\r1\t2\t3\r4\t5\t\"6\"\r7\t8\t9"), [{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}]);
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\r\n1\t2\t3\r\n4\t5\t\"6\"\r\n7\t8\t9"), [{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}]);
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n4\t5\t\"6\"\n7\t8\t9"), table([{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\r1\t2\t3\r4\t5\t\"6\"\r7\t8\t9"), table([{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\r\n1\t2\t3\r\n4\t5\t\"6\"\r\n7\t8\t9"), table([{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}], ["a", "b", "c"]));
   test.end();
 });
 
 tape("tsv.parse(string, row) returns the expected converted objects", function(test) {
   function row(d) { d.Hello = -d.Hello; return d; }
-  test.deepEqual(dsv.tsv.parse(fs.readFileSync("test/data/sample.tsv", "utf-8"), row), [{Hello: -42, World: "\"fish\""}]);
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n", function(d) { return d; }), [{a: "1", b: "2", c: "3"}]);
+  test.deepEqual(dsv.tsv.parse(fs.readFileSync("test/data/sample.tsv", "utf-8"), row), table([{Hello: -42, World: "\"fish\""}], ["Hello", "World"]));
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n", function(d) { return d; }), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
   test.end();
 });
 
 tape("tsv.parse(string, row) skips rows if row returns null or undefined", function(test) {
   function row(d, i) { return [d, null, undefined, false][i]; }
-  test.deepEqual(dsv.tsv.parse("field\n42\n\n\n\n", row), [{field: "42"}, false]);
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n2\t3\t4", function(d) { return d.a & 1 ? null : d; }), [{a: "2", b: "3", c: "4"}]);
-  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n2\t3\t4", function(d) { return d.a & 1 ? undefined : d; }), [{a: "2", b: "3", c: "4"}]);
+  test.deepEqual(dsv.tsv.parse("field\n42\n\n\n\n", row), table([{field: "42"}, false], ["field"]));
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n2\t3\t4", function(d) { return d.a & 1 ? null : d; }), table([{a: "2", b: "3", c: "4"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.tsv.parse("a\tb\tc\n1\t2\t3\n2\t3\t4", function(d) { return d.a & 1 ? undefined : d; }), table([{a: "2", b: "3", c: "4"}], ["a", "b", "c"]));
   test.end();
 });
 

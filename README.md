@@ -18,7 +18,7 @@ If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](h
 
 <a name="dsv" href="#dsv">#</a> <b>dsv</b>(<i>delimiter</i>)
 
-Constructs a new DSV parser and formatter for the specified *delimiter*.
+Constructs a new DSV parser and formatter for the specified *delimiter*. The *delimiter* must be a single character (*i.e.*, a single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are not.
 
 <a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>row</i>])
 

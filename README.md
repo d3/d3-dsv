@@ -56,6 +56,12 @@ var data = csv.parse(string, function(d) {
 
 Using `+` rather than [parseInt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseInt) or [parseFloat](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseFloat) is typically faster, though more restrictive. For example, `"30px"` when coerced using `+` returns `NaN`, while parseInt and parseFloat return `30`.
 
+The returned array also exposes a `columns` property containing the column names in input order. (This is in contrast to Object.keys, whose iteration order is arbitrary.) For example:
+
+```js
+data.columns; // ["Year", "Make", "Model", "Length"]
+```
+
 <a name="dsv_parseRows" href="#dsv_parseRows">#</a> <i>dsv</i>.<b>parseRows</b>(<i>string</i>[, <i>row</i>])
 
 Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of arrays representing the parsed rows.

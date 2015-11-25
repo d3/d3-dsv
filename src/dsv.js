@@ -2,19 +2,30 @@ function dsv(delimiter) {
   return new Dsv(delimiter);
 }
 
+function converter(columns) {
+  return new Function("d", "return {" + columns.map(function(name, i) {
+    return JSON.stringify(name) + ": d[" + i + "]";
+  }).join(",") + "}");
+}
+
+function customConverter(columns, f) {
+  var convert = converter(columns);
+  return function(row, i) {
+    return f(convert(row), i);
+  };
+}
+
 function Dsv(delimiter) {
   var reFormat = new RegExp("[\"" + delimiter + "\n]"),
       delimiterCode = delimiter.charCodeAt(0);
 
   this.parse = function(text, f) {
-    var o;
-    return this.parseRows(text, function(row, i) {
-      if (o) return o(row, i - 1);
-      var a = new Function("d", "return {" + row.map(function(name, i) {
-        return JSON.stringify(name) + ": d[" + i + "]";
-      }).join(",") + "}");
-      o = f ? function(row, i) { return f(a(row), i); } : a;
+    var convert, columns, rows = this.parseRows(text, function(row, i) {
+      if (convert) return convert(row, i - 1);
+      columns = row, convert = f ? customConverter(row, f) : converter(row);
     });
+    rows.columns = columns;
+    return rows;
   };
 
   this.parseRows = function(text, f) {

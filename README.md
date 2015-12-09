@@ -41,7 +41,13 @@ The resulting JavaScript array is:
 ]
 ```
 
-Field values are always strings; they will not be automatically converted to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator). By specifying a *row* conversion function, you can convert the strings to numbers or other specific types, such as dates:
+The returned array also exposes a `columns` property containing the column names in input order (in contrast to Object.keys, whose iteration order is arbitrary). For example:
+
+```js
+data.columns; // ["Year", "Make", "Model", "Length"]
+```
+
+Field values are always strings; they will not be automatically converted to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator), but better is to specify a *row* conversion function. For each row, the *row* function is passed an object representing the current row (`d`), the index (`i`) starting at zero for the first non-header row, and the array of column names. For example:
 
 ```js
 var data = csv.parse(string, function(d) {
@@ -54,13 +60,7 @@ var data = csv.parse(string, function(d) {
 });
 ```
 
-Using `+` rather than [parseInt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseInt) or [parseFloat](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseFloat) is typically faster, though more restrictive. For example, `"30px"` when coerced using `+` returns `NaN`, while parseInt and parseFloat return `30`.
-
-The returned array also exposes a `columns` property containing the column names in input order. (This is in contrast to Object.keys, whose iteration order is arbitrary.) For example:
-
-```js
-data.columns; // ["Year", "Make", "Model", "Length"]
-```
+Note: using `+` rather than [parseInt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseInt) or [parseFloat](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/parseFloat) is typically faster, though more restrictive. For example, `"30px"` when coerced using `+` returns `NaN`, while parseInt and parseFloat return `30`.
 
 <a name="dsv_parseRows" href="#dsv_parseRows">#</a> <i>dsv</i>.<b>parseRows</b>(<i>string</i>[, <i>row</i>])
 

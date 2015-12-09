@@ -2,16 +2,16 @@ function dsv(delimiter) {
   return new Dsv(delimiter);
 }
 
-function converter(columns) {
+function objectConverter(columns) {
   return new Function("d", "return {" + columns.map(function(name, i) {
     return JSON.stringify(name) + ": d[" + i + "]";
   }).join(",") + "}");
 }
 
 function customConverter(columns, f) {
-  var convert = converter(columns);
+  var object = objectConverter(columns);
   return function(row, i) {
-    return f(convert(row), i);
+    return f(object(row), i, columns);
   };
 }
 
@@ -38,7 +38,7 @@ function Dsv(delimiter) {
   this.parse = function(text, f) {
     var convert, columns, rows = this.parseRows(text, function(row, i) {
       if (convert) return convert(row, i - 1);
-      columns = row, convert = f ? customConverter(row, f) : converter(row);
+      columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
     });
     rows.columns = columns;
     return rows;

@@ -56,10 +56,10 @@ tape("dsv(\"|\").parse(string, row) skips rows if row returns null or undefined"
   test.end();
 });
 
-tape("dsv(\"|\").parse(string, row) invokes row(d, i) for each row d, in order", function(test) {
+tape("dsv(\"|\").parse(string, row) invokes row(d, i, columns) for each row d, in order", function(test) {
   var rows = [];
-  psv.parse("a\n1\n2\n3\n4", function(d, i) { rows.push({d: d, i: i}); });
-  test.deepEqual(rows, [{d: {a: "1"}, i: 0}, {d: {a: "2"}, i: 1}, {d: {a: "3"}, i: 2}, {d: {a: "4"}, i: 3}]);
+  psv.parse("a\n1\n2\n3\n4", function(d, i, columns) { rows.push({d: d, i: i, columns: columns}); });
+  test.deepEqual(rows, [{d: {a: "1"}, i: 0, columns: ["a"]}, {d: {a: "2"}, i: 1, columns: ["a"]}, {d: {a: "3"}, i: 2, columns: ["a"]}, {d: {a: "4"}, i: 3, columns: ["a"]}]);
   test.end();
 });
 

@@ -1,22 +1,30 @@
 # d3-dsv
 
-A parser and formatter for delimiter-separated values, most commonly [comma-separated values](https://en.wikipedia.org/wiki/Comma-separated_values) (CSV) and tab-separated values (TSV). These tabular formats are popular with spreadsheet programs such as Microsoft Excel, and are often more space-efficient than JSON for large datasets. This implementation is based on [RFC 4180](http://tools.ietf.org/html/rfc4180).
+This module provides a parser and formatter for delimiter-separated values, most commonly [comma-](https://en.wikipedia.org/wiki/Comma-separated_values) (CSV) or tab-separated values (TSV). These tabular formats are popular with spreadsheet programs such as Microsoft Excel, and are often more space-efficient than JSON. This implementation is based on [RFC 4180](http://tools.ietf.org/html/rfc4180).
 
-Supports [comma-](#csv) and [tab-](#tsv)separated values out of the box. To define a new delimiter, such as `"|"` for pipe-separated values, use the [dsv constructor](#dsv):
+[Comma](#csv) and [tab](#tsv) delimiters are built-in. To use a different delimiter, such as “|” for pipe-separated values, use the [dsv constructor](#dsv):
 
 ```js
-var psv = dsv("|");
+var psv = d3_dsv.dsv("|");
 
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}]
 ```
 
+For easy loading of DSV files in a browser, see [d3-request](https://github.com/d3/d3-request)’s [csv](https://github.com/d3/d3-request#csv) and [tsv](https://github.com/d3/d3-request#tsv) methods.
+
 ## Installing
 
-If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](https://github.com/d3/d3-dsv/releases/latest).
+If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](https://github.com/d3/d3-dsv/releases/latest). The released bundle supports AMD, CommonJS, and vanilla environments. Create a custom build using [Rollup](https://github.com/rollup/rollup) or your preferred bundler. You can also load directly from [d3js.org](https://d3js.org):
+
+```html
+<script src="https://d3js.org/d3-dsv.v0.1.min.js"></script>
+```
+
+In a vanilla environment, a `d3_dsv` global is exported. [Try d3-dsv in your browser.](https://tonicdev.com/npm/d3-dsv)
 
 ## API Reference
 
-<a name="dsv" href="#dsv">#</a> <b>dsv</b>(<i>delimiter</i>)
+<a name="dsv" href="#dsv">#</a> d3_dsv.<b>dsv</b>(<i>delimiter</i>)
 
 Constructs a new DSV parser and formatter for the specified *delimiter*. The *delimiter* must be a single character (*i.e.*, a single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are not.
 
@@ -50,7 +58,7 @@ data.columns; // ["Year", "Make", "Model", "Length"]
 Field values are always strings; they will not be automatically converted to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator), but better is to specify a *row* conversion function. For each row, the *row* function is passed an object representing the current row (`d`), the index (`i`) starting at zero for the first non-header row, and the array of column names. For example:
 
 ```js
-var data = csv.parse(string, function(d) {
+var data = d3_dsv.csv.parse(string, function(d) {
   return {
     year: new Date(+d.Year, 0, 1), // convert "Year" column to Date
     make: d.Make,
@@ -85,7 +93,7 @@ The resulting JavaScript array is:
 Field values are always strings; they will not be automatically converted to numbers. See [*dsv*.parse](#dsv_parse) for details. An optional *row* conversion function may be specified as the second argument to convert types and filter rows. For example:
 
 ```js
-var data = csv.parseRows(string, function(d, i) {
+var data = d3_dsv.csv.parseRows(string, function(d, i) {
   return {
     year: new Date(+d[0], 0, 1), // convert first colum column to Date
     make: d[1],
@@ -104,7 +112,7 @@ Formats the specified array of object *rows* as delimiter-separated values, retu
 If *columns* is not specified, the list of column names that forms the header row is determined by the union of all properties on all objects in *rows*; the order of columns is nondeterministic. If *columns* is specified, it is an array of strings representing the column names. For example:
 
 ```js
-var string = csv.format(data, ["year", "make", "model", "length"]);
+var string = d3_dsv.csv.format(data, ["year", "make", "model", "length"]);
 ```
 
 All fields on each row object will be coerced to strings. For more control over which and how fields are formatted, first map *rows* to an array of array of string, and then use [*dsv*.formatRows](#dsv_formatRows).
@@ -113,10 +121,10 @@ All fields on each row object will be coerced to strings. For more control over 
 
 Formats the specified array of array of string *rows* as delimiter-separated values, returning a string. This operation is the reverse of [*dsv*.parseRows](#dsv_parseRows). Each row will be separated by a newline (`\n`), and each column within each row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (") or a newline will be escaped using double-quotes.
 
-To convert an array of objects to an array of arrays while explicitly specifying the columns, use [array.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map). For example:
+To convert an array of objects to an array of arrays while explicitly specifying the columns, use [*array*.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map). For example:
 
 ```js
-var string = csv.formatRows(data.map(function(d, i) {
+var string = d3_dsv.csv.formatRows(data.map(function(d, i) {
   return [
     d.year.getFullYear(), // Assuming d.year is a Date object.
     d.make,
@@ -126,10 +134,10 @@ var string = csv.formatRows(data.map(function(d, i) {
 }));
 ```
 
-If you like, you can also [array.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) this result with an array of column names to generate the first row:
+If you like, you can also [*array*.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) this result with an array of column names to generate the first row:
 
 ```js
-var string = csv.formatRows([[
+var string = d3_dsv.csv.formatRows([[
     "year",
     "make",
     "model",
@@ -144,20 +152,20 @@ var string = csv.formatRows([[
 })));
 ```
 
-<a name="csv" href="#csv">#</a> <b>csv</b>
+<a name="csv" href="#csv">#</a> d3_dsv.<b>csv</b>
 
 A parser and formatter for comma-separated values (CSV), defined as:
 
 ```js
-var csv = dsv(",");
+var csv = d3_dsv.dsv(",");
 ```
 
-<a name="tsv" href="#tsv">#</a> <b>tsv</b>
+<a name="tsv" href="#tsv">#</a> d3_dsv.<b>tsv</b>
 
 A parser and formatter for tab-separated values (TSV), defined as:
 
 ```js
-var tsv = dsv("\t");
+var tsv = d3_dsv.dsv("\t");
 ```
 
 ### Content Security Policy
@@ -166,7 +174,7 @@ If a [content security policy](http://www.w3.org/TR/CSP/) is in place, note that
 
 ## Command Line Reference
 
-The d3-dsv module comes with a few binaries to convert DSV files:
+This module comes with a few binaries to convert DSV files:
 
 * csv2json
 * csv2tsv

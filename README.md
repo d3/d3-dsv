@@ -10,7 +10,7 @@ var psv = d3.dsv("|");
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}]
 ```
 
-For easy loading of DSV files in a browser, see [d3-request](https://github.com/d3/d3-request)’s [csv](https://github.com/d3/d3-request#csv) and [tsv](https://github.com/d3/d3-request#tsv) methods.
+For easy loading of DSV files in a browser, see [d3-request](https://github.com/d3/d3-request)’s [requestCsv](https://github.com/d3/d3-request#requestCsv) and [requestTsv](https://github.com/d3/d3-request#requestTsv) methods.
 
 ## Installing
 

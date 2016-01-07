@@ -5,7 +5,7 @@ This module provides a parser and formatter for delimiter-separated values, most
 [Comma](#csv) and [tab](#tsv) delimiters are built-in. To use a different delimiter, such as “|” for pipe-separated values, use the [dsv constructor](#dsv):
 
 ```js
-var psv = d3_dsv.dsv("|");
+var psv = d3.dsv("|");
 
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}]
 ```
@@ -24,7 +24,7 @@ In a vanilla environment, a `d3_dsv` global is exported. [Try d3-dsv in your bro
 
 ## API Reference
 
-<a name="dsv" href="#dsv">#</a> d3_dsv.<b>dsv</b>(<i>delimiter</i>)
+<a name="dsv" href="#dsv">#</a> d3.<b>dsv</b>(<i>delimiter</i>)
 
 Constructs a new DSV parser and formatter for the specified *delimiter*. The *delimiter* must be a single character (*i.e.*, a single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are not.
 
@@ -152,7 +152,7 @@ var string = d3_dsv.csv.formatRows([[
 })));
 ```
 
-<a name="csv" href="#csv">#</a> d3_dsv.<b>csv</b>
+<a name="csv" href="#csv">#</a> d3.<b>csv</b>
 
 A parser and formatter for comma-separated values (CSV), defined as:
 
@@ -160,7 +160,7 @@ A parser and formatter for comma-separated values (CSV), defined as:
 var csv = d3_dsv.dsv(",");
 ```
 
-<a name="tsv" href="#tsv">#</a> d3_dsv.<b>tsv</b>
+<a name="tsv" href="#tsv">#</a> d3.<b>tsv</b>
 
 A parser and formatter for tab-separated values (TSV), defined as:
 

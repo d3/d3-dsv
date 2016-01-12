@@ -106,7 +106,7 @@ function Dsv(delimiter) {
   }
 
   this.format = function(rows, columns) {
-    if (arguments.length < 2) columns = inferColumns(rows);
+    if (columns == null) columns = inferColumns(rows);
     return [columns.map(formatValue).join(delimiter)].concat(rows.map(function(row) {
       return columns.map(function(column) {
         return formatValue(row[column]);

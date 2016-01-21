@@ -59,7 +59,7 @@ function Dsv(delimiter) {
       if (eol) return eol = false, EOL; // special case: end of line
 
       // special case: quotes
-      var j = I;
+      var j = I, c;
       if (text.charCodeAt(j) === 34) {
         var i = j;
         while (i++ < N) {
@@ -69,7 +69,7 @@ function Dsv(delimiter) {
           }
         }
         I = i + 2;
-        var c = text.charCodeAt(i + 1);
+        c = text.charCodeAt(i + 1);
         if (c === 13) {
           eol = true;
           if (text.charCodeAt(i + 2) === 10) ++I;
@@ -81,7 +81,8 @@ function Dsv(delimiter) {
 
       // common case: find next delimiter or newline
       while (I < N) {
-        var c = text.charCodeAt(I++), k = 1;
+        var k = 1;
+        c = text.charCodeAt(I++);
         if (c === 10) eol = true; // \n
         else if (c === 13) { eol = true; if (text.charCodeAt(I) === 10) ++I, ++k; } // \r|\r\n
         else if (c !== delimiterCode) continue;
@@ -125,7 +126,7 @@ function Dsv(delimiter) {
   function formatValue(text) {
     return reFormat.test(text) ? "\"" + text.replace(/\"/g, "\"\"") + "\"" : text;
   }
-};
+}
 
 dsv.prototype = Dsv.prototype;
 

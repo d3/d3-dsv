@@ -28,7 +28,7 @@
   },
   "scripts": {
     "pretest": "mkdir -p build && node -e 'process.stdout.write(\"var version = \\\"\" + require(\"./package.json\").version + \"\\\"; export * from \\\"../index\\\"; export {version};\");' > build/bundle.js && rollup -f umd -u d3-dsv -n d3_dsv -o build/d3-dsv.js -- build/bundle.js",
-    "test": "faucet `find test -name '*-test.js'`",
+    "test": "faucet `find test -name '*-test.js'` && eslint index.js src",
     "prepublish": "npm run test && uglifyjs build/d3-dsv.js -c -m -o build/d3-dsv.min.js && rm -f build/d3-dsv.zip && zip -j build/d3-dsv.zip -- LICENSE README.md build/d3-dsv.js build/d3-dsv.min.js"
   },
   "devDependencies": {

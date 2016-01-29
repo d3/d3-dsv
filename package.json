@@ -1,6 +1,6 @@
 {
   "name": "d3-dsv",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "A parser and formatter for delimiter-separated values, such as CSV and TSV",
   "keywords": [
     "d3",
@@ -27,13 +27,14 @@
     "url": "https://github.com/d3/d3-dsv.git"
   },
   "scripts": {
-    "pretest": "mkdir -p build && node -e 'process.stdout.write(\"var version = \\\"\" + require(\"./package.json\").version + \"\\\"; export * from \\\"../index\\\"; export {version};\");' > build/bundle.js && rollup -f umd -u d3-dsv -n d3_dsv -o build/d3-dsv.js -- build/bundle.js",
+    "pretest": "mkdir -p build && node -e 'process.stdout.write(\"var version = \\\"\" + require(\"./package.json\").version + \"\\\"; export * from \\\"../index\\\"; export {version};\");' > build/bundle.js && rollup -f umd -n d3_dsv -o build/d3-dsv.js -- build/bundle.js",
     "test": "faucet `find test -name '*-test.js'` && eslint index.js src",
-    "prepublish": "npm run test && uglifyjs build/d3-dsv.js -c -m -o build/d3-dsv.min.js && rm -f build/d3-dsv.zip && zip -j build/d3-dsv.zip -- LICENSE README.md build/d3-dsv.js build/d3-dsv.min.js"
+    "prepublish": "npm run test && uglifyjs build/d3-dsv.js -c -m -o build/d3-dsv.min.js && rm -f build/d3-dsv.zip && zip -j build/d3-dsv.zip -- LICENSE README.md build/d3-dsv.js build/d3-dsv.min.js",
+    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git tag -am \"Release $VERSION.\" v${VERSION} && git push --tags && cp build/d3-dsv.js ../d3.github.com/d3-dsv.v0.1.js && cp build/d3-dsv.min.js ../d3.github.com/d3-dsv.v0.1.min.js && cd ../d3.github.com && git add d3-dsv.v0.1.js d3-dsv.v0.1.min.js && git commit -m \"d3-dsv ${VERSION}\" && git push"
   },
   "devDependencies": {
     "faucet": "0.0",
-    "rollup": "0.20.5",
+    "rollup": "0.25",
     "tape": "4",
     "uglify-js": "2"
   }

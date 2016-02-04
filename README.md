@@ -104,7 +104,7 @@ data.columns; // ["Year", "Make", "Model", "Length"]
 Field values are always strings; they will not be automatically converted to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator), but better is to specify a *row* conversion function. For each row, the *row* function is passed an object representing the current row (`d`), the index (`i`) starting at zero for the first non-header row, and the array of column names. For example:
 
 ```js
-var data = d3.csv.parse(string, function(d) {
+var data = d3.csvParse(string, function(d) {
   return {
     year: new Date(+d.Year, 0, 1), // convert "Year" column to Date
     make: d.Make,
@@ -139,7 +139,7 @@ The resulting JavaScript array is:
 Field values are always strings; they will not be automatically converted to numbers. See [*dsv*.parse](#dsv_parse) for details. An optional *row* conversion function may be specified as the second argument to convert types and filter rows. For example:
 
 ```js
-var data = d3.csv.parseRows(string, function(d, i) {
+var data = d3.csvParseRows(string, function(d, i) {
   return {
     year: new Date(+d[0], 0, 1), // convert first colum column to Date
     make: d[1],
@@ -158,7 +158,7 @@ Formats the specified array of object *rows* as delimiter-separated values, retu
 If *columns* is not specified, the list of column names that forms the header row is determined by the union of all properties on all objects in *rows*; the order of columns is nondeterministic. If *columns* is specified, it is an array of strings representing the column names. For example:
 
 ```js
-var string = d3.csv.format(data, ["year", "make", "model", "length"]);
+var string = d3.csvFormat(data, ["year", "make", "model", "length"]);
 ```
 
 All fields on each row object will be coerced to strings. For more control over which and how fields are formatted, first map *rows* to an array of array of string, and then use [*dsv*.formatRows](#dsv_formatRows).
@@ -170,7 +170,7 @@ Formats the specified array of array of string *rows* as delimiter-separated val
 To convert an array of objects to an array of arrays while explicitly specifying the columns, use [*array*.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map). For example:
 
 ```js
-var string = d3.csv.formatRows(data.map(function(d, i) {
+var string = d3.csvFormatRows(data.map(function(d, i) {
   return [
     d.year.getFullYear(), // Assuming d.year is a Date object.
     d.make,
@@ -183,7 +183,7 @@ var string = d3.csv.formatRows(data.map(function(d, i) {
 If you like, you can also [*array*.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) this result with an array of column names to generate the first row:
 
 ```js
-var string = d3.csv.formatRows([[
+var string = d3.csvFormatRows([[
     "year",
     "make",
     "model",
@@ -216,5 +216,6 @@ These programs either take a single file as an argument or read from stdin, and 
 ```
 csv2json file.csv > file.json
 csv2json < file.csv > file.json
+csv2json - < file.csv > file.json
 cat file.csv | csv2json - > file.json
 ```

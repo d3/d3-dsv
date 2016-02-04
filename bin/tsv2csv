@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
 var os = require("os"),
-    dsv = require("../"),
-    read = require("../lib/read");
+    rw = require("rw").dash,
+    dsv = require("../");
 
-read(process.argv[2], function(error, text) {
+rw.readFile(process.argv[2] || "-", "utf8", function(error, text) {
   if (error) throw error;
-  process.stdout.write(dsv.csv.format(dsv.tsv.parse(text)));
-  process.stdout.write(os.EOL);
+  rw.writeFile("-", dsv.csvFormat(dsv.tsvParse(text)) + os.EOL, "utf8", function(error) {
+    if (error) throw error;
+  });
 });

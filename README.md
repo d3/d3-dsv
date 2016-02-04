@@ -2,12 +2,26 @@
 
 This module provides a parser and formatter for delimiter-separated values, most commonly [comma-](https://en.wikipedia.org/wiki/Comma-separated_values) (CSV) or tab-separated values (TSV). These tabular formats are popular with spreadsheet programs such as Microsoft Excel, and are often more space-efficient than JSON. This implementation is based on [RFC 4180](http://tools.ietf.org/html/rfc4180).
 
-[Comma](#csv) and [tab](#tsv) delimiters are built-in. To use a different delimiter, such as “|” for pipe-separated values, use the [dsv constructor](#dsv):
+Comma (CSV) and tab (TSV) delimiters are built-in. For example, to parse:
+
+```js
+d3.csvParse("foo,bar\n1,2"); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
+d3.tsvParse("foo\tbar\n1\t2"); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
+```
+
+Or to format:
+
+```js
+d3.csvFormat([{foo: "1", bar: "2"}]); // "foo,bar\n1,2"
+d3.tsvFormat([{foo: "1", bar: "2"}]); // "foo\tbar\n1\t2"
+```
+
+To use a different delimiter, such as “|” for pipe-separated values, use the [dsv constructor](#dsv):
 
 ```js
 var psv = d3.dsv("|");
 
-console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}]
+console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
 ```
 
 For easy loading of DSV files in a browser, see [d3-request](https://github.com/d3/d3-request)’s [requestCsv](https://github.com/d3/d3-request#requestCsv) and [requestTsv](https://github.com/d3/d3-request#requestTsv) methods.
@@ -17,12 +31,44 @@ For easy loading of DSV files in a browser, see [d3-request](https://github.com/
 If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](https://github.com/d3/d3-dsv/releases/latest). The released bundle supports AMD, CommonJS, and vanilla environments. Create a custom build using [Rollup](https://github.com/rollup/rollup) or your preferred bundler. You can also load directly from [d3js.org](https://d3js.org):
 
 ```html
-<script src="https://d3js.org/d3-dsv.v0.1.min.js"></script>
+<script src="https://d3js.org/d3-dsv.v0.2.min.js"></script>
 ```
 
 In a vanilla environment, a `d3_dsv` global is exported. [Try d3-dsv in your browser.](https://tonicdev.com/npm/d3-dsv)
 
 ## API Reference
+
+<a name="csvParse" href="#csvParse">#</a> d3.<b>csvParse</b>(<i>string</i>[, <i>row</i>])
+
+Equivalent to [dsv](#dsv)(",").[parse](#dsv_parse).
+
+<a name="csvParseRows" href="#csvParseRows">#</a> d3.<b>csvParseRows</b>(<i>string</i>[, <i>row</i>])
+
+Equivalent to [dsv](#dsv)(",").[parseRows](#dsv_parseRows).
+
+<a name="csvFormat" href="#csvFormat">#</a> d3.<b>csvFormat</b>(<i>rows</i>[, <i>columns</i>])
+
+Equivalent to [dsv](#dsv)(",").[format](#dsv_format).
+
+<a name="csvFormatRows" href="#csvFormatRows">#</a> d3.<b>csvFormatRows</b>(<i>rows</i>)
+
+Equivalent to [dsv](#dsv)(",").[formatRows](#dsv_formatRows).
+
+<a name="tsvParse" href="#tsvParse">#</a> d3.<b>tsvParse</b>(<i>string</i>[, <i>row</i>])
+
+Equivalent to [dsv](#dsv)("\t").[parse](#dsv_parse).
+
+<a name="tsvParseRows" href="#tsvParseRows">#</a> d3.<b>tsvParseRows</b>(<i>string</i>[, <i>row</i>])
+
+Equivalent to [dsv](#dsv)("\t").[parseRows](#dsv_parseRows).
+
+<a name="tsvFormat" href="#tsvFormat">#</a> d3.<b>tsvFormat</b>(<i>rows</i>[, <i>columns</i>])
+
+Equivalent to [dsv](#dsv)("\t").[format](#dsv_format).
+
+<a name="tsvFormatRows" href="#tsvFormatRows">#</a> d3.<b>tsvFormatRows</b>(<i>rows</i>)
+
+Equivalent to [dsv](#dsv)("\t").[formatRows](#dsv_formatRows).
 
 <a name="dsv" href="#dsv">#</a> d3.<b>dsv</b>(<i>delimiter</i>)
 
@@ -150,22 +196,6 @@ var string = d3.csv.formatRows([[
     d.length
   ];
 })));
-```
-
-<a name="csv" href="#csv">#</a> d3.<b>csv</b>
-
-A parser and formatter for comma-separated values (CSV), defined as:
-
-```js
-var csv = d3.dsv(",");
-```
-
-<a name="tsv" href="#tsv">#</a> d3.<b>tsv</b>
-
-A parser and formatter for tab-separated values (TSV), defined as:
-
-```js
-var tsv = d3.dsv("\t");
 ```
 
 ### Content Security Policy

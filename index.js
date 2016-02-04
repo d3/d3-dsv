@@ -1,4 +1,3 @@
-import dsv from "./src/dsv";
-export {dsv};
-export var csv = dsv(",");
-export var tsv = dsv("\t");
+export {default as dsv} from "./src/dsv";
+export {csvParse, csvParseRows, csvFormat, csvFormatRows} from "./src/csv";
+export {tsvParse, tsvParseRows, tsvFormat, tsvFormatRows} from "./src/tsv";

@@ -1,7 +1,3 @@
-function dsv(delimiter) {
-  return new Dsv(delimiter);
-}
-
 function objectConverter(columns) {
   return new Function("d", "return {" + columns.map(function(name, i) {
     return JSON.stringify(name) + ": d[" + i + "]";
@@ -31,20 +27,20 @@ function inferColumns(rows) {
   return columns;
 }
 
-function Dsv(delimiter) {
+export default function(delimiter) {
   var reFormat = new RegExp("[\"" + delimiter + "\n]"),
       delimiterCode = delimiter.charCodeAt(0);
 
-  this.parse = function(text, f) {
-    var convert, columns, rows = this.parseRows(text, function(row, i) {
+  function parse(text, f) {
+    var convert, columns, rows = parseRows(text, function(row, i) {
       if (convert) return convert(row, i - 1);
       columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
     });
     rows.columns = columns;
     return rows;
-  };
+  }
 
-  this.parseRows = function(text, f) {
+  function parseRows(text, f) {
     var EOL = {}, // sentinel value for end-of-line
         EOF = {}, // sentinel value for end-of-file
         rows = [], // output rows
@@ -106,18 +102,18 @@ function Dsv(delimiter) {
     return rows;
   }
 
-  this.format = function(rows, columns) {
+  function format(rows, columns) {
     if (columns == null) columns = inferColumns(rows);
     return [columns.map(formatValue).join(delimiter)].concat(rows.map(function(row) {
       return columns.map(function(column) {
         return formatValue(row[column]);
       }).join(delimiter);
     })).join("\n");
-  };
+  }
 
-  this.formatRows = function(rows) {
+  function formatRows(rows) {
     return rows.map(formatRow).join("\n");
-  };
+  }
 
   function formatRow(row) {
     return row.map(formatValue).join(delimiter);
@@ -126,8 +122,11 @@ function Dsv(delimiter) {
   function formatValue(text) {
     return reFormat.test(text) ? "\"" + text.replace(/\"/g, "\"\"") + "\"" : text;
   }
+
+  return {
+    parse: parse,
+    parseRows: parseRows,
+    format: format,
+    formatRows: formatRows
+  };
 }
-
-dsv.prototype = Dsv.prototype;
-
-export default dsv;

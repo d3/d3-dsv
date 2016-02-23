@@ -16,10 +16,10 @@ d3.csvFormat([{foo: "1", bar: "2"}]); // "foo,bar\n1,2"
 d3.tsvFormat([{foo: "1", bar: "2"}]); // "foo\tbar\n1\t2"
 ```
 
-To use a different delimiter, such as “|” for pipe-separated values, use the [dsv constructor](#dsv):
+To use a different delimiter, such as “|” for pipe-separated values, use [d3.dsvFormat](#dsvFormat):
 
 ```js
-var psv = d3.dsv("|");
+var psv = d3.dsvFormat("|");
 
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
 ```

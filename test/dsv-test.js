@@ -3,7 +3,7 @@ var tape = require("tape"),
     fs = require("fs"),
     table = require("./table");
 
-var psv = dsv.dsv("|");
+var psv = dsv.dsvFormat("|");
 
 tape("dsv(\"|\").parse(string) returns the expected objects", function(test) {
   test.deepEqual(psv.parse("a|b|c\n1|2|3\n"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));

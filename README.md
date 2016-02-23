@@ -31,7 +31,7 @@ For easy loading of DSV files in a browser, see [d3-request](https://github.com/
 If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](https://github.com/d3/d3-dsv/releases/latest). The released bundle supports AMD, CommonJS, and vanilla environments. Create a custom build using [Rollup](https://github.com/rollup/rollup) or your preferred bundler. You can also load directly from [d3js.org](https://d3js.org):
 
 ```html
-<script src="https://d3js.org/d3-dsv.v0.2.min.js"></script>
+<script src="https://d3js.org/d3-dsv.v0.3.min.js"></script>
 ```
 
 In a vanilla environment, a `d3_dsv` global is exported. [Try d3-dsv in your browser.](https://tonicdev.com/npm/d3-dsv)
@@ -40,37 +40,37 @@ In a vanilla environment, a `d3_dsv` global is exported. [Try d3-dsv in your bro
 
 <a name="csvParse" href="#csvParse">#</a> d3.<b>csvParse</b>(<i>string</i>[, <i>row</i>])
 
-Equivalent to [dsv](#dsv)(",").[parse](#dsv_parse).
+Equivalent to [dsvFormat](#dsvFormat)(",").[parse](#dsv_parse).
 
 <a name="csvParseRows" href="#csvParseRows">#</a> d3.<b>csvParseRows</b>(<i>string</i>[, <i>row</i>])
 
-Equivalent to [dsv](#dsv)(",").[parseRows](#dsv_parseRows).
+Equivalent to [dsvFormat](#dsvFormat)(",").[parseRows](#dsv_parseRows).
 
 <a name="csvFormat" href="#csvFormat">#</a> d3.<b>csvFormat</b>(<i>rows</i>[, <i>columns</i>])
 
-Equivalent to [dsv](#dsv)(",").[format](#dsv_format).
+Equivalent to [dsvFormat](#dsvFormat)(",").[format](#dsv_format).
 
 <a name="csvFormatRows" href="#csvFormatRows">#</a> d3.<b>csvFormatRows</b>(<i>rows</i>)
 
-Equivalent to [dsv](#dsv)(",").[formatRows](#dsv_formatRows).
+Equivalent to [dsvFormat](#dsvFormat)(",").[formatRows](#dsv_formatRows).
 
 <a name="tsvParse" href="#tsvParse">#</a> d3.<b>tsvParse</b>(<i>string</i>[, <i>row</i>])
 
-Equivalent to [dsv](#dsv)("\t").[parse](#dsv_parse).
+Equivalent to [dsvFormat](#dsvFormat)("\t").[parse](#dsv_parse).
 
 <a name="tsvParseRows" href="#tsvParseRows">#</a> d3.<b>tsvParseRows</b>(<i>string</i>[, <i>row</i>])
 
-Equivalent to [dsv](#dsv)("\t").[parseRows](#dsv_parseRows).
+Equivalent to [dsvFormat](#dsvFormat)("\t").[parseRows](#dsv_parseRows).
 
 <a name="tsvFormat" href="#tsvFormat">#</a> d3.<b>tsvFormat</b>(<i>rows</i>[, <i>columns</i>])
 
-Equivalent to [dsv](#dsv)("\t").[format](#dsv_format).
+Equivalent to [dsvFormat](#dsvFormat)("\t").[format](#dsv_format).
 
 <a name="tsvFormatRows" href="#tsvFormatRows">#</a> d3.<b>tsvFormatRows</b>(<i>rows</i>)
 
-Equivalent to [dsv](#dsv)("\t").[formatRows](#dsv_formatRows).
+Equivalent to [dsvFormat](#dsvFormat)("\t").[formatRows](#dsv_formatRows).
 
-<a name="dsv" href="#dsv">#</a> d3.<b>dsv</b>(<i>delimiter</i>)
+<a name="dsvFormat" href="#dsvFormat">#</a> d3.<b>dsvFormat</b>(<i>delimiter</i>)
 
 Constructs a new DSV parser and formatter for the specified *delimiter*. The *delimiter* must be a single character (*i.e.*, a single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are not.
 

@@ -120,7 +120,9 @@ export default function(delimiter) {
   }
 
   function formatValue(text) {
-    return reFormat.test(text) ? "\"" + text.replace(/\"/g, "\"\"") + "\"" : text;
+    return text == null ? ""
+        : reFormat.test(text += "") ? "\"" + text.replace(/\"/g, "\"\"") + "\""
+        : text;
   }
 
   return {

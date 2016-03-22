@@ -150,6 +150,18 @@ tape("csvFormat(array, columns) observes the specified array of column names", f
   test.end();
 });
 
+tape("csvFormat(array, columns) coerces column names to strings", function(test) {
+  test.deepEqual(dsv.csvFormat([{a: 1, b: 2, "\"fish\"": 3}], [{toString: function() { return "\"fish\""; }}]), "\"\"\"fish\"\"\"\n3");
+  test.deepEqual(dsv.csvFormat([{a: 1, b: 2, c: 3}], ["a", null, "b", undefined, "c"]), "a,,b,,c\n1,,2,,3");
+  test.end();
+});
+
+tape("csvFormat(array, columns) coerces field values to strings", function(test) {
+  test.deepEqual(dsv.csvFormat([{a: {toString: function() { return "\"fish\""; }}}]), "a\n\"\"\"fish\"\"\"");
+  test.deepEqual(dsv.csvFormat([{a: null, b: undefined, c: 3}]), "a,b,c\n,,3");
+  test.end();
+});
+
 tape("csvFormatRows(array) takes an array of array of string as input", function(test) {
   test.deepEqual(dsv.csvFormatRows([["a", "b", "c"], ["1", "2", "3"]]), "a,b,c\n1,2,3");
   test.end();

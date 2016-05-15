@@ -32,13 +32,14 @@
     "prepublish": "npm run test && uglifyjs build/d3-dsv.js -c -m -o build/d3-dsv.min.js",
     "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-dsv.js ../d3.github.com/d3-dsv.v0.3.js && cp build/d3-dsv.min.js ../d3.github.com/d3-dsv.v0.3.min.js && cd ../d3.github.com && git add d3-dsv.v0.3.js d3-dsv.v0.3.min.js && git commit -m \"d3-dsv ${VERSION}\" && git push && cd - && zip -j build/d3-dsv.zip -- LICENSE README.md build/d3-dsv.js build/d3-dsv.min.js"
   },
-  "devDependencies": {
-    "json2module": "0.0",
-    "rollup": "0.25",
-    "tape": "4",
-    "uglify-js": "2"
-  },
   "dependencies": {
     "rw": "1"
+  },
+  "devDependencies": {
+    "eslint": "2",
+    "json2module": "0.0",
+    "rollup": "0.26",
+    "tape": "4",
+    "uglify-js": "2"
   }
 }

@@ -4,6 +4,7 @@
   "description": "A parser and formatter for delimiter-separated values, such as CSV and TSV",
   "keywords": [
     "d3",
+    "d3-module",
     "dsv",
     "csv",
     "tsv"

@@ -16,6 +16,7 @@
     "url": "http://bost.ocks.org/mike"
   },
   "main": "build/d3-dsv.js",
+  "module": "index",
   "jsnext:main": "index.js",
   "bin": {
     "csv2tsv": "./bin/csv2tsv",
@@ -31,7 +32,7 @@
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n d3 -o build/d3-dsv.js -- index.js",
     "test": "tape 'test/**/*-test.js' && eslint index.js src",
     "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-dsv.js -c -m -o build/d3-dsv.min.js",
-    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-dsv.js ../d3.github.com/d3-dsv.v1.js && cp build/d3-dsv.min.js ../d3.github.com/d3-dsv.v1.min.js && cd ../d3.github.com && git add d3-dsv.v1.js d3-dsv.v1.min.js && git commit -m \"d3-dsv ${VERSION}\" && git push && cd - && zip -j build/d3-dsv.zip -- LICENSE README.md build/d3-dsv.js build/d3-dsv.min.js"
+    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cd ../d3.github.com && git pull && cp ../d3-dsv/build/d3-dsv.js d3-dsv.v1.js && cp ../d3-dsv/build/d3-dsv.min.js d3-dsv.v1.min.js && git add d3-dsv.v1.js d3-dsv.v1.min.js && git commit -m \"d3-dsv ${VERSION}\" && git push && cd - && zip -j build/d3-dsv.zip -- LICENSE README.md build/d3-dsv.js build/d3-dsv.min.js"
   },
   "dependencies": {
     "rw": "1"
@@ -39,7 +40,7 @@
   "devDependencies": {
     "eslint": "2",
     "package-preamble": "0.0",
-    "rollup": "0.31",
+    "rollup": "0.34",
     "tape": "4",
     "uglify-js": "2"
   }

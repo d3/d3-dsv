@@ -213,20 +213,174 @@ If a [content security policy](http://www.w3.org/TR/CSP/) is in place, note that
 
 ## Command Line Reference
 
-This module comes with a few binaries to convert DSV files:
+### dsv2dsv
 
-* csv2json [<>](https://github.com/d3/d3-dsv/blob/master/bin/csv2json "Source")
-* csv2tsv [<>](https://github.com/d3/d3-dsv/blob/master/bin/csv2tsv "Source")
-* tsv2csv [<>](https://github.com/d3/d3-dsv/blob/master/bin/tsv2csv "Source")
-* tsv2json [<>](https://github.com/d3/d3-dsv/blob/master/bin/tsv2json "Source")
+<a name="dsv2dsv" href="#dsv2dsv">#</a> <b>dsv2dsv</b> [<i>options…</i>] [<i>file</i>]
 
-These programs either take a single file as an argument or read from stdin, and write to stdout. For example, these statements are all equivalent:
+Converts the specified DSV input *file* to DSV (typically with a different delimiter or encoding). If *file* is not specified, defaults to reading from stdin. For example, to convert to CSV to TSV:
 
 ```
-csv2json file.csv > file.json
-csv2json < file.csv > file.json
-csv2json - < file.csv > file.json
-cat file.csv | csv2json - > file.json
+csv2tsv < example.csv > example.tsv
 ```
 
-Use --help for more.
+To convert windows-1252 CSV to utf-8 CSV:
+
+```
+dsv2dsv --input-encoding windows-1252 < latin1.csv > utf8.csv
+```
+
+<a name="dsv2dsv_help" href="dsv2dsv_help">#</a> dsv2dsv <b>-h</b>
+<br><a href="dsv2dsv_help">#</a> dsv2dsv <b>--help</b>
+
+Output usage information.
+
+<a name="dsv2dsv_version" href="dsv2dsv_version">#</a> dsv2dsv <b>-V</b>
+<br><a href="dsv2dsv_version">#</a> dsv2dsv <b>--version</b>
+
+Output the version number.
+
+<a name="dsv2dsv_out" href="dsv2dsv_out">#</a> dsv2dsv <b>-o</b> <i>file</i>
+<br><a href="dsv2dsv_out">#</a> dsv2dsv <b>--out</b> <i>file</i>
+
+Specify the output file name. Defaults to “-” for stdout.
+
+<a name="dsv2dsv_input_delimiter" href="dsv2dsv_input_delimiter">#</a> dsv2dsv <b>-r</b> <i>delimiter</i>
+<br><a href="dsv2dsv_input_delimiter">#</a> dsv2dsv <b>--input-delimiter</b> <i>delimiter</i>
+
+Specify the input delimiter character. Defaults to “,” for reading CSV. (You can enter a tab on the command line by typing ⌃V.)
+
+<a name="dsv2dsv_input_encoding" href="dsv2dsv_input_encoding">#</a> dsv2dsv <b>--input-encoding</b> <i>encoding</i>
+
+Specify the input character encoding. Defaults to “utf8”.
+
+<a name="dsv2dsv_output_delimiter" href="dsv2dsv_output_delimiter">#</a> dsv2dsv <b>-w</b> <i>delimiter</i>
+<br><a href="dsv2dsv_output_delimiter">#</a> dsv2dsv <b>--output-delimiter</b> <i>delimiter</i>
+
+Specify the output delimiter character. Defaults to “,” for writing CSV. (You can enter a tab on the command line by typing ⌃V.)
+
+<a name="dsv2dsv_output_encoding" href="dsv2dsv_output_encoding">#</a> dsv2dsv <b>--output-encoding</b> <i>encoding</i>
+
+Specify the output character encoding. Defaults to “utf8”.
+
+<a name="csv2tsv" href="#csv2tsv">#</a> <b>csv2tsv</b> [<i>options…</i>] [<i>file</i>]
+
+Equivalent to [dsv2dsv](#dsv2dsv), but the [output delimiter](#dsv2dsv_output_delimiter) defaults to the tab character (\t).
+
+<a name="tsv2csv" href="#tsv2csv">#</a> <b>tsv2csv</b> [<i>options…</i>] [<i>file</i>]
+
+Equivalent to [dsv2dsv](#dsv2dsv), but the [input delimiter](#dsv2dsv_output_delimiter) defaults to the tab character (\t).
+
+### dsv2json
+
+<a name="dsv2json" href="#dsv2json">#</a> <b>dsv2json</b> [<i>options…</i>] [<i>file</i>]
+
+Converts the specified DSV input *file* to JSON. If *file* is not specified, defaults to reading from stdin. For example, to convert to CSV to JSON:
+
+```
+csv2json < example.csv > example.json
+```
+
+Or to convert CSV to a newline-delimited JSON stream:
+
+```
+csv2json -n < example.csv > example.ndjson
+```
+
+<a name="dsv2json_help" href="dsv2json_help">#</a> dsv2json <b>-h</b>
+<br><a href="dsv2json_help">#</a> dsv2json <b>--help</b>
+
+Output usage information.
+
+<a name="dsv2json_version" href="dsv2json_version">#</a> dsv2json <b>-V</b>
+<br><a href="dsv2json_version">#</a> dsv2json <b>--version</b>
+
+Output the version number.
+
+<a name="dsv2json_out" href="dsv2json_out">#</a> dsv2json <b>-o</b> <i>file</i>
+<br><a href="dsv2json_out">#</a> dsv2json <b>--out</b> <i>file</i>
+
+Specify the output file name. Defaults to “-” for stdout.
+
+<a name="dsv2json_input_delimiter" href="dsv2json_input_delimiter">#</a> dsv2json <b>-r</b> <i>delimiter</i>
+<br><a href="dsv2json_input_delimiter">#</a> dsv2json <b>--input-delimiter</b> <i>delimiter</i>
+
+Specify the input delimiter character. Defaults to “,” for reading CSV. (You can enter a tab on the command line by typing ⌃V.)
+
+<a name="dsv2json_input_encoding" href="dsv2json_input_encoding">#</a> dsv2json <b>--input-encoding</b> <i>encoding</i>
+
+Specify the input character encoding. Defaults to “utf8”.
+
+<a name="dsv2json_output_encoding" href="dsv2json_output_encoding">#</a> dsv2json <b>-r</b> <i>encoding</i>
+<br><a href="dsv2json_output_encoding">#</a> dsv2json <b>--output-encoding</b> <i>encoding</i>
+
+Specify the output character encoding. Defaults to “utf8”.
+
+<a name="dsv2json_newline_delimited" href="dsv2json_newline_delimited">#</a> dsv2json <b>-n</b>
+<br><a href="dsv2json_newline_delimited">#</a> dsv2json <b>--newline-delimited</b>
+
+Output [newline-delimited JSON](https://github.com/mbostock/ndjson-cli) instead of a single JSON array.
+
+<a name="csv2json" href="#csv2json">#</a> <b>csv2json</b> [<i>options…</i>] [<i>file</i>]
+
+Equivalent to [dsv2json](#dsv2json).
+
+<a name="tsv2json" href="#csv2json">#</a> <b>tsv2json</b> [<i>options…</i>] [<i>file</i>]
+
+Equivalent to [dsv2json](#dsv2json), but the [input delimiter](#dsv2json_input_delimiter) defaults to the tab character (\t).
+
+### json2dsv
+
+<a name="json2dsv" href="#json2dsv">#</a> <b>json2dsv</b> [<i>options…</i>] [<i>file</i>]
+
+Converts the specified JSON input *file* to DSV. If *file* is not specified, defaults to reading from stdin. For example, to convert to JSON to CSV:
+
+```
+json2csv < example.json > example.csv
+```
+
+Or to convert a newline-delimited JSON stream to CSV:
+
+```
+json2csv -n < example.ndjson > example.csv
+```
+
+<a name="json2dsv_help" href="json2dsv_help">#</a> json2dsv <b>-h</b>
+<br><a href="json2dsv_help">#</a> json2dsv <b>--help</b>
+
+Output usage information.
+
+<a name="json2dsv_version" href="json2dsv_version">#</a> json2dsv <b>-V</b>
+<br><a href="json2dsv_version">#</a> json2dsv <b>--version</b>
+
+Output the version number.
+
+<a name="json2dsv_out" href="json2dsv_out">#</a> json2dsv <b>-o</b> <i>file</i>
+<br><a href="json2dsv_out">#</a> json2dsv <b>--out</b> <i>file</i>
+
+Specify the output file name. Defaults to “-” for stdout.
+
+<a name="json2dsv_input_encoding" href="json2dsv_input_encoding">#</a> json2dsv <b>--input-encoding</b> <i>encoding</i>
+
+Specify the input character encoding. Defaults to “utf8”.
+
+<a name="json2dsv_output_delimiter" href="json2dsv_output_delimiter">#</a> json2dsv <b>-w</b> <i>delimiter</i>
+<br><a href="json2dsv_output_delimiter">#</a> json2dsv <b>--output-delimiter</b> <i>delimiter</i>
+
+Specify the output delimiter character. Defaults to “,” for writing CSV. (You can enter a tab on the command line by typing ⌃V.)
+
+<a name="json2dsv_output_encoding" href="json2dsv_output_encoding">#</a> json2dsv <b>--output-encoding</b> <i>encoding</i>
+
+Specify the output character encoding. Defaults to “utf8”.
+
+<a name="json2dsv_newline_delimited" href="json2dsv_newline_delimited">#</a> json2dsv <b>-n</b>
+<br><a href="json2dsv_newline_delimited">#</a> json2dsv <b>--newline-delimited</b>
+
+Read [newline-delimited JSON](https://github.com/mbostock/ndjson-cli) instead of a single JSON array.
+
+<a name="csv2json" href="#csv2json">#</a> <b>csv2json</b> [<i>options…</i>] [<i>file</i>]
+
+Equivalent to [json2dsv](#json2dsv).
+
+<a name="tsv2json" href="#csv2json">#</a> <b>tsv2json</b> [<i>options…</i>] [<i>file</i>]
+
+Equivalent to [json2dsv](#json2dsv), but the [output delimiter](#json2dsv_output_delimiter) defaults to the tab character (\t).

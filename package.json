@@ -19,10 +19,15 @@
   "module": "index",
   "jsnext:main": "index.js",
   "bin": {
-    "csv2tsv": "./bin/csv2tsv",
-    "csv2json": "./bin/csv2json",
-    "tsv2csv": "./bin/tsv2csv",
-    "tsv2json": "./bin/tsv2json"
+    "csv2json": "bin/dsv2json",
+    "csv2tsv": "bin/dsv2dsv",
+    "dsv2dsv": "bin/dsv2dsv",
+    "dsv2json": "bin/dsv2json",
+    "json2csv": "bin/json2dsv",
+    "json2dsv": "bin/json2dsv",
+    "json2tsv": "bin/json2dsv",
+    "tsv2csv": "bin/dsv2dsv",
+    "tsv2json": "bin/dsv2json"
   },
   "repository": {
     "type": "git",

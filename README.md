@@ -228,3 +228,5 @@ csv2json < file.csv > file.json
 csv2json - < file.csv > file.json
 cat file.csv | csv2json - > file.json
 ```
+
+Use --help for more.

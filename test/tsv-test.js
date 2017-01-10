@@ -172,6 +172,11 @@ tape("tsvFormatRows(array) escapes Unix newlines", function(test) {
   test.end();
 });
 
+tape("tsvFormatRows(array) escapes Windows newlines", function(test) {
+  test.deepEqual(dsv.tsvFormatRows([["new\rline"]]), "\"new\rline\"");
+  test.end();
+});
+
 tape("tsvFormatRows(array) escapes values containing delimiters", function(test) {
   test.deepEqual(dsv.tsvFormatRows([["oxford\ttab"]]), "\"oxford\ttab\"");
   test.end();

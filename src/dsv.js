@@ -28,7 +28,7 @@ function inferColumns(rows) {
 }
 
 export default function(delimiter) {
-  var reFormat = new RegExp("[\"" + delimiter + "\n]"),
+  var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
       delimiterCode = delimiter.charCodeAt(0);
 
   function parse(text, f) {

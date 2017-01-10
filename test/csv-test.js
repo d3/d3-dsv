@@ -192,6 +192,11 @@ tape("csvFormatRows(array) escapes Unix newlines", function(test) {
   test.end();
 });
 
+tape("csvFormatRows(array) escapes Windows newlines", function(test) {
+  test.deepEqual(dsv.csvFormatRows([["new\rline"]]), "\"new\rline\"");
+  test.end();
+});
+
 tape("csvFormatRows(array) escapes values containing delimiters", function(test) {
   test.deepEqual(dsv.csvFormatRows([["oxford,comma"]]), "\"oxford,comma\"");
   test.end();

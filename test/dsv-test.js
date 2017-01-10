@@ -174,6 +174,11 @@ tape("dsv(\"|\").formatRows(array) escapes Unix newlines", function(test) {
   test.end();
 });
 
+tape("dsv(\"|\").formatRows(array) escapes Windows newlines", function(test) {
+  test.deepEqual(psv.formatRows([["new\rline"]]), "\"new\rline\"");
+  test.end();
+});
+
 tape("dsv(\"|\").formatRows(array) escapes values containing delimiters", function(test) {
   test.deepEqual(psv.formatRows([["oxford|tab"]]), "\"oxford|tab\"");
   test.end();

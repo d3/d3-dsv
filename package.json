@@ -45,6 +45,7 @@
     "rw": "1"
   },
   "devDependencies": {
+    "csv-spectrum": "1",
     "eslint": "2",
     "package-preamble": "0.0",
     "rollup": "0.34",

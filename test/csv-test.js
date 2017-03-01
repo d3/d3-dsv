@@ -1,7 +1,8 @@
 var tape = require("tape"),
     dsv = require("../"),
     fs = require("fs"),
-    table = require("./table");
+    table = require("./table"),
+    spectrum = require("csv-spectrum");
 
 tape("csvParse(string) returns the expected objects", function(test) {
   test.deepEqual(dsv.csvParse("a,b,c\n1,2,3\n"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
@@ -45,6 +46,18 @@ tape("csvParse(string) returns columns in the input order", function(test) {
   test.deepEqual(dsv.csvParse("a,0,1\n").columns, ["a", "0", "1"]);
   test.deepEqual(dsv.csvParse("1,0,a\n").columns, ["1", "0", "a"]);
   test.end();
+});
+
+tape("csvParse(string) passes the csv-spectrum test suite", function(test) {
+  spectrum(function(error, samples) {
+    samples.forEach(function(sample) {
+      var actual = dsv.csvParse(sample.csv.toString()),
+          expected = JSON.parse(sample.json.toString());
+      delete actual.columns;
+      test.deepEqual(actual, expected);
+    });
+    test.end();
+  });
 });
 
 tape("csvParse(string, row) returns the expected converted objects", function(test) {

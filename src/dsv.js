@@ -1,7 +1,10 @@
 function objectConverter(columns) {
-  return new Function("d", "return {" + columns.map(function(name, i) {
-    return JSON.stringify(name) + ": d[" + i + "]";
-  }).join(",") + "}");
+  return function (d) {
+    return columns.reduce(function(result, name, i) {
+      result[name] = d[i];
+      return result;
+    }, {});
+  };
 }
 
 function customConverter(columns, f) {

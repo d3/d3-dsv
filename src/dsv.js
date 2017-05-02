@@ -1,5 +1,5 @@
 function objectConverter(columns) {
-  return function (d) {
+  return function(d) {
     return columns.reduce(function(result, name, i) {
       result[name] = d[i];
       return result;

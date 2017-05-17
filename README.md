@@ -211,6 +211,14 @@ var string = d3.csvFormatRows([[
 
 If a [content security policy](http://www.w3.org/TR/CSP/) is in place, note that [*dsv*.parse](#dsv_parse) requires `unsafe-eval` in the `script-src` directive, due to the (safe) use of dynamic code generation for fast parsing. (See [source](https://github.com/d3/d3-dsv/blob/master/src/dsv.js).) Alternatively, use [*dsv*.parseRows](#dsv_parseRows).
 
+### Byte-Order Marks and Node.js
+
+CSV files sometimes begin with a [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark). Saving a spreadsheet in CSV UTF-8 format from Microsoft Excel, for example, will include a BOM. On the web this is not usually a problem, because web APIs generally remove the BOM when a file is read. In Node.js, on the other hand, reading a UTF-8 file [will not remove the BOM](https://github.com/nodejs/node-v0.x-archive/issues/1918).
+
+If the BOM is not removed, the first character of the text is a zero-width non-breaking space. So if a CSV file with BOM is parsed by [`d3.csvParse`](#csvParse), the key corresponding to the first column will begin with a zero-width non-breaking space character. (The problem can be hard to spot since this character is usually invisible when printed.)
+
+The solution is to remove the BOM after reading the file, perhaps using a package like [strip-bom](https://www.npmjs.com/package/strip-bom).
+
 ## Command Line Reference
 
 ### dsv2dsv

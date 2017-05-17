@@ -211,13 +211,13 @@ var string = d3.csvFormatRows([[
 
 If a [content security policy](http://www.w3.org/TR/CSP/) is in place, note that [*dsv*.parse](#dsv_parse) requires `unsafe-eval` in the `script-src` directive, due to the (safe) use of dynamic code generation for fast parsing. (See [source](https://github.com/d3/d3-dsv/blob/master/src/dsv.js).) Alternatively, use [*dsv*.parseRows](#dsv_parseRows).
 
-### Byte-Order Marks and Node.js
+### Byte-Order Marks
 
-CSV files sometimes begin with a [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark). Saving a spreadsheet in CSV UTF-8 format from Microsoft Excel, for example, will include a BOM. On the web this is not usually a problem, because web APIs generally remove the BOM when a file is read. In Node.js, on the other hand, reading a UTF-8 file [will not remove the BOM](https://github.com/nodejs/node-v0.x-archive/issues/1918).
+DSV files sometimes begin with a [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark); saving a spreadsheet in CSV UTF-8 format from Microsoft Excel, for example, will include a BOM. On the web this is not usually a problem because the [UTF-8 decode algorithm](https://encoding.spec.whatwg.org/#utf-8-decode) specified in the Encoding standard removes the BOM. Node.js, on the other hand, [does not remove the BOM](https://github.com/nodejs/node-v0.x-archive/issues/1918) when decoding UTF-8.
 
-If the BOM is not removed, the first character of the text is a zero-width non-breaking space. So if a CSV file with BOM is parsed by [`d3.csvParse`](#csvParse), the key corresponding to the first column will begin with a zero-width non-breaking space character. (The problem can be hard to spot since this character is usually invisible when printed.)
+If the BOM is not removed, the first character of the text is a zero-width non-breaking space. So if a CSV file with a BOM is parsed by [d3.csvParse](#csvParse), the first column’s name will begin with a zero-width non-breaking space. This can be hard to spot since this character is usually invisible when printed.
 
-The solution is to remove the BOM after reading the file, perhaps using a package like [strip-bom](https://www.npmjs.com/package/strip-bom).
+To remove the BOM before parsing, consider using [strip-bom](https://www.npmjs.com/package/strip-bom).
 
 ## Command Line Reference
 

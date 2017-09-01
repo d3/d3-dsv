@@ -11,7 +11,53 @@ tape("csvParse(string) returns the expected objects", function(test) {
 });
 
 tape("csvParse(string) does not strip whitespace", function(test) {
-  test.deepEqual(dsv.csvParse("a,b,c\n 1, 2,3\n"), table([{a: " 1", b: " 2", c: "3"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.csvParse("a,b,c\n 1, 2 ,3 "), table([{a: " 1", b: " 2 ", c: "3 "}], ["a", "b", "c"]));
+  test.end();
+});
+
+tape("csvParse(string) treats empty fields as the empty string", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1,,3"), table([{a: "1", b: "", c: "3"}], ["a", "b", "c"]));
+  test.end();
+});
+
+tape("csvParse(string) treats a trailing empty field as the empty string", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1,2,\n1,2,\n"), table([{a: "1", b: "2", c: ""}, {a: "1", b: "2", c: ""}], ["a", "b", "c"]));
+  test.end();
+});
+
+tape("csvParse(string) treats a trailing empty field on the last line as the empty string", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1,2,\n1,2,"), table([{a: "1", b: "2", c: ""}, {a: "1", b: "2", c: ""}], ["a", "b", "c"]));
+  test.end();
+});
+
+tape("csvParse(string) treats quoted empty strings as the empty string", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1,\"\",3"), table([{a: "1", b: "", c: "3"}], ["a", "b", "c"]));
+  test.end();
+});
+
+tape("csvParse(string) allows the last field to have unterminated quotes", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1,2,\"3"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.csvParse("a,b,c\n1,2,\""), table([{a: "1", b: "2", c: ""}], ["a", "b", "c"]));
+  test.end();
+});
+
+tape("csvParse(string) ignores a blank last line", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1,2,3\n"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
+  test.end();
+});
+
+tape("csvParse(string) treats a blank non-last line as a single-column empty string", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1,2,3\n\n"), table([{a: "1", b: "2", c: "3"}, {a: "", b: undefined, c: undefined}], ["a", "b", "c"]));
+  test.end();
+});
+
+tape("csvParse(string) returns undefined values for missing columns", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1\n1,2"), table([{a: "1", b: undefined, c: undefined}, {a: "1", b: "2", c: undefined}], ["a", "b", "c"]));
+  test.end();
+});
+
+tape("csvParse(string) does not ignore a whitespace-only last line", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1,2,3\n "), table([{a: "1", b: "2", c: "3"}, {a: " ", b: undefined, c: undefined}], ["a", "b", "c"]));
   test.end();
 });
 
@@ -84,6 +130,57 @@ tape("csvParse(string, row) calls row(d, i) for each row d, in order", function(
 
 tape("csvParseRows(string) returns the expected array of array of string", function(test) {
   test.deepEqual(dsv.csvParseRows("a,b,c\n"), [["a", "b", "c"]]);
+  test.end();
+});
+
+tape("csvParseRows(string) does not strip whitespace", function(test) {
+  test.deepEqual(dsv.csvParseRows(" 1, 2 ,3 "), [[" 1", " 2 ", "3 "]]);
+  test.end();
+});
+
+tape("csvParseRows(string) treats empty fields as the empty string", function(test) {
+  test.deepEqual(dsv.csvParseRows("1,,3"), [["1", "", "3"]]);
+  test.end();
+});
+
+tape("csvParseRows(string) treats a trailing empty field as the empty string", function(test) {
+  test.deepEqual(dsv.csvParseRows("1,2,\n1,2,\n"), [["1", "2", ""], ["1", "2", ""]]);
+  test.end();
+});
+
+tape("csvParseRows(string) treats a trailing empty field on the last line as the empty string", function(test) {
+  test.deepEqual(dsv.csvParseRows("1,2,\n1,2,"), [["1", "2", ""], ["1", "2", ""]]);
+  test.end();
+});
+
+tape("csvParseRows(string) treats quoted empty strings as the empty string", function(test) {
+  test.deepEqual(dsv.csvParseRows("1,\"\",3"), [["1", "", "3"]]);
+  test.end();
+});
+
+tape("csvParseRows(string) allows the last field to have unterminated quotes", function(test) {
+  test.deepEqual(dsv.csvParseRows("1,2,\"3"), [["1", "2", "3"]]);
+  test.deepEqual(dsv.csvParseRows("1,2,\""), [["1", "2", ""]]);
+  test.end();
+});
+
+tape("csvParseRows(string) ignores a blank last line", function(test) {
+  test.deepEqual(dsv.csvParseRows("1,2,3\n"), [["1", "2", "3"]]);
+  test.end();
+});
+
+tape("csvParseRows(string) treats a blank non-last line as a single-column empty string", function(test) {
+  test.deepEqual(dsv.csvParseRows("1,2,3\n\n"), [["1", "2", "3"], [""]]);
+  test.end();
+});
+
+tape("csvParseRows(string) can return rows of varying length", function(test) {
+  test.deepEqual(dsv.csvParseRows("1\n1,2\n1,2,3"), [["1"], ["1", "2"], ["1", "2", "3"]]);
+  test.end();
+});
+
+tape("csvParseRows(string) does not ignore a whitespace-only last line", function(test) {
+  test.deepEqual(dsv.csvParseRows("1,2,3\n "), [["1", "2", "3"], [" "]]);
   test.end();
 });
 

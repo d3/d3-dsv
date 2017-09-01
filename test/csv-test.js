@@ -129,7 +129,8 @@ tape("csvParse(string, row) calls row(d, i) for each row d, in order", function(
 });
 
 tape("csvParseRows(string) returns the expected array of array of string", function(test) {
-  test.deepEqual(dsv.csvParseRows("a,b,c\n"), [["a", "b", "c"]]);
+  test.deepEqual(dsv.csvParseRows("a,b,c"), [["a", "b", "c"]]);
+  test.deepEqual(dsv.csvParseRows("a,b,c\n1,2,3"), [["a", "b", "c"], ["1", "2", "3"]]);
   test.end();
 });
 
@@ -144,17 +145,20 @@ tape("csvParseRows(string) treats empty fields as the empty string", function(te
 });
 
 tape("csvParseRows(string) treats a trailing empty field as the empty string", function(test) {
-  test.deepEqual(dsv.csvParseRows("1,2,\n1,2,\n"), [["1", "2", ""], ["1", "2", ""]]);
+  test.deepEqual(dsv.csvParseRows("1,2,\n1,2,3"), [["1", "2", ""], ["1", "2", "3"]]);
   test.end();
 });
 
 tape("csvParseRows(string) treats a trailing empty field on the last line as the empty string", function(test) {
-  test.deepEqual(dsv.csvParseRows("1,2,\n1,2,"), [["1", "2", ""], ["1", "2", ""]]);
+  test.deepEqual(dsv.csvParseRows("1,2,\n"), [["1", "2", ""]]);
+  test.deepEqual(dsv.csvParseRows("1,2,"), [["1", "2", ""]]);
   test.end();
 });
 
 tape("csvParseRows(string) treats quoted empty strings as the empty string", function(test) {
+  test.deepEqual(dsv.csvParseRows("\"\",2,3"), [["", "2", "3"]]);
   test.deepEqual(dsv.csvParseRows("1,\"\",3"), [["1", "", "3"]]);
+  test.deepEqual(dsv.csvParseRows("1,2,\"\""), [["1", "2", ""]]);
   test.end();
 });
 
@@ -171,6 +175,7 @@ tape("csvParseRows(string) ignores a blank last line", function(test) {
 
 tape("csvParseRows(string) treats a blank non-last line as a single-column empty string", function(test) {
   test.deepEqual(dsv.csvParseRows("1,2,3\n\n"), [["1", "2", "3"], [""]]);
+  test.deepEqual(dsv.csvParseRows("1,2,3\n\"\"\n"), [["1", "2", "3"], [""]]);
   test.end();
 });
 
@@ -206,6 +211,23 @@ tape("csvParseRows(string) parses Unix, Mac and DOS newlines", function(test) {
   test.deepEqual(dsv.csvParseRows("a,b,c\n1,2,3\n4,5,\"6\"\n7,8,9"), [["a", "b", "c"], ["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]);
   test.deepEqual(dsv.csvParseRows("a,b,c\r1,2,3\r4,5,\"6\"\r7,8,9"), [["a", "b", "c"], ["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]);
   test.deepEqual(dsv.csvParseRows("a,b,c\r\n1,2,3\r\n4,5,\"6\"\r\n7,8,9"), [["a", "b", "c"], ["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]);
+  test.end();
+});
+
+tape("csvParseRows(\"\") returns the empty array", function(test) {
+  test.deepEqual(dsv.csvParseRows(""), []);
+  test.end();
+});
+
+tape("csvParseRows(\"\n\") returns an array of one empty string", function(test) {
+  test.deepEqual(dsv.csvParseRows("\n"), [[""]]);
+  test.deepEqual(dsv.csvParseRows("\r"), [[""]]);
+  test.deepEqual(dsv.csvParseRows("\r\n"), [[""]]);
+  test.end();
+});
+
+tape("csvParseRows(\"\n\n\") returns an array of two empty strings", function(test) {
+  test.deepEqual(dsv.csvParseRows("\n\n"), [[""], [""]]);
   test.end();
 });
 

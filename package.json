@@ -36,7 +36,7 @@
   "scripts": {
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n d3 -o build/d3-dsv.js -- index.js",
     "test": "tape 'test/**/*-test.js' && eslint index.js src",
-    "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-dsv.js -c -m -o build/d3-dsv.min.js",
+    "prepublish": "npm run test && uglifyjs -b beautify=false,preamble=\"'$(preamble)'\" build/d3-dsv.js -c -m -o build/d3-dsv.min.js",
     "postpublish": "git push && git push --tags && cd ../d3.github.com && git pull && cp ../d3-dsv/build/d3-dsv.js d3-dsv.v1.js && cp ../d3-dsv/build/d3-dsv.min.js d3-dsv.v1.min.js && git add d3-dsv.v1.js d3-dsv.v1.min.js && git commit -m \"d3-dsv ${npm_package_version}\" && git push && cd - && zip -j build/d3-dsv.zip -- LICENSE README.md build/d3-dsv.js build/d3-dsv.min.js"
   },
   "dependencies": {
@@ -46,10 +46,10 @@
   },
   "devDependencies": {
     "csv-spectrum": "1",
-    "eslint": "3",
-    "package-preamble": "0.0",
-    "rollup": "0.41",
+    "eslint": "4",
+    "package-preamble": "0.1",
+    "rollup": "0.49",
     "tape": "4",
-    "uglify-js": "^2.8.11"
+    "uglify-js": "3"
   }
 }

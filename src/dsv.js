@@ -38,7 +38,7 @@ export default function(delimiter) {
       DELIMITER = delimiter.charCodeAt(0);
 
   function parse(text, f) {
-    var convert, columns, rows = parseRows(text, function(row, i) {
+    var convert, columns = [], rows = parseRows(text, function(row, i) {
       if (convert) return convert(row, i - 1);
       columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
     });

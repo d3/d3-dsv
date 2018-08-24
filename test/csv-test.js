@@ -124,7 +124,7 @@ tape("csvParse(string, row) skips rows if row returns null or undefined", functi
 tape("csvParse(string, row) calls row(d, i) for each row d, in order", function(test) {
   var rows = [];
   dsv.csvParse("a\n1\n2\n3\n4", function(d, i) { rows.push({d: d, i: i}); });
-  test.deepEqual(rows, [{d: {a: "1"}, i: 0}, {d: {a: "2"}, i: 1}, {d: {a: "3"}, i: 2}, {d: {a: "4"}, i: 3}]);;
+  test.deepEqual(rows, [{d: {a: "1"}, i: 0}, {d: {a: "2"}, i: 1}, {d: {a: "3"}, i: 2}, {d: {a: "4"}, i: 3}]);
   test.end();
 });
 

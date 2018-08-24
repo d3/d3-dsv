@@ -1,9 +1,36 @@
-export default {
-  input: "index",
+import {terser} from "rollup-plugin-terser";
+import * as meta from "./package.json";
+
+const config = {
+  input: "index.js",
+  external: Object.keys(meta.dependencies || {}),
   output: {
-    extend: true,
-    file: "build/d3-dsv.js",
+    file: `dist/${meta.name}.js`,
+    name: "d3",
     format: "umd",
-    name: "d3"
-  }
+    indent: false,
+    extend: true,
+    banner: `// ${meta.homepage} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`,
+    globals: Object.assign({}, ...Object.keys(meta.dependencies || {}).map(key => ({[key]: "d3"})))
+  },
+  plugins: []
 };
+
+export default [
+  config,
+  {
+    ...config,
+    output: {
+      ...config.output,
+      file: `dist/${meta.name}.min.js`
+    },
+    plugins: [
+      ...config.plugins,
+      terser({
+        output: {
+          preamble: config.output.banner
+        }
+      })
+    ]
+  }
+];

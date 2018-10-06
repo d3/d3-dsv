@@ -108,7 +108,7 @@ data.columns; // ["Year", "Make", "Model", "Length"]
 
 If a *row* conversion function is not specified, field values are strings. For safety, there is no automatic conversion to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator), but better is to specify a *row* conversion function.
 
-If a *row* conversion function is specified, the specified function is invoked for each row, being passed an object representing the current row (`d`), the index (`i`) starting at zero for the first non-header row, and the array of column names. If the returned value is null or undefined, the row is skipped and will be ommitted from the array returned by *dsv*.parse; otherwise, the returned value defines the corresponding row object. For example:
+If a *row* conversion function is specified, the specified function is invoked for each row, being passed an object representing the current row (`d`), the index (`i`) starting at zero for the first non-header row, and the array of column names. If the returned value is null or undefined, the row is skipped and will be omitted from the array returned by *dsv*.parse; otherwise, the returned value defines the corresponding row object. For example:
 
 ```js
 var data = d3.csvParse(string, function(d) {
@@ -145,7 +145,7 @@ The resulting JavaScript array is:
 
 If a *row* conversion function is not specified, field values are strings. For safety, there is no automatic conversion to numbers, dates, or other types. In some cases, JavaScript may coerce strings to numbers for you automatically (for example, using the `+` operator), but better is to specify a *row* conversion function.
 
-If a *row* conversion function is specified, the specified function is invoked for each row, being passed an array representing the current row (`d`), the index (`i`) starting at zero for the first row, and the array of column names. If the returned value is null or undefined, the row is skipped and will be ommitted from the array returned by *dsv*.parse; otherwise, the returned value defines the corresponding row object. For example:
+If a *row* conversion function is specified, the specified function is invoked for each row, being passed an array representing the current row (`d`), the index (`i`) starting at zero for the first row, and the array of column names. If the returned value is null or undefined, the row is skipped and will be omitted from the array returned by *dsv*.parse; otherwise, the returned value defines the corresponding row object. For example:
 
 ```js
 var data = d3.csvParseRows(string, function(d, i) {

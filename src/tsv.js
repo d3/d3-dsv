@@ -5,4 +5,5 @@ var tsv = dsv("\t");
 export var tsvParse = tsv.parse;
 export var tsvParseRows = tsv.parseRows;
 export var tsvFormat = tsv.format;
+export var tsvFormatBody = tsv.formatBody;
 export var tsvFormatRows = tsv.formatRows;

@@ -299,6 +299,16 @@ tape("csvFormat(array, columns) coerces field values to strings", function(test)
   test.end();
 });
 
+tape("csvFormatBody(array) omits the header row", function(test) {
+  test.deepEqual(dsv.csvFormatBody([{a: 1, b: 2}, {c: 3, b: 4}, {c: 5, a: 1, b: 2}]), "1,2,\n,4,3\n1,2,5");
+  test.end();
+});
+
+tape("csvFormatBody(array, columns) omits the header row", function(test) {
+  test.deepEqual(dsv.csvFormatBody([{a: 1, b: 2}, {c: 3, b: 4}, {c: 5, a: 1, b: 2}], ["a", "b"]), "1,2\n,4\n1,2");
+  test.end();
+});
+
 tape("csvFormatRows(array) takes an array of array of string as input", function(test) {
   test.deepEqual(dsv.csvFormatRows([["a", "b", "c"], ["1", "2", "3"]]), "a,b,c\n1,2,3");
   test.end();

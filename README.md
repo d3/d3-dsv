@@ -24,11 +24,11 @@ var psv = d3.dsvFormat("|");
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
 ```
 
-For easy loading of DSV files in a browser, see [d3-request](https://github.com/d3/d3-request)’s [d3.csv](https://github.com/d3/d3-request#csv) and [d3.tsv](https://github.com/d3/d3-request#tsv) methods.
+For easy loading of DSV files in a browser, see [d3-fetch](https://github.com/d3/d3-fetch)’s [d3.csv](https://github.com/d3/d3-fetch/blob/master/README.md#csv) and [d3.tsv](https://github.com/d3/d3-fetch/blob/master/README.md#tsv) methods.
 
 ## Installing
 
-If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](https://github.com/d3/d3-dsv/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-dsv.v1.min.js) or as part of [D3 4.0](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
+If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](https://github.com/d3/d3-dsv/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-dsv.v1.min.js) or as part of [D3](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
 
 ```html
 <script src="https://d3js.org/d3-dsv.v1.min.js"></script>

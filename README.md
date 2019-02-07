@@ -243,7 +243,7 @@ Type inference works as follows. For each *value* in the given *object*, the [tr
 1. Otherwise, if a [date-only or date-time string](https://www.ecma-international.org/ecma-262/9.0/index.html#sec-date-time-string-format), then a Date.
 1. Otherwise, a string (the original untrimmed value).
 
-Values with leading zeroes may be coerced to numbers; for example `"08904"` coerces to `8904`. However, extra characters such as commas or units (*e.g.*, `"$1.00"`, `(123)"`, `"1,234"` or `"32px"`) will prevent number coercion, resulting in a string.
+Values with leading zeroes may be coerced to numbers; for example `"08904"` coerces to `8904`. However, extra characters such as commas or units (*e.g.*, `"$1.00"`, `"(123)"`, `"1,234"` or `"32px"`) will prevent number coercion, resulting in a string.
 
 Date strings must be in ECMAScript’s subset of the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). When a date-only string such as YYYY-MM-DD is specified, the inferred time zone is UTC; however, if a date-time string such as YYYY-MM-DDTHH:MM is specified without a time zone, it is assumed to be local time.
 

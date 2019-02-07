@@ -209,7 +209,7 @@ var string = d3.csvFormatRows([[
 
 <a name="autoType" href="#autoType">#</a> d3.<b>autoType</b>(<i>object</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/autoType.js "Source")
 
-Given an *object* representing a parsed row, infers the types of values on the *object* and coerces them accordingly, returning the mutated *object*. This function is intended to be used as a *row* accessor function in conjunction with [*dsv*.parse](#dsv_parse) and [*dsv*.parseRows](#dsv_parseRow). For example, consider the following CSV file:
+Given an *object* (or array) representing a parsed row, infers the types of values on the *object* and coerces them accordingly, returning the mutated *object*. This function is intended to be used as a *row* accessor function in conjunction with [*dsv*.parse](#dsv_parse) and [*dsv*.parseRows](#dsv_parseRow). For example, consider the following CSV file:
 
 ```
 Year,Make,Model,Length

@@ -57,13 +57,13 @@ tape("autoType(object) detects booleans", function(test) {
 tape("autoType(object) detects null", function(test) {
   test.deepEqual(dsv.autoType({foo: "NULL"}), {foo: null});
   test.deepEqual(dsv.autoType({foo: "null"}), {foo: null});
+  test.deepEqual(dsv.autoType({foo: ""}), {foo: null});
   test.end();
 });
 
 tape("autoType(object) detects undefined", function(test) {
   test.deepEqual(dsv.autoType({foo: "UNDEFINED"}), {foo: undefined});
   test.deepEqual(dsv.autoType({foo: "undefined"}), {foo: undefined});
-  test.deepEqual(dsv.autoType({foo: ""}), {foo: undefined});
   test.end();
 });
 
@@ -87,7 +87,8 @@ tape("autoType(object) ignores leading and trailing whitespace", function(test) 
   test.equal(Number.isNaN(dsv.autoType({foo: " NaN "}).foo), true);
   test.deepEqual(dsv.autoType({foo: " true "}), {foo: true});
   test.deepEqual(dsv.autoType({foo: " NULL "}), {foo: null});
-  test.deepEqual(dsv.autoType({foo: " "}), {foo: undefined});
+  test.deepEqual(dsv.autoType({foo: " "}), {foo: null});
+  test.deepEqual(dsv.autoType({foo: " undefined"}), {foo: undefined});
   test.end();
 });
 

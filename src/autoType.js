@@ -1,10 +1,10 @@
 export default function autoType(object) {
   for (var key in object) {
     var string = object[key].trim(), number;
-    if (/^(|undefined|UNDEFINED)$/.test(string)) {
-      object[key] = undefined;
-    } else if (/^(null|NULL)$/.test(string)) {
+    if (/^(|null|NULL)$/.test(string)) {
       object[key] = null;
+    } else if (/^(undefined|UNDEFINED)$/.test(string)) {
+      object[key] = undefined;
     } else if (/^(true|TRUE)$/.test(string)) {
       object[key] = true;
     } else if (/^(false|FALSE)$/.test(string)) {

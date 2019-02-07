@@ -1,8 +1,7 @@
 export default function autoType(object) {
   for (var key in object) {
     var value = object[key].trim(), number;
-    if (/^(|null|NULL)$/.test(value)) value = null;
-    else if (/^(undefined|UNDEFINED)$/.test(value)) value = undefined;
+    if (!value) value = null;
     else if (/^(true|TRUE)$/.test(value)) value = true;
     else if (/^(false|FALSE)$/.test(value)) value = false;
     else if (/^(NaN|NA[N]?|na[n]?)$/.test(value)) value = NaN;

@@ -260,6 +260,8 @@ Date strings must be in ECMAScript’s subset of the [ISO 8601 format](https://e
 
 Automatic type inference is primarily intended to provide safe, predictable behavior in conjunction with [*dsv*.format](#dsv_format) and [*dsv*.formatRows](#dsv_formatRows) for common JavaScript types. If you need different behavior, you should implement your own row accessor function.
 
+For more, see [the d3.autoType notebook](https://beta.observablehq.com/@d3/d3-autotype).
+
 ### Content Security Policy
 
 If a [content security policy](http://www.w3.org/TR/CSP/) is in place, note that [*dsv*.parse](#dsv_parse) requires `unsafe-eval` in the `script-src` directive, due to the (safe) use of dynamic code generation for fast parsing. (See [source](https://github.com/d3/d3-dsv/blob/master/src/dsv.js).) Alternatively, use [*dsv*.parseRows](#dsv_parseRows).

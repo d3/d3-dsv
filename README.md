@@ -217,7 +217,7 @@ Year,Make,Model,Length
 2000,Mercury,Cougar,2.38
 ```
 
-When using [d3.csvParse](#csvParse),
+When used with [d3.csvParse](#csvParse),
 
 ```js
 d3.csvParse(string, d3.autoType)

@@ -245,7 +245,7 @@ Type inference works as follows. For each *value* in the given *object*, the [tr
 
 Values with leading zeroes may be coerced to numbers; for example `"08904"` coerces to `8904`. However, extra characters such as commas or units (*e.g.*, `"$1.00"`, `"(123)"`, `"1,234"` or `"32px"`) will prevent number coercion, resulting in a string.
 
-Date strings must be in ECMAScript’s subset of the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). When a date-only string such as YYYY-MM-DD is specified, the inferred time zone is UTC; however, if a date-time string such as YYYY-MM-DDTHH:MM is specified without a time zone, it is assumed to be local time.
+Date strings must be in ECMAScript’s subset of the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). When a date-only string such as YYYY-MM-DD is specified, the inferred time is midnight UTC; however, if a date-time string such as YYYY-MM-DDTHH:MM is specified without a time zone, it is assumed to be local time.
 
 Automatic type inference is primarily intended to provide safe, predictable behavior in conjunction with [*dsv*.format](#dsv_format) and [*dsv*.formatRows](#dsv_formatRows) for common JavaScript types. If you need different behavior, you should implement your own row accessor function.
 

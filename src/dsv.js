@@ -114,7 +114,7 @@ export default function(delimiter) {
 
   function formatValue(value) {
     return value == null ? ""
-        : value instanceof Date ? value.toJSON()
+        : value instanceof Date ? value.toISOString()
         : reFormat.test(value += "") ? "\"" + value.replace(/"/g, "\"\"") + "\""
         : value;
   }

@@ -34,6 +34,12 @@ tape("autoType(object) detects dates", function(test) {
   test.end();
 });
 
+tape("autoType(object) detects extended years", function(test) {
+  test.deepEqual(dsv.autoType({foo: "-010001-01-01T00:00:00Z"}), {foo: new Date("-010001-01-01T00:00:00Z")});
+  test.deepEqual(dsv.autoType({foo: "+010001-01-01T00:00:00Z"}), {foo: new Date("+010001-01-01T00:00:00Z")});
+  test.end();
+});
+
 tape("autoType(object) detects date-times", function(test) {
   test.deepEqual(dsv.autoType({foo: "2018T00:00Z"}), {foo: new Date("2018-01-01T00:00:00.000Z")});
   test.deepEqual(dsv.autoType({foo: "2018T00:00+08:00"}), {foo: new Date("2017-12-31T16:00:00.000Z")});

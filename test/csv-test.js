@@ -258,6 +258,11 @@ tape("csvFormat(array) takes an array of objects as input", function(test) {
   test.end();
 });
 
+tape("csvFormat(array) converts dates to ISO 8601", function(test) {
+  test.deepEqual(dsv.csvFormat([{date: new Date(Date.UTC(2018, 0, 1))}]), "date\n2018-01-01T00:00:00.000Z");
+  test.end();
+});
+
 tape("csvFormat(array) escapes field names and values containing delimiters", function(test) {
   test.deepEqual(dsv.csvFormat([{"foo,bar": true}]), "\"foo,bar\"\ntrue");
   test.deepEqual(dsv.csvFormat([{field: "foo,bar"}]), "field\n\"foo,bar\"");

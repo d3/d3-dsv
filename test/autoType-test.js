@@ -18,10 +18,6 @@ tape("autoType(object) detects numbers", function(test) {
 
 tape("autoType(object) detects NaN", function(test) {
   test.equal(Number.isNaN(dsv.autoType({foo: "NaN"}).foo), true);
-  test.equal(Number.isNaN(dsv.autoType({foo: "NAN"}).foo), true);
-  test.equal(Number.isNaN(dsv.autoType({foo: "nan"}).foo), true);
-  test.equal(Number.isNaN(dsv.autoType({foo: "NA"}).foo), true);
-  test.equal(Number.isNaN(dsv.autoType({foo: "na"}).foo), true);
   test.end();
 });
 
@@ -54,9 +50,7 @@ tape("autoType(object) detects date-times", function(test) {
 
 tape("autoType(object) detects booleans", function(test) {
   test.deepEqual(dsv.autoType({foo: "true"}), {foo: true});
-  test.deepEqual(dsv.autoType({foo: "TRUE"}), {foo: true});
   test.deepEqual(dsv.autoType({foo: "false"}), {foo: false});
-  test.deepEqual(dsv.autoType({foo: "FALSE"}), {foo: false});
   test.end();
 });
 
@@ -73,6 +67,15 @@ tape("autoType(object) detects strings", function(test) {
   test.deepEqual(dsv.autoType({foo: "1,431"}), {foo: "1,431"});
   test.deepEqual(dsv.autoType({foo: "$1.00"}), {foo: "$1.00"});
   test.deepEqual(dsv.autoType({foo: "(1.00)"}), {foo: "(1.00)"});
+  test.deepEqual(dsv.autoType({foo: "Nan"}), {foo: "Nan"});
+  test.deepEqual(dsv.autoType({foo: "True"}), {foo: "True"});
+  test.deepEqual(dsv.autoType({foo: "False"}), {foo: "False"});
+  test.deepEqual(dsv.autoType({foo: "TRUE"}), {foo: "TRUE"});
+  test.deepEqual(dsv.autoType({foo: "FALSE"}), {foo: "FALSE"});
+  test.deepEqual(dsv.autoType({foo: "NAN"}), {foo: "NAN"});
+  test.deepEqual(dsv.autoType({foo: "nan"}), {foo: "nan"});
+  test.deepEqual(dsv.autoType({foo: "NA"}), {foo: "NA"});
+  test.deepEqual(dsv.autoType({foo: "na"}), {foo: "na"});
   test.end();
 });
 
@@ -85,13 +88,6 @@ tape("autoType(object) ignores leading and trailing whitespace", function(test) 
   test.equal(Number.isNaN(dsv.autoType({foo: " NaN "}).foo), true);
   test.deepEqual(dsv.autoType({foo: " true "}), {foo: true});
   test.deepEqual(dsv.autoType({foo: " "}), {foo: null});
-  test.end();
-});
-
-tape("autoType(object) is case-sensitive", function(test) {
-  test.deepEqual(dsv.autoType({foo: "Nan"}), {foo: "Nan"});
-  test.deepEqual(dsv.autoType({foo: "True"}), {foo: "True"});
-  test.deepEqual(dsv.autoType({foo: "False"}), {foo: "False"});
   test.end();
 });
 

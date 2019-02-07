@@ -3,12 +3,12 @@ export default function autoType(object) {
     var string = object[key].trim(), number;
     if (/^(|undefined|UNDEFINED)$/.test(string)) {
       object[key] = undefined;
+    } else if (/^(null|NULL)$/.test(string)) {
+      object[key] = null;
     } else if (/^(true|TRUE)$/.test(string)) {
       object[key] = true;
     } else if (/^(false|FALSE)$/.test(string)) {
       object[key] = false;
-    } else if (/^(null|NULL)$/.test(string)) {
-      object[key] = null;
     } else if (/^(NaN|NA[N]?|na[n]?)$/.test(string)) {
       object[key] = NaN;
     } else if (!isNaN(number = +string)) {

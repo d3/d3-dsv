@@ -235,9 +235,9 @@ The resulting JavaScript array is:
 Type inference works as follows. For each *value* in the given *object*, the [trimmed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim) value is computed. Then, the assigned value on the *object* is based on this trimmed value as follows:
 
 1. If empty, or exactly `"undefined"` or `"UNDEFINED"`, then `undefined`.
+1. If exactly `"null"` or `"NULL"`, then `null`.
 1. If exactly `"true"` or `"TRUE"`, then `true`.
 1. If exactly `"false"` or `"FALSE"`, then `false`.
-1. If exactly `"null"` or `"NULL"`, then `null`.
 1. If exactly `"NaN"`, `"nan"`, `"NAN"`, `"na"`, or `"NA"`, then `NaN`.
 1. Otherwise, if [coercible to a number](https://www.ecma-international.org/ecma-262/9.0/index.html#sec-tonumber-applied-to-the-string-type), then a number.
 1. Otherwise, if a [date-only or date-time string](https://www.ecma-international.org/ecma-262/9.0/index.html#sec-date-time-string-format), then a Date.

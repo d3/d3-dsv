@@ -232,7 +232,7 @@ the resulting JavaScript array is:
 ]
 ```
 
-Type inference works as follows. For each *value* in the given *object*, the [trimmed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim) value is computed. Then, the value is assigned as follows:
+Type inference works as follows. For each *value* in the given *object*, the [trimmed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim) value is computed; the value is then re-assigned as follows:
 
 1. If empty, then `null`.
 1. If exactly `"true"`, then `true`.

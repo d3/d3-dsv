@@ -207,6 +207,43 @@ var string = d3.csvFormatRows([[
 })));
 ```
 
+<a name="autoType" href="#autoType">#</a> d3.<b>autoType</b>(<i>object</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/autoType.js "Source")
+
+Given an *object* representing a parsed DSV row, infers the types of values on the *object* and coerces them accordingly. This function is intended to be used as a *row* accessor function in conjunction with [*dsv*.parse](#dsv_parse) and [*dsv*.parseRows](#dsv_parseRow). For example, consider the following CSV file:
+
+```
+Year,Make,Model,Length
+1997,Ford,E350,2.34
+2000,Mercury,Cougar,2.38
+```
+
+When using [d3.csvParse](#csvParse)
+
+```js
+d3.csvParse(string, d3.autoType)
+```
+
+The resulting JavaScript array is:
+
+```js
+[
+  {"Year": 1997, "Make": "Ford", "Model": "E350", "Length": 2.34},
+  {"Year": 2000, "Make": "Mercury", "Model": "Cougar", "Length": 2.38}
+]
+```
+
+Type inferences works as follows. For each *value* in the current *object*, the [trimmed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim) *value* is computed. The assigned value on the *object* is based on this trimmed value as follows:
+
+1. If empty, or exactly `"undefined"` or `"UNDEFINED"`, then `undefined`.
+1. If exactly `"true"` or `"TRUE"`, then `true`.
+1. If exactly `"false"` or `"FALSE"`, then `false`.
+1. If exactly `"null"` or `"NULL"`, then `null`.
+1. If exactly `"NaN"`, `"nan"`, `"NAN"`, `"na"`, or `"NA"`, then `NaN`..
+1. Otherwise, if [coercible to a number](https://www.ecma-international.org/ecma-262/9.0/index.html#sec-tonumber-applied-to-the-string-type), then a number.
+1. Otherwise, if a [date-only or date-time string](https://www.ecma-international.org/ecma-262/9.0/index.html#sec-date-time-string-format), then a Date.
+
+Note that values with leading zeroes are coercible to a number; for example `"08904"` coerces to `8904`. Also note that date strings must be in a subset of the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), and that when a date-only string such as YYYY-MM-DD is specified, the inferred time zone is UTC. However, if a date-time string such as YYYY-MM-DDTHH:MM is specified without a time zone, it is assumed to be local time. If you need different behavior, you should implement your own row accessor function as described above.
+
 ### Content Security Policy
 
 If a [content security policy](http://www.w3.org/TR/CSP/) is in place, note that [*dsv*.parse](#dsv_parse) requires `unsafe-eval` in the `script-src` directive, due to the (safe) use of dynamic code generation for fast parsing. (See [source](https://github.com/d3/d3-dsv/blob/master/src/dsv.js).) Alternatively, use [*dsv*.parseRows](#dsv_parseRows).

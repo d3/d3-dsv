@@ -320,7 +320,8 @@ tape("csvFormatRows(array) separates lines using Unix newline", function(test) {
 });
 
 tape("csvFormatRows(array) converts dates to ISO 8601", function(test) {
-  test.deepEqual(dsv.csvFormatRows([[new Date(Date.UTC(2018, 0, 1))]]), "2018-01-01T00:00:00.000Z");
+  test.deepEqual(dsv.csvFormatRows([[new Date(Date.UTC(2018, 0, 1))]]), "2018-01-01");
+  test.deepEqual(dsv.csvFormatRows([[new Date(2018, 0, 1)]]), "2018-01-01T08:00Z");
   test.end();
 });
 

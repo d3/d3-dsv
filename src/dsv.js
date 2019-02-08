@@ -33,6 +33,41 @@ function inferColumns(rows) {
   return columns;
 }
 
+function pad(value, width) {
+  var s = value + "", length = s.length;
+  return length < width ? new Array(width - length + 1).join(0) + s : s;
+}
+
+function formatYear(year) {
+  return year < 0 ? "-" + pad(-year, 6)
+    : year > 9999 ? "+" + pad(year, 6)
+    : pad(year, 4);
+}
+
+function formatDate(date) {
+  var hours = date.getUTCHours(),
+      minutes = date.getUTCMinutes(),
+      seconds = date.getUTCSeconds(),
+      milliseconds = date.getUTCMilliseconds();
+  return isNaN(date) ? "Invalid Date"
+      : formatYear(date.getUTCFullYear(), 4) + "-"
+      + pad(date.getUTCMonth() + 1, 2) + "-"
+      + pad(date.getUTCDate(), 2)
+      + (milliseconds ? "T"
+          + pad(hours, 2) + ":"
+          + pad(minutes, 2) + ":"
+          + pad(seconds, 2) + "."
+          + pad(milliseconds, 3) + "Z"
+      : seconds ? "T"
+          + pad(hours, 2) + ":"
+          + pad(minutes, 2) + ":"
+          + pad(seconds, 2) + "Z"
+      : minutes || hours ? "T"
+          + pad(hours, 2) + ":"
+          + pad(minutes, 2) + "Z"
+      : "");
+}
+
 export default function(delimiter) {
   var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
       DELIMITER = delimiter.charCodeAt(0);
@@ -123,7 +158,7 @@ export default function(delimiter) {
 
   function formatValue(value) {
     return value == null ? ""
-        : value instanceof Date ? value.toISOString()
+        : value instanceof Date ? formatDate(value)
         : reFormat.test(value += "") ? "\"" + value.replace(/"/g, "\"\"") + "\""
         : value;
   }

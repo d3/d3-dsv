@@ -178,7 +178,7 @@ If *columns* is not specified, the list of column names that forms the header ro
 var string = d3.csvFormat(data, ["year", "make", "model", "length"]);
 ```
 
-All fields on each row object will be coerced to strings. If the field value is null or undefined, the empty string is used. If the field value is a Date, the ISO 8601 date format is used per [*date*.toISOString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString). For more control over which and how fields are formatted, first map *rows* to an array of array of string, and then use [*dsv*.formatRows](#dsv_formatRows).
+All fields on each row object will be coerced to strings. If the field value is null or undefined, the empty string is used. If the field value is a Date, the [ECMAScript date-time string format](https://www.ecma-international.org/ecma-262/9.0/index.html#sec-date-time-string-format) (a subset of ISO 8601) is used: for examples, dates at UTC midnight are formatted as `YYYY-MM-DD`. For more control over which and how fields are formatted, first map *rows* to an array of array of string, and then use [*dsv*.formatRows](#dsv_formatRows).
 
 <a name="dsv_formatBody" href="#dsv_formatBody">#</a> <i>dsv</i>.<b>formatBody</b>(<i>rows</i>[, <i>columns</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js "Source")
 

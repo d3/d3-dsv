@@ -47,17 +47,17 @@ tape("csvParse(string) ignores a blank last line", function(test) {
 });
 
 tape("csvParse(string) treats a blank non-last line as a single-column empty string", function(test) {
-  test.deepEqual(dsv.csvParse("a,b,c\n1,2,3\n\n"), table([{a: "1", b: "2", c: "3"}, {a: "", b: undefined, c: undefined}], ["a", "b", "c"]));
+  test.deepEqual(dsv.csvParse("a,b,c\n1,2,3\n\n"), table([{a: "1", b: "2", c: "3"}, {a: "", b: "", c: ""}], ["a", "b", "c"]));
   test.end();
 });
 
-tape("csvParse(string) returns undefined values for missing columns", function(test) {
-  test.deepEqual(dsv.csvParse("a,b,c\n1\n1,2"), table([{a: "1", b: undefined, c: undefined}, {a: "1", b: "2", c: undefined}], ["a", "b", "c"]));
+tape("csvParse(string) returns empty strings for missing columns", function(test) {
+  test.deepEqual(dsv.csvParse("a,b,c\n1\n1,2"), table([{a: "1", b: "", c: ""}, {a: "1", b: "2", c: ""}], ["a", "b", "c"]));
   test.end();
 });
 
 tape("csvParse(string) does not ignore a whitespace-only last line", function(test) {
-  test.deepEqual(dsv.csvParse("a,b,c\n1,2,3\n "), table([{a: "1", b: "2", c: "3"}, {a: " ", b: undefined, c: undefined}], ["a", "b", "c"]));
+  test.deepEqual(dsv.csvParse("a,b,c\n1,2,3\n "), table([{a: "1", b: "2", c: "3"}, {a: " ", b: "", c: ""}], ["a", "b", "c"]));
   test.end();
 });
 

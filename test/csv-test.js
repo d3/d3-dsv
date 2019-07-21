@@ -260,7 +260,7 @@ tape("csvFormat(array) takes an array of objects as input", function(test) {
 
 tape("csvFormat(array) converts dates to ISO 8601", function(test) {
   test.deepEqual(dsv.csvFormat([{date: new Date(Date.UTC(2018, 0, 1))}]), "date\n2018-01-01");
-  test.deepEqual(dsv.csvFormat([{date: new Date(2018, 0, 1)}]), "date\n2018-01-01T08:00Z");
+  test.deepEqual(dsv.csvFormat([{date: new Date(2018, 0, 1)}]), "date\n" + new Date(2018, 0, 1).toISOString().replace(/:00.000/,""));
   test.end();
 });
 
@@ -322,7 +322,7 @@ tape("csvFormatRows(array) separates lines using Unix newline", function(test) {
 
 tape("csvFormatRows(array) converts dates to ISO 8601", function(test) {
   test.deepEqual(dsv.csvFormatRows([[new Date(Date.UTC(2018, 0, 1))]]), "2018-01-01");
-  test.deepEqual(dsv.csvFormatRows([[new Date(2018, 0, 1)]]), "2018-01-01T08:00Z");
+  test.deepEqual(dsv.csvFormatRows([[new Date(2018, 0, 1)]]), new Date(2018, 0, 1).toISOString().replace(/:00.000/,""));
   test.end();
 });
 

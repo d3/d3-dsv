@@ -6,14 +6,10 @@ var EOL = {},
     NEWLINE = 10,
     RETURN = 13;
 
-function objectConverter(columns) {
-  return new Function("d", "return {" + columns.map(function(name, i) {
+function customConverter(columns, f) {
+  var object = new Function("d", "return {" + columns.map(function(name, i) {
     return JSON.stringify(name) + ": d[" + i + "] || \"\"";
   }).join(",") + "}");
-}
-
-function customConverter(columns, f) {
-  var object = objectConverter(columns);
   return function(row, i) {
     return f(object(row), i, columns);
   };
@@ -66,7 +62,7 @@ export default function(delimiter) {
   function parse(text, f = autoType) {
     var convert, columns, rows = parseRows(text, function(row, i) {
       if (convert) return convert(row, i - 1);
-      columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
+      columns = row, convert = customConverter(row, f);
     });
     rows.columns = columns || [];
     return rows;

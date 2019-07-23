@@ -1,3 +1,5 @@
+import {default as autoType} from "./autoType.js";
+
 var EOL = {},
     EOF = {},
     QUOTE = 34,
@@ -61,7 +63,7 @@ export default function(delimiter) {
   var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
       DELIMITER = delimiter.charCodeAt(0);
 
-  function parse(text, f) {
+  function parse(text, f = autoType) {
     var convert, columns, rows = parseRows(text, function(row, i) {
       if (convert) return convert(row, i - 1);
       columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
@@ -70,7 +72,7 @@ export default function(delimiter) {
     return rows;
   }
 
-  function parseRows(text, f) {
+  function parseRows(text, f = autoType) {
     var rows = [], // output rows
         N = text.length,
         I = 0, // current character index

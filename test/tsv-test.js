@@ -3,45 +3,47 @@ var tape = require("tape"),
     fs = require("fs"),
     table = require("./table");
 
-tape("tsvParse(string) returns the expected objects", function(test) {
-  test.deepEqual(dsv.tsvParse("a\tb\tc\n1\t2\t3\n"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
-  test.deepEqual(dsv.tsvParse(fs.readFileSync("test/data/sample.tsv", "utf-8")), table([{Hello: "42", World: "\"fish\""}], ["Hello", "World"]));
+function identity(x) { return x; }
+
+tape("tsvParse(string, identity) returns the expected objects", function(test) {
+  test.deepEqual(dsv.tsvParse("a\tb\tc\n1\t2\t3\n", identity), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.tsvParse(fs.readFileSync("test/data/sample.tsv", "utf-8"), identity), table([{Hello: "42", World: "\"fish\""}], ["Hello", "World"]));
   test.end();
 });
 
-tape("tsvParse(string) does not strip whitespace", function(test) {
-  test.deepEqual(dsv.tsvParse("a\tb\tc\n 1\t 2\t3\n"), table([{a: " 1", b: " 2", c: "3"}], ["a", "b", "c"]));
+tape("tsvParse(string, identity) does not strip whitespace", function(test) {
+  test.deepEqual(dsv.tsvParse("a\tb\tc\n 1\t 2\t3\n", identity), table([{a: " 1", b: " 2", c: "3"}], ["a", "b", "c"]));
   test.end();
 });
 
-tape("tsvParse(string) parses quoted values", function(test) {
-  test.deepEqual(dsv.tsvParse("a\tb\tc\n\"1\"\t2\t3"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
-  test.deepEqual(dsv.tsvParse("a\tb\tc\n\"1\"\t2\t3\n"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
+tape("tsvParse(string, identity) parses quoted values", function(test) {
+  test.deepEqual(dsv.tsvParse("a\tb\tc\n\"1\"\t2\t3", identity), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.tsvParse("a\tb\tc\n\"1\"\t2\t3\n", identity), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
   test.end();
 });
 
-tape("tsvParse(string) parses quoted values with quotes", function(test) {
-  test.deepEqual(dsv.tsvParse("a\n\"\"\"hello\"\"\""), table([{a: "\"hello\""}], ["a"]));
+tape("tsvParse(string, identity) parses quoted values with quotes", function(test) {
+  test.deepEqual(dsv.tsvParse("a\n\"\"\"hello\"\"\"", identity), table([{a: "\"hello\""}], ["a"]));
   test.end();
 });
 
-tape("tsvParse(string) parses quoted values with newlines", function(test) {
-  test.deepEqual(dsv.tsvParse("a\n\"new\nline\""), table([{a: "new\nline"}], ["a"]));
-  test.deepEqual(dsv.tsvParse("a\n\"new\rline\""), table([{a: "new\rline"}], ["a"]));
-  test.deepEqual(dsv.tsvParse("a\n\"new\r\nline\""), table([{a: "new\r\nline"}], ["a"]));
+tape("tsvParse(string, identity) parses quoted values with newlines", function(test) {
+  test.deepEqual(dsv.tsvParse("a\n\"new\nline\"", identity), table([{a: "new\nline"}], ["a"]));
+  test.deepEqual(dsv.tsvParse("a\n\"new\rline\"", identity), table([{a: "new\rline"}], ["a"]));
+  test.deepEqual(dsv.tsvParse("a\n\"new\r\nline\"", identity), table([{a: "new\r\nline"}], ["a"]));
   test.end();
 });
 
-tape("tsvParse(string) observes Unix, Mac and DOS newlines", function(test) {
-  test.deepEqual(dsv.tsvParse("a\tb\tc\n1\t2\t3\n4\t5\t\"6\"\n7\t8\t9"), table([{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}], ["a", "b", "c"]));
-  test.deepEqual(dsv.tsvParse("a\tb\tc\r1\t2\t3\r4\t5\t\"6\"\r7\t8\t9"), table([{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}], ["a", "b", "c"]));
-  test.deepEqual(dsv.tsvParse("a\tb\tc\r\n1\t2\t3\r\n4\t5\t\"6\"\r\n7\t8\t9"), table([{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}], ["a", "b", "c"]));
+tape("tsvParse(string, identity) observes Unix, Mac and DOS newlines", function(test) {
+  test.deepEqual(dsv.tsvParse("a\tb\tc\n1\t2\t3\n4\t5\t\"6\"\n7\t8\t9", identity), table([{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.tsvParse("a\tb\tc\r1\t2\t3\r4\t5\t\"6\"\r7\t8\t9", identity), table([{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}], ["a", "b", "c"]));
+  test.deepEqual(dsv.tsvParse("a\tb\tc\r\n1\t2\t3\r\n4\t5\t\"6\"\r\n7\t8\t9", identity), table([{a: "1", b: "2", c: "3"}, {a: "4", b: "5", c: "6"}, {a: "7", b: "8", c: "9"}], ["a", "b", "c"]));
   test.end();
 });
 
 tape("tsvParse(string, row) returns the expected converted objects", function(test) {
   function row(d) { d.Hello = -d.Hello; return d; }
-  test.deepEqual(dsv.tsvParse(fs.readFileSync("test/data/sample.tsv", "utf-8"), row), table([{Hello: -42, World: "\"fish\""}], ["Hello", "World"]));
+  test.deepEqual(dsv.tsvParse(fs.readFileSync("test/data/sample.tsv", "utf-8", identity), row), table([{Hello: -42, World: "\"fish\""}], ["Hello", "World"]));
   test.deepEqual(dsv.tsvParse("a\tb\tc\n1\t2\t3\n", function(d) { return d; }), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
   test.end();
 });
@@ -61,39 +63,39 @@ tape("tsvParse(string, row) invokes row(d, i) for each row d, in order", functio
   test.end();
 });
 
-tape("tsvParseRows(string) returns the expected array of array of string", function(test) {
-  test.deepEqual(dsv.tsvParseRows("a\tb\tc\n"), [["a", "b", "c"]]);
+tape("tsvParseRows(string, identity) returns the expected array of array of string", function(test) {
+  test.deepEqual(dsv.tsvParseRows("a\tb\tc\n", identity), [["a", "b", "c"]]);
   test.end();
 });
 
-tape("tsvParseRows(string) parses quoted values", function(test) {
-  test.deepEqual(dsv.tsvParseRows("\"1\"\t2\t3\n"), [["1", "2", "3"]]);
-  test.deepEqual(dsv.tsvParseRows("\"hello\""), [["hello"]]);
+tape("tsvParseRows(string, identity) parses quoted values", function(test) {
+  test.deepEqual(dsv.tsvParseRows("\"1\"\t2\t3\n", identity), [["1", "2", "3"]]);
+  test.deepEqual(dsv.tsvParseRows("\"hello\"", identity), [["hello"]]);
   test.end();
 });
 
-tape("tsvParseRows(string) parses quoted values with quotes", function(test) {
-  test.deepEqual(dsv.tsvParseRows("\"\"\"hello\"\"\""), [["\"hello\""]]);
+tape("tsvParseRows(string, identity) parses quoted values with quotes", function(test) {
+  test.deepEqual(dsv.tsvParseRows("\"\"\"hello\"\"\"", identity), [["\"hello\""]]);
   test.end();
 });
 
-tape("tsvParseRows(string) parses quoted values with newlines", function(test) {
-  test.deepEqual(dsv.tsvParseRows("\"new\nline\""), [["new\nline"]]);
-  test.deepEqual(dsv.tsvParseRows("\"new\rline\""), [["new\rline"]]);
-  test.deepEqual(dsv.tsvParseRows("\"new\r\nline\""), [["new\r\nline"]]);
+tape("tsvParseRows(string, identity) parses quoted values with newlines", function(test) {
+  test.deepEqual(dsv.tsvParseRows("\"new\nline\"", identity), [["new\nline"]]);
+  test.deepEqual(dsv.tsvParseRows("\"new\rline\"", identity), [["new\rline"]]);
+  test.deepEqual(dsv.tsvParseRows("\"new\r\nline\"", identity), [["new\r\nline"]]);
   test.end();
 });
 
-tape("tsvParseRows(string) parses Unix, Mac and DOS newlines", function(test) {
-  test.deepEqual(dsv.tsvParseRows("a\tb\tc\n1\t2\t3\n4\t5\t\"6\"\n7\t8\t9"), [["a", "b", "c"], ["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]);
-  test.deepEqual(dsv.tsvParseRows("a\tb\tc\r1\t2\t3\r4\t5\t\"6\"\r7\t8\t9"), [["a", "b", "c"], ["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]);
-  test.deepEqual(dsv.tsvParseRows("a\tb\tc\r\n1\t2\t3\r\n4\t5\t\"6\"\r\n7\t8\t9"), [["a", "b", "c"], ["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]);
+tape("tsvParseRows(string, identity) parses Unix, Mac and DOS newlines", function(test) {
+  test.deepEqual(dsv.tsvParseRows("a\tb\tc\n1\t2\t3\n4\t5\t\"6\"\n7\t8\t9", identity), [["a", "b", "c"], ["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]);
+  test.deepEqual(dsv.tsvParseRows("a\tb\tc\r1\t2\t3\r4\t5\t\"6\"\r7\t8\t9", identity), [["a", "b", "c"], ["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]);
+  test.deepEqual(dsv.tsvParseRows("a\tb\tc\r\n1\t2\t3\r\n4\t5\t\"6\"\r\n7\t8\t9", identity), [["a", "b", "c"], ["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]);
   test.end();
 });
 
 tape("tsvParseRows(string, row) returns the expected converted array of array of string", function(test) {
   function row(d, i) { if (i) d[0] = -d[0]; return d; }
-  test.deepEqual(dsv.tsvParseRows(fs.readFileSync("test/data/sample.tsv", "utf-8"), row), [["Hello", "World"], [-42, "\"fish\""]]);
+  test.deepEqual(dsv.tsvParseRows(fs.readFileSync("test/data/sample.tsv", "utf-8", identity), row), [["Hello", "World"], [-42, "\"fish\""]]);
   test.deepEqual(dsv.tsvParseRows("a\tb\tc\n1\t2\t3\n", function(d) { return d; }), [["a", "b", "c"], ["1", "2", "3"]]);
   test.end();
 });

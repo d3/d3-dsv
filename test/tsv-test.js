@@ -181,3 +181,8 @@ tape("tsvFormatRows(array) escapes values containing delimiters", function(test)
   test.deepEqual(dsv.tsvFormatRows([["oxford\ttab"]]), "\"oxford\ttab\"");
   test.end();
 });
+
+tape("tsvFormatRow(array) takes a single array of string as input", function(test) {
+  test.deepEqual(dsv.tsvFormatRow(["a", "b", "c"]), "a\tb\tc");
+  test.end();
+});

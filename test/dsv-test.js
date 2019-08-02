@@ -183,3 +183,8 @@ tape("dsv(\"|\").formatRows(array) escapes values containing delimiters", functi
   test.deepEqual(psv.formatRows([["oxford|tab"]]), "\"oxford|tab\"");
   test.end();
 });
+
+tape("dsv(\"|\").formatRow(array) takes a single array of string as input", function(test) {
+  test.deepEqual(psv.formatRow(["a", "b", "c"]), "a|b|c");
+  test.end();
+});

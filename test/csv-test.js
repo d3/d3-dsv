@@ -355,3 +355,8 @@ tape("csvFormatRows(array) escapes values containing delimiters", function(test)
   test.deepEqual(dsv.csvFormatRows([["oxford,comma"]]), "\"oxford,comma\"");
   test.end();
 });
+
+tape("csvFormatRow(array) takes a single array of string as input", function(test) {
+  test.deepEqual(dsv.csvFormatRow(["a", "b", "c"]), "a,b,c");
+  test.end();
+});

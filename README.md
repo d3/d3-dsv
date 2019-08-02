@@ -63,6 +63,14 @@ Equivalent to [dsvFormat](#dsvFormat)(",").[formatBody](#dsv_formatBody).
 
 Equivalent to [dsvFormat](#dsvFormat)(",").[formatRows](#dsv_formatRows).
 
+<a name="csvFormatRow" href="#csvFormatRow">#</a> d3.<b>csvFormatRow</b>(<i>row</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js "Source")
+
+Equivalent to [dsvFormat](#dsvFormat)(",").[formatRow](#dsv_formatRow).
+
+<a name="csvFormatValue" href="#csvFormatValue">#</a> d3.<b>csvFormatValue</b>(<i>value</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js "Source")
+
+Equivalent to [dsvFormat](#dsvFormat)(",").[formatValue](#dsv_formatValue).
+
 <a name="tsvParse" href="#tsvParse">#</a> d3.<b>tsvParse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js "Source")
 
 Equivalent to [dsvFormat](#dsvFormat)("\t").[parse](#dsv_parse).
@@ -82,6 +90,14 @@ Equivalent to [dsvFormat](#dsvFormat)("\t").[formatBody](#dsv_formatBody).
 <a name="tsvFormatRows" href="#tsvFormatRows">#</a> d3.<b>tsvFormatRows</b>(<i>rows</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js "Source")
 
 Equivalent to [dsvFormat](#dsvFormat)("\t").[formatRows](#dsv_formatRows).
+
+<a name="tsvFormatRow" href="#tsvFormatRow">#</a> d3.<b>tsvFormatRow</b>(<i>row</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js "Source")
+
+Equivalent to [dsvFormat](#dsvFormat)("\t").[formatRow](#dsv_formatRow).
+
+<a name="tsvFormatValue" href="#tsvFormatValue">#</a> d3.<b>tsvFormatValue</b>(<i>value</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js "Source")
+
+Equivalent to [dsvFormat](#dsvFormat)("\t").[formatValue](#dsv_formatValue).
 
 <a name="dsvFormat" href="#dsvFormat">#</a> d3.<b>dsvFormat</b>(<i>delimiter</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js)
 
@@ -218,6 +234,14 @@ var string = d3.csvFormatRows([[
   ];
 })));
 ```
+
+<a name="dsv_formatRow" href="#dsv_formatRow">#</a> <i>dsv</i>.<b>formatRow</b>(<i>row</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js "Source")
+
+Formats a single array *row* of strings as delimiter-separated values, returning a string. Each column within the row will be separated by the delimiter (such as a comma, `,`). Values that contain either the delimiter, a double-quote (") or a newline will be escaped using double-quotes.
+
+<a name="dsv_formatValue" href="#dsv_formatValue">#</a> <i>dsv</i>.<b>formatValue</b>(<i>value</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js "Source")
+
+Format a single *value* or string as a delimiter-separated value, returning a string. A value that contains either the delimiter, a double-quote (") or a newline will be escaped using double-quotes.
 
 <a name="autoType" href="#autoType">#</a> d3.<b>autoType</b>(<i>object</i>) [<>](https://github.com/d3/d3-dsv/blob/master/src/autoType.js "Source")
 

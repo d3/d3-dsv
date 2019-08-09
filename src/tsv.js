@@ -1,4 +1,4 @@
-import dsv from "./dsv";
+import dsv from "./dsv.js";
 
 var tsv = dsv("\t");
 

@@ -52,9 +52,9 @@
   },
   "devDependencies": {
     "csv-spectrum": "1",
-    "eslint": "5",
-    "rollup": "0.64",
-    "rollup-plugin-terser": "1",
+    "eslint": "6",
+    "rollup": "1",
+    "rollup-plugin-terser": "5",
     "tape": "4"
   }
 }

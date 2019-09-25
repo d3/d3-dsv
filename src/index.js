@@ -1,4 +1,4 @@
-export {default as dsvFormat} from "./dsv";
-export {csvParse, csvParseRows, csvFormat, csvFormatBody, csvFormatRows, csvFormatRow, csvFormatValue} from "./csv";
-export {tsvParse, tsvParseRows, tsvFormat, tsvFormatBody, tsvFormatRows, tsvFormatRow, tsvFormatValue} from "./tsv";
-export {default as autoType} from "./autoType";
+export {default as dsvFormat} from "./dsv.js";
+export {csvParse, csvParseRows, csvFormat, csvFormatBody, csvFormatRows, csvFormatRow, csvFormatValue} from "./csv.js";
+export {tsvParse, tsvParseRows, tsvFormat, tsvFormatBody, tsvFormatRows, tsvFormatRow, tsvFormatValue} from "./tsv.js";
+export {default as autoType} from "./autoType.js";

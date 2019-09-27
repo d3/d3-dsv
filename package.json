@@ -50,6 +50,7 @@
     "iconv-lite": "0.4",
     "rw": "1"
   },
+  "sideEffects": false,
   "devDependencies": {
     "csv-spectrum": "1",
     "eslint": "6",

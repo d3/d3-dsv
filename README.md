@@ -464,10 +464,10 @@ Specify the output character encoding. Defaults to “utf8”.
 
 Read [newline-delimited JSON](https://github.com/mbostock/ndjson-cli) instead of a single JSON array.
 
-<a name="csv2json" href="#csv2json">#</a> <b>csv2json</b> [<i>options…</i>] [<i>file</i>]
+<a name="json2csv" href="#json2csv">#</a> <b>json2csv</b> [<i>options…</i>] [<i>file</i>]
 
 Equivalent to [json2dsv](#json2dsv).
 
-<a name="tsv2json" href="#csv2json">#</a> <b>tsv2json</b> [<i>options…</i>] [<i>file</i>]
+<a name="json2tsv" href="#json2tsv">#</a> <b>json2tsv</b> [<i>options…</i>] [<i>file</i>]
 
 Equivalent to [json2dsv](#json2dsv), but the [output delimiter](#json2dsv_output_delimiter) defaults to the tab character (\t).

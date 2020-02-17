@@ -45,7 +45,7 @@ var data = d3.csvParse(string);
 
 <a name="csvParse" href="#csvParse">#</a> d3.<b>csvParse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js "Source") :warning: [CSP in browser context](#content-security-policy)
 
-Equivalent to [dsvFormat](#dsvFormat)(",").[parse](#dsv_parse).
+Equivalent to [dsvFormat](#dsvFormat)(",").[parse](#dsv_parse). Note: requires unsafe-eval [content security policy](#content-security-policy).
 
 <a name="csvParseRows" href="#csvParseRows">#</a> d3.<b>csvParseRows</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js "Source")
 
@@ -73,7 +73,7 @@ Equivalent to [dsvFormat](#dsvFormat)(",").[formatValue](#dsv_formatValue).
 
 <a name="tsvParse" href="#tsvParse">#</a> d3.<b>tsvParse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js "Source") :warning: [CSP in browser context](#content-security-policy)
 
-Equivalent to [dsvFormat](#dsvFormat)("\t").[parse](#dsv_parse).
+Equivalent to [dsvFormat](#dsvFormat)("\t").[parse](#dsv_parse). Note: requires unsafe-eval [content security policy](#content-security-policy).
 
 <a name="tsvParseRows" href="#tsvParseRows">#</a> d3.<b>tsvParseRows</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js "Source")
 

@@ -43,7 +43,7 @@ var data = d3.csvParse(string);
 
 ## API Reference
 
-<a name="csvParse" href="#csvParse">#</a> d3.<b>csvParse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js "Source")
+<a name="csvParse" href="#csvParse">#</a> d3.<b>csvParse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/csv.js "Source") :warning: [CSP in browser context](#content-security-policy)
 
 Equivalent to [dsvFormat](#dsvFormat)(",").[parse](#dsv_parse).
 
@@ -71,7 +71,7 @@ Equivalent to [dsvFormat](#dsvFormat)(",").[formatRow](#dsv_formatRow).
 
 Equivalent to [dsvFormat](#dsvFormat)(",").[formatValue](#dsv_formatValue).
 
-<a name="tsvParse" href="#tsvParse">#</a> d3.<b>tsvParse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js "Source")
+<a name="tsvParse" href="#tsvParse">#</a> d3.<b>tsvParse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/tsv.js "Source") :warning: [CSP in browser context](#content-security-policy)
 
 Equivalent to [dsvFormat](#dsvFormat)("\t").[parse](#dsv_parse).
 
@@ -103,7 +103,7 @@ Equivalent to [dsvFormat](#dsvFormat)("\t").[formatValue](#dsv_formatValue).
 
 Constructs a new DSV parser and formatter for the specified *delimiter*. The *delimiter* must be a single character (*i.e.*, a single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are not.
 
-<a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js "Source")
+<a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js "Source") :warning: [CSP in browser context](#content-security-policy)
 
 Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of objects representing the parsed rows.
 

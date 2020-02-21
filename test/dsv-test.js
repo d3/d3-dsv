@@ -115,6 +115,18 @@ tape("dsv(\"|\").parseRows(string, row) invokes row(d, i) for each row d, in ord
   test.end();
 });
 
+tape("dsv(\"|\", { comment }).parseRows(string) skips comments", function(test) {
+  test.deepEqual(dsv.dsvFormat("|", { comment: "#" }).parseRows("#blaa\n# blaa\n#\na|#b|c\n1|2|#3\n#blaablaa#\r4|5|\"6\"\r\n#blaa"), [["a", "#b", "c"], ["1", "2", "#3"], ["4", "5", "6"]]);
+  test.deepEqual(dsv.dsvFormat("|", { comment: "//" }).parseRows("//blaa\n// blaa\na|//b|c\n/1|2|//3\n//blaablaa//\n4|5|\"6\"\n//blaa\n"), [["a", "//b", "c"], ["/1", "2", "//3"], ["4", "5", "6"]]);
+  test.end();
+});
+
+tape("dsv(\"|\", { comment }).parse(string) skips comments", function(test) {
+  test.deepEqual(dsv.dsvFormat("|", { comment: "#" }).parse("#blaa\n# blaa\n#\na|#b|c\n1|2|#3\n#blaa"), table([{a: "1", "#b": "2", c: "#3"}], ["a", "#b", "c"]));
+  test.end();
+});
+
+
 tape("dsv(\"|\").format(array) takes an array of objects as input", function(test) {
   test.deepEqual(psv.format([{a: 1, b: 2, c: 3}]), "a|b|c\n1|2|3");
   test.end();

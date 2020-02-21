@@ -77,7 +77,9 @@ export default function(delimiter, options) {
         n = 0, // current line number
         t, // current token
         eof = N <= 0, // current token followed by EOF?
-        eol = false; // current token followed by EOL?
+        eol = false, // current token followed by EOL?
+        bol = true, // current token is the first on the line
+        commentPrefix = options ? options.comment : undefined;
 
     // Strip the trailing newline.
     if (text.charCodeAt(N - 1) === NEWLINE) --N;
@@ -85,7 +87,28 @@ export default function(delimiter, options) {
 
     function token() {
       if (eof) return EOF;
-      if (eol) return eol = false, EOL;
+      if (eol) return eol = false, bol = true, EOL;
+
+      // Skip comments
+      if (bol && commentPrefix) {
+        for (;;) {
+          let ci = 0;
+          while (ci < commentPrefix.length && commentPrefix.charAt(ci) === text.charAt(ci + I)) {
+            ci++;
+          }
+          if (ci !== commentPrefix.length) break;
+          I += ci;
+          // Find next newline.
+          while (I < N) {
+            c = text.charCodeAt(I++);
+            if (c === NEWLINE) break 
+            else if (c === RETURN) { if (text.charCodeAt(I) === NEWLINE) ++I; break; }
+          }
+        }
+        if (I >= N) return EOF;
+      }
+
+      bol = false;
 
       // Unescape quotes.
       var i, j = I, c;

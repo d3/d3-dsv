@@ -57,7 +57,7 @@ function formatDate(date) {
       : "");
 }
 
-export default function(delimiter) {
+export default function(delimiter, options) {
   var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
       DELIMITER = delimiter.charCodeAt(0);
 

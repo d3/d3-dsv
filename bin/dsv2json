@@ -15,7 +15,7 @@ commander
     .usage("[options] [file]")
     .option("-o, --out <file>", "output file name; defaults to “-” for stdout", "-")
     .option("-r, --input-delimiter <character>", "input delimiter character", defaultInDelimiter)
-    .option("-a, --autotype", "parse rows with type inference (see d3.autoType)")
+    .option("-a, --auto-type", "parse rows with type inference (see d3.autoType)")
     .option("-n, --newline-delimited", "output newline-delimited JSON")
     .option("--input-encoding <encoding>", "input character encoding; defaults to “utf8”", "utf8")
     .option("--output-encoding <encoding>", "output character encoding; defaults to “utf8”", "utf8")
@@ -26,7 +26,7 @@ var inFormat = dsv.dsvFormat(commander.inputDelimiter);
 rw.readFile(commander.args[0] || "-", function(error, text) {
   if (error) throw error;
 
-  var rowConverter = commander.autotype ? dsv.autoType : null
+  var rowConverter = commander.autoType ? dsv.autoType : null
   var rows = inFormat.parse(iconv.decode(text, commander.inputEncoding), rowConverter);
 
   rw.writeFile(commander.out, iconv.encode(commander.newlineDelimited

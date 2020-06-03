@@ -389,7 +389,7 @@ Output the version number.
 Specify the output file name. Defaults to “-” for stdout.
 
 <a name="dsv2json_autotype" href="dsv2json_autotype">#</a> dsv2json <b>-a</b>
-<br><a href="dsv2json_autotype">#</a> dsv2json <b>--autotype</b>
+<br><a href="dsv2json_autotype">#</a> dsv2json <b>--auto-type</b>
 
 Use type inference when parsing rows. See <a href="#autoType">d3.autoType</a> for how it works.
 

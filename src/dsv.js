@@ -57,6 +57,15 @@ function formatDate(date) {
       : "");
 }
 
+function columns_from_first_row(row) {
+  var index = {};
+  return row.map(function(c) {
+    var suffix = (index[c] = index[c] || 0) ? "_" + index[c] : "";
+    index[c]++;
+    return c + suffix;
+  });
+}
+
 export default function(delimiter) {
   var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
       DELIMITER = delimiter.charCodeAt(0);
@@ -64,7 +73,8 @@ export default function(delimiter) {
   function parse(text, f) {
     var convert, columns, rows = parseRows(text, function(row, i) {
       if (convert) return convert(row, i - 1);
-      columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
+      columns = columns_from_first_row(row);
+      convert = f ? customConverter(row, f) : objectConverter(columns);
     });
     rows.columns = columns || [];
     return rows;

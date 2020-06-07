@@ -188,3 +188,11 @@ tape("dsv(\"|\").formatRow(array) takes a single array of string as input", func
   test.deepEqual(psv.formatRow(["a", "b", "c"]), "a|b|c");
   test.end();
 });
+
+tape("dsv(\"|\").parse(array) disambiguates repeated column names", function(test) {
+  test.deepEqual(psv.parse("a|b|a\n1|2|3"), {
+    0: {a:"1", b:"2", a_1:"3"},
+    columns: ['a','b','a_1']
+  });
+  test.end();
+});

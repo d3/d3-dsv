@@ -124,7 +124,7 @@ The resulting JavaScript array is:
 ]
 ```
 
-The returned array also exposes a `columns` property containing the column names in input order (in contrast to Object.keys, whose iteration order is arbitrary). For example:
+The returned array also exposes a `columns` property containing the column names, possibly deduplicated, in input order (in contrast to Object.keys, whose iteration order is arbitrary). For example:
 
 ```js
 data.columns; // ["Year", "Make", "Model", "Length"]

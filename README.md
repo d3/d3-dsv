@@ -107,7 +107,7 @@ Constructs a new DSV parser and formatter for the specified *delimiter*. The *de
 
 Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of objects representing the parsed rows.
 
-Unlike [*dsv*.parseRows](#dsv_parseRows), this method requires that the first line of the DSV content contains a delimiter-separated list of column names; these column names become the attributes on the returned objects. For example, consider the following CSV file:
+Unlike [*dsv*.parseRows](#dsv_parseRows), this method requires that the first line of the DSV content contains a delimiter-separated list of column names; these column names, which must be unique, become the attributes on the returned objects. For example, consider the following CSV file:
 
 ```
 Year,Make,Model,Length

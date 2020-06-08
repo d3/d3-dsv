@@ -194,5 +194,13 @@ tape("dsv(\"|\").parse(array) disambiguates repeated column names", function(tes
     0: {a:"1", b:"2", a_1:"3"},
     columns: ['a','b','a_1']
   });
+  test.deepEqual(psv.parse("a|b|a_1|a\n1|2|3|4"), {
+    0: {a:"1", b:"2", a_1:"3", a_2:"4"},
+    columns: ['a','b','a_1', 'a_2']
+  });
+  test.deepEqual(psv.parse("a|b|a|a_1\n1|2|3|4"), {
+    0: {a:"1", b:"2", a_1:"3", a_1_1:"4"},
+    columns: ['a','b','a_1', 'a_1_1']
+  });
   test.end();
 });

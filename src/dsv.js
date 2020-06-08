@@ -58,12 +58,13 @@ function formatDate(date) {
 }
 
 function columns_from_first_row(row) {
-  var index = {};
-  return row.map(function(c) {
-    var suffix = (index[c] = index[c] || 0) ? "_" + index[c] : "";
-    index[c]++;
-    return c + suffix;
-  });
+  var columns = [];
+  for (var i = 0; i < row.length; i++) {
+    var name = row[i], tentative = name, j = 0;
+    while (columns.includes(tentative)) tentative = name + "_" + ++j;
+    columns.push(tentative);
+  }
+  return columns;
 }
 
 export default function(delimiter) {

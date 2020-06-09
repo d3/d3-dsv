@@ -17,4 +17,4 @@ export default function autoType(object) {
 }
 
 // https://github.com/d3/d3-dsv/issues/45
-var fixtz = new Date("2019-01-01T00:00").getHours() || new Date("2019-07-01T00:00").getHours();
+const fixtz = new Date("2019-01-01T00:00").getHours() || new Date("2019-07-01T00:00").getHours();

@@ -61,6 +61,11 @@ tape("tsvParse(string, row) invokes row(d, i) for each row d, in order", functio
   test.end();
 });
 
+tape("tsvParse(string) accepts numbers as names", function(test) {
+  test.deepEqual(dsv.tsvParse("11\t22\t33\n\"a\"\tb\t0"), table([{11: "a", 22: "b", 33: "0"}], ["11", "22", "33"]));
+  test.end();
+});
+
 tape("tsvParseRows(string) returns the expected array of array of string", function(test) {
   test.deepEqual(dsv.tsvParseRows("a\tb\tc\n"), [["a", "b", "c"]]);
   test.end();

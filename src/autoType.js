@@ -1,5 +1,6 @@
 export default function autoType(object) {
   for (var key in object) {
+    if (typeof object[key] !== "string") continue;
     var value = object[key].trim(), number, m;
     if (!value) value = null;
     else if (value === "true") value = true;

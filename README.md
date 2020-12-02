@@ -24,7 +24,7 @@ var psv = d3.dsvFormat("|");
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
 ```
 
-For easy loading of DSV files in a browser, see [d3-fetch](https://github.com/d3/d3-fetch)’s [d3.csv](https://github.com/d3/d3-fetch/blob/master/README.md#csv) and [d3.tsv](https://github.com/d3/d3-fetch/blob/master/README.md#tsv) methods.
+For easy loading of DSV files in a browser, see [d3-fetch](https://github.com/d3/d3-fetch)’s [d3.csv](https://github.com/d3/d3-fetch/blob/master/README.md#csv), [d3.tsv](https://github.com/d3/d3-fetch/blob/master/README.md#tsv) and [d3.dsv](https://github.com/d3/d3-fetch/blob/master/README.md#dsv) methods.
 
 ## Installing
 

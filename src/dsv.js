@@ -5,9 +5,13 @@ var EOL = {},
     RETURN = 13;
 
 function objectConverter(columns) {
-  return new Function("d", "return {" + columns.map(function(name, i) {
-    return JSON.stringify(name) + ": d[" + i + "] || \"\"";
-  }).join(",") + "}");
+  return function(d) {
+    var obj = {};
+    for(var k = 0; k < columns.length; k++) {
+      obj[columns[k]] = d[k] || "";
+    }
+    return obj;
+  };
 }
 
 function customConverter(columns, f) {

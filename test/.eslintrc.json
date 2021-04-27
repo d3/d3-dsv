@@ -6,5 +6,8 @@
   },
   "rules": {
     "no-cond-assign": 0
+  },
+  "env": {
+    "mocha": true
   }
 }

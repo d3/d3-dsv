@@ -28,14 +28,23 @@ For easy loading of DSV files in a browser, see [d3-fetch](https://github.com/d3
 
 ## Installing
 
-If you use NPM, `npm install d3-dsv`. Otherwise, download the [latest release](https://github.com/d3/d3-dsv/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-dsv.v1.min.js) or as part of [D3](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
+If you use npm, `npm install d3-dsv`. You can also download the [latest release on GitHub](https://github.com/d3/d3-dsv/releases/latest). For vanilla HTML in modern browsers, import d3-dsv from Skypack:
 
 ```html
-<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+<script type="module">
+import {csvParse} from "https://cdn.skypack.dev/d3-dsv@3";
+
+const data = csvParse(string);
+</script>
+```
+
+For legacy environments, you can load d3-dsv’s UMD bundle from an npm-based CDN such as jsDelivr; a `d3` global is exported:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/d3-dsv@3"></script>
 <script>
 
-var data = d3.csvParse(string);
-
+const data = d3.csvParse(string);
 </script>
 ```
 

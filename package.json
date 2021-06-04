@@ -35,8 +35,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "commander": "2",
-    "iconv-lite": "0.4",
+    "commander": "7",
+    "iconv-lite": "0.6",
     "rw": "1"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
     "eslint": "7",
     "mocha": "8",
     "rollup": "2",
-    "rollup-plugin-terser": "5"
+    "rollup-plugin-terser": "7"
   },
   "scripts": {
     "test": "TZ=America/Los_Angeles mocha 'test/**/*-test.js' && eslint src test",
@@ -55,14 +55,14 @@
     "node": ">=12"
   },
   "bin": {
-    "csv2json": "bin/dsv2json",
-    "csv2tsv": "bin/dsv2dsv",
-    "dsv2dsv": "bin/dsv2dsv",
-    "dsv2json": "bin/dsv2json",
-    "json2csv": "bin/json2dsv",
-    "json2dsv": "bin/json2dsv",
-    "json2tsv": "bin/json2dsv",
-    "tsv2csv": "bin/dsv2dsv",
-    "tsv2json": "bin/dsv2json"
+    "csv2json": "bin/dsv2json.js",
+    "csv2tsv": "bin/dsv2dsv.js",
+    "dsv2dsv": "bin/dsv2dsv.js",
+    "dsv2json": "bin/dsv2json.js",
+    "json2csv": "bin/json2dsv.js",
+    "json2dsv": "bin/json2dsv.js",
+    "json2tsv": "bin/json2dsv.js",
+    "tsv2csv": "bin/dsv2dsv.js",
+    "tsv2json": "bin/dsv2json.js"
   }
 }

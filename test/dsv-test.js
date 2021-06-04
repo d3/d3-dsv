@@ -1,9 +1,9 @@
 import assert from "assert";
-import * as d3 from "../src/index.js";
 import {readFileSync} from "fs";
+import {dsvFormat} from "../src/index.js";
 import {table} from "./table.js";
 
-const psv = d3.dsvFormat("|");
+const psv = dsvFormat("|");
 
 it("dsv(\"|\").parse(string) returns the expected objects", () => {
   assert.deepStrictEqual(psv.parse("a|b|c\n1|2|3\n"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));

@@ -19,7 +19,7 @@ d3.tsvFormat([{foo: "1", bar: "2"}]); // "foo\tbar\n1\t2"
 To use a different delimiter, such as “|” for pipe-separated values, use [d3.dsvFormat](#dsvFormat):
 
 ```js
-var psv = d3.dsvFormat("|");
+const psv = d3.dsvFormat("|");
 
 console.log(psv.parse("foo|bar\n1|2")); // [{foo: "1", bar: "2"}, columns: ["foo", "bar"]]
 ```
@@ -32,9 +32,11 @@ If you use npm, `npm install d3-dsv`. You can also download the [latest release 
 
 ```html
 <script type="module">
+
 import {csvParse} from "https://cdn.skypack.dev/d3-dsv@3";
 
 const data = csvParse(string);
+
 </script>
 ```
 
@@ -45,10 +47,9 @@ For legacy environments, you can load d3-dsv’s UMD bundle from an npm-based CD
 <script>
 
 const data = d3.csvParse(string);
+
 </script>
 ```
-
-[Try d3-dsv in your browser.](https://tonicdev.com/npm/d3-dsv)
 
 ## API Reference
 
@@ -146,7 +147,7 @@ If a *row* conversion function is not specified, field values are strings. For s
 If a *row* conversion function is specified, the specified function is invoked for each row, being passed an object representing the current row (`d`), the index (`i`) starting at zero for the first non-header row, and the array of column names. If the returned value is null or undefined, the row is skipped and will be omitted from the array returned by *dsv*.parse; otherwise, the returned value defines the corresponding row object. For example:
 
 ```js
-var data = d3.csvParse(string, function(d) {
+const data = d3.csvParse(string, (d) => {
   return {
     year: new Date(+d.Year, 0, 1), // lowercase and convert "Year" to Date
     make: d.Make, // lowercase
@@ -185,7 +186,7 @@ If a *row* conversion function is not specified, field values are strings. For s
 If a *row* conversion function is specified, the specified function is invoked for each row, being passed an array representing the current row (`d`), the index (`i`) starting at zero for the first row, and the array of column names. If the returned value is null or undefined, the row is skipped and will be omitted from the array returned by *dsv*.parse; otherwise, the returned value defines the corresponding row object. For example:
 
 ```js
-var data = d3.csvParseRows(string, function(d, i) {
+const data = d3.csvParseRows(string, (d, i) => {
   return {
     year: new Date(+d[0], 0, 1), // convert first colum column to Date
     make: d[1],
@@ -204,7 +205,7 @@ Formats the specified array of object *rows* as delimiter-separated values, retu
 If *columns* is not specified, the list of column names that forms the header row is determined by the union of all properties on all objects in *rows*; the order of columns is nondeterministic. If *columns* is specified, it is an array of strings representing the column names. For example:
 
 ```js
-var string = d3.csvFormat(data, ["year", "make", "model", "length"]);
+const string = d3.csvFormat(data, ["year", "make", "model", "length"]);
 ```
 
 All fields on each row object will be coerced to strings. If the field value is null or undefined, the empty string is used. If the field value is a Date, the [ECMAScript date-time string format](https://www.ecma-international.org/ecma-262/9.0/index.html#sec-date-time-string-format) (a subset of ISO 8601) is used: for example, dates at UTC midnight are formatted as `YYYY-MM-DD`. For more control over which and how fields are formatted, first map *rows* to an array of array of string, and then use [*dsv*.formatRows](#dsv_formatRows).
@@ -220,7 +221,7 @@ Formats the specified array of array of string *rows* as delimiter-separated val
 To convert an array of objects to an array of arrays while explicitly specifying the columns, use [*array*.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map). For example:
 
 ```js
-var string = d3.csvFormatRows(data.map(function(d, i) {
+const string = d3.csvFormatRows(data.map((d, i) => {
   return [
     d.year.getFullYear(), // Assuming d.year is a Date object.
     d.make,
@@ -233,12 +234,12 @@ var string = d3.csvFormatRows(data.map(function(d, i) {
 If you like, you can also [*array*.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) this result with an array of column names to generate the first row:
 
 ```js
-var string = d3.csvFormatRows([[
+const string = d3.csvFormatRows([[
     "year",
     "make",
     "model",
     "length"
-  ]].concat(data.map(function(d, i) {
+  ]].concat(data.map((d, i) => {
   return [
     d.year.getFullYear(), // Assuming d.year is a Date object.
     d.make,

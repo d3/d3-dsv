@@ -1,4 +1,4 @@
-module.exports = function(rows, columns) {
+export function table(rows, columns) {
   rows.columns = columns;
   return rows;
-};
+}

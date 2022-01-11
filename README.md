@@ -188,7 +188,7 @@ If a *row* conversion function is specified, the specified function is invoked f
 ```js
 const data = d3.csvParseRows(string, (d, i) => {
   return {
-    year: new Date(+d[0], 0, 1), // convert first colum column to Date
+    year: new Date(+d[0], 0, 1), // convert first column to Date
     make: d[1],
     model: d[2],
     length: +d[3] // convert fourth column to number

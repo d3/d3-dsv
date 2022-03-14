@@ -13,7 +13,7 @@ function objectConverter(columns) {
     return function(d) {
       var result = {};
       for (var i = 0; i < columns.length; i++) {
-        result[columns[i]] = d[i] || '';
+        result[columns[i]] = d[i] || "";
       }
       return result;
     };

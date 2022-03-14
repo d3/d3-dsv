@@ -157,3 +157,13 @@ it("dsv(\"|\").formatRows(array) escapes values containing delimiters", () => {
 it("dsv(\"|\").formatRow(array) takes a single array of string as input", () => {
   assert.deepStrictEqual(psv.formatRow(["a", "b", "c"]), "a|b|c");
 });
+
+it("dsv(\"|\").parse(string) works with the main branch throwing", () => {
+  const origStringify = JSON.stringify;
+  JSON.stringify = function() {
+    throw new EvalError("test");
+  };
+  assert.deepStrictEqual(psv.parse("a|b|c\n1|2\n"), table([{a: "1", b: "2", c: ""}], ["a", "b", "c"]));
+  assert.deepStrictEqual(psv.parse(readFileSync("test/data/sample.psv", "utf-8")), table([{Hello: "42", World: "\"fish\""}], ["Hello", "World"]));
+  JSON.stringify = origStringify;
+});

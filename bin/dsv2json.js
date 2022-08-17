@@ -7,7 +7,7 @@ import {fileURLToPath} from "url";
 import rw from "rw";
 import {program} from "commander";
 import iconv from "iconv-lite";
-import {dsvFormat} from "../src/index.js";
+import {autoType, dsvFormat} from "../src/index.js";
 
 const progname = basename(process.argv[1]);
 const defaultInDelimiter = progname.slice(0, 3) === "tsv" ? "\t" : ",";
@@ -28,7 +28,7 @@ const inFormat = dsvFormat(options.inputDelimiter);
 
 rw.dash.readFile(program.args[0] || "-", (error, text) => {
   if (error) throw error;
-  const rowConverter = options.autoType ? dsv.autoType : null
+  const rowConverter = options.autoType ? autoType : null
   const rows = inFormat.parse(iconv.decode(text, options.inputEncoding), rowConverter);
   rw.dash.writeFile(options.out, iconv.encode(options.newlineDelimited
       ? rows.map((row) => JSON.stringify(row)).join("\n") + "\n"

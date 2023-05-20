@@ -5,9 +5,19 @@ var EOL = {},
     RETURN = 13;
 
 function objectConverter(columns) {
-  return new Function("d", "return {" + columns.map(function(name, i) {
-    return JSON.stringify(name) + ": d[" + i + "] || \"\"";
-  }).join(",") + "}");
+  try {
+    return new Function("d", "return {" + columns.map(function(name, i) {
+      return JSON.stringify(name) + ": d[" + i + "] || \"\"";
+    }).join(",") + "}");
+  } catch (ex) { // EvalError due to Content Security Policy.
+    return function(d) {
+      var result = {};
+      for (var i = 0; i < columns.length; i++) {
+        result[columns[i]] = d[i] || "";
+      }
+      return result;
+    };
+  }
 }
 
 function customConverter(columns, f) {

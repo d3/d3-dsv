@@ -115,9 +115,9 @@ Constructs a new DSV parser and formatter for the specified *delimiter*. The *de
 
 <a name="dsv_parse" href="#dsv_parse">#</a> *dsv*.<b>parse</b>(<i>string</i>[, <i>row</i>]) [<>](https://github.com/d3/d3-dsv/blob/master/src/dsv.js "Source")
 
-Parses the specified *string*, which must be in the delimiter-separated values format with the appropriate delimiter, returning an array of objects representing the parsed rows.
+Parses the specified *`string`* and returns an array of objects representing the parsed rows. *`row`* is an accessor function that can be used to convert types of values from default string. [d3.autoType](#autoType) can be used as a *`row`* function for automatic type detection.
 
-Unlike [*dsv*.parseRows](#dsv_parseRows), this method requires that the first line of the DSV content contains a delimiter-separated list of column names; these column names become the attributes on the returned objects. For example, consider the following CSV file:
+Unlike [*dsv*.parseRows](#dsv_parseRows), this method requires that the first line of the DSV content contains a delimiter-separated list of column names; these column names become the fields of the returned objects. For example, consider the following CSV file:
 
 ```
 Year,Make,Model,Length

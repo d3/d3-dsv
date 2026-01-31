@@ -5,9 +5,14 @@ var EOL = {},
     RETURN = 13;
 
 function objectConverter(columns) {
-  return new Function("d", "return {" + columns.map(function(name, i) {
-    return JSON.stringify(name) + ": d[" + i + "] || \"\"";
-  }).join(",") + "}");
+  var n = columns.length;
+  return function(d) {
+    var obj = {};
+    for (var i = 0; i < n; i++) {
+      obj[columns[i]] = d[i] || "";
+    }
+    return obj;
+  };
 }
 
 function customConverter(columns, f) {

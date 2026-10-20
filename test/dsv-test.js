@@ -5,6 +5,16 @@ import {table} from "./table.js";
 
 const psv = dsvFormat("|");
 
+for (const delimiter of ["]", "\\", "-", "^"]) {
+  it(`dsv(${JSON.stringify(delimiter)}) quotes delimiter characters literally`, () => {
+    const dsv = dsvFormat(delimiter);
+    const rows = [[`a${delimiter}b`, "c"], ["line\nbreak", 'a"b']];
+    assert.deepStrictEqual(dsv.parseRows(dsv.formatRows(rows)), rows);
+    const objects = [{column: `a${delimiter}b`, other: "c"}];
+    assert.deepStrictEqual(dsv.parse(dsv.format(objects)), table(objects, ["column", "other"]));
+  });
+}
+
 it("dsv(\"|\").parse(string) returns the expected objects", () => {
   assert.deepStrictEqual(psv.parse("a|b|c\n1|2|3\n"), table([{a: "1", b: "2", c: "3"}], ["a", "b", "c"]));
   assert.deepStrictEqual(psv.parse(readFileSync("test/data/sample.psv", "utf-8")), table([{Hello: "42", World: "\"fish\""}], ["Hello", "World"]));

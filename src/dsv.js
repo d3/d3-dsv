@@ -58,7 +58,7 @@ function formatDate(date) {
 }
 
 export default function(delimiter) {
-  var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
+  var reFormat = new RegExp("[\"" + delimiter.replace(/[\\\]^-]/g, "\\$&") + "\n\r]"),
       DELIMITER = delimiter.charCodeAt(0);
 
   function parse(text, f) {

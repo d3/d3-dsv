@@ -7,6 +7,6 @@ This module provides a parser and formatter for delimiter-separated values, most
 ## Resources
 
 - [Documentation](https://d3js.org/d3-dsv)
-- [Examples](https://observablehq.com/collection/@d3/d3-dsv)
+- [Examples](https://observablehq.com/@d3/-/collection/d3-dsv)
 - [Releases](https://github.com/d3/d3-dsv/releases)
 - [Getting help](https://d3js.org/community)

@@ -7,7 +7,7 @@ import {fileURLToPath} from "node:url";
 import rw from "rw";
 import {program} from "commander";
 import iconv from "iconv-lite";
-import {autoType, dsvFormat} from "../dist/d3-dsv.mjs";
+import {autoType, dsvFormat} from "d3-dsv";
 
 const progname = basename(process.argv[1]);
 const defaultInDelimiter = progname.slice(0, 3) === "tsv" ? "\t" : ",";

@@ -1,5 +1,6 @@
-import assert from "assert";
-import {autoType} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {autoType} from "d3-dsv";
 
 it("autoType(object) mutates in-place", () => {
   const object = {foo: "4.2"};

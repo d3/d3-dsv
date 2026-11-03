@@ -1,6 +1,7 @@
-import assert from "assert";
-import {readFileSync} from "fs";
-import {dsvFormat} from "../src/index.js";
+import assert from "node:assert";
+import {readFileSync} from "node:fs";
+import {it} from "vitest";
+import {dsvFormat} from "d3-dsv";
 import {table} from "./table.js";
 
 const psv = dsvFormat("|");

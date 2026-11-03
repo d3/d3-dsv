@@ -1,37 +1,38 @@
+import {test} from "vitest";
 import assert from "assert";
 import {autoType} from "../src/index.js";
 
-it("autoType(object) mutates in-place", () => {
+test("autoType(object) mutates in-place", () => {
   const object = {foo: "4.2"};
   assert.strictEqual(autoType(object), object);
   assert.deepStrictEqual(object, {foo: 4.2});
 });
 
-it("autoType(object) detects numbers", () => {
+test("autoType(object) detects numbers", () => {
   assert.deepStrictEqual(autoType({foo: "4.2"}), {foo: 4.2});
   assert.deepStrictEqual(autoType({foo: "04.2"}), {foo: 4.2});
   assert.deepStrictEqual(autoType({foo: "-4.2"}), {foo: -4.2});
   assert.deepStrictEqual(autoType({foo: "1e4"}), {foo: 10000});
 });
 
-it("autoType(object) detects NaN", () => {
+test("autoType(object) detects NaN", () => {
   assert.strictEqual(Number.isNaN(autoType({foo: "NaN"}).foo), true);
 });
 
 // https://www.ecma-international.org/ecma-262/9.0/index.html#sec-date-time-string-format
 // When the time zone offset is absent, date-only forms are interpreted as a UTC time and date-time forms are interpreted as a local time.
 // YYYY is ambiguous with number, so the number takes priority.
-it("autoType(object) detects dates", () => {
+test("autoType(object) detects dates", () => {
   assert.deepStrictEqual(autoType({foo: "2018-01"}), {foo: new Date("2018-01-01T00:00:00.000Z")});
   assert.deepStrictEqual(autoType({foo: "2018-01-01"}), {foo: new Date("2018-01-01T00:00:00.000Z")});
 });
 
-it("autoType(object) detects extended years", () => {
+test("autoType(object) detects extended years", () => {
   assert.deepStrictEqual(autoType({foo: "-010001-01-01T00:00:00Z"}), {foo: new Date("-010001-01-01T00:00:00Z")});
   assert.deepStrictEqual(autoType({foo: "+010001-01-01T00:00:00Z"}), {foo: new Date("+010001-01-01T00:00:00Z")});
 });
 
-it("autoType(object) detects date-times", () => {
+test("autoType(object) detects date-times", () => {
   assert.deepStrictEqual(autoType({foo: "2018T00:00Z"}), {foo: new Date("2018-01-01T00:00:00.000Z")});
   assert.deepStrictEqual(autoType({foo: "2018T00:00+08:00"}), {foo: new Date("2017-12-31T16:00:00.000Z")});
   assert.deepStrictEqual(autoType({foo: "2018-01T12:23"}), {foo: new Date("2018-01-01T12:23:00.000")});
@@ -42,16 +43,16 @@ it("autoType(object) detects date-times", () => {
   assert.deepStrictEqual(autoType({foo: "2018-01-01T00:00-00:00"}), {foo: new Date("2018-01-01T00:00:00.000Z")});
 });
 
-it("autoType(object) detects booleans", () => {
+test("autoType(object) detects booleans", () => {
   assert.deepStrictEqual(autoType({foo: "true"}), {foo: true});
   assert.deepStrictEqual(autoType({foo: "false"}), {foo: false});
 });
 
-it("autoType(object) detects null", () => {
+test("autoType(object) detects null", () => {
   assert.deepStrictEqual(autoType({foo: ""}), {foo: null});
 });
 
-it("autoType(object) detects strings", () => {
+test("autoType(object) detects strings", () => {
   assert.deepStrictEqual(autoType({foo: "yes"}), {foo: "yes"});
   assert.deepStrictEqual(autoType({foo: "no"}), {foo: "no"});
   assert.deepStrictEqual(autoType({foo: "01/01/2018"}), {foo: "01/01/2018"});
@@ -70,7 +71,7 @@ it("autoType(object) detects strings", () => {
   assert.deepStrictEqual(autoType({foo: "na"}), {foo: "na"});
 });
 
-it("autoType(object) ignores leading and trailing whitespace", () => {
+test("autoType(object) ignores leading and trailing whitespace", () => {
   assert.deepStrictEqual(autoType({foo: " 4.2 "}), {foo: 4.2});
   assert.deepStrictEqual(autoType({foo: " -4.2 "}), {foo: -4.2});
   assert.deepStrictEqual(autoType({foo: " 1e4 "}), {foo: 10000});
@@ -81,12 +82,12 @@ it("autoType(object) ignores leading and trailing whitespace", () => {
   assert.deepStrictEqual(autoType({foo: " "}), {foo: null});
 });
 
-it("autoType(array) mutates in-place", () => {
+test("autoType(array) mutates in-place", () => {
   const array = ["4.2"];
   assert.strictEqual(autoType(array), array);
   assert.deepStrictEqual(array, [4.2]);
 });
 
-it("autoType(array) can take an array", () => {
+test("autoType(array) can take an array", () => {
   assert.deepStrictEqual(autoType(["4.2", " 2018-01 "]), [4.2, new Date("2018-01-01T00:00:00.000Z")]);
 });

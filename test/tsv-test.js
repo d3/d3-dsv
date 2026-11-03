@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import {readFileSync} from "node:fs";
 import {it} from "vitest";
-import {tsvFormat, tsvFormatRow, tsvFormatRows, tsvParse, tsvParseRows} from "../src/index.js";
+import {tsvFormat, tsvFormatRow, tsvFormatRows, tsvParse, tsvParseRows} from "d3-dsv";
 import {table} from "./table.js";
 
 it("tsvParse(string) returns the expected objects", () => {

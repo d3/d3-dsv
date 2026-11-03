@@ -2,7 +2,7 @@ import assert from "node:assert";
 import {readFileSync} from "node:fs";
 import {it} from "vitest";
 import spectrum from "csv-spectrum";
-import {csvFormat, csvFormatBody, csvFormatRow, csvFormatRows, csvParse, csvParseRows} from "../src/index.js";
+import {csvFormat, csvFormatBody, csvFormatRow, csvFormatRows, csvParse, csvParseRows} from "d3-dsv";
 import {table} from "./table.js";
 
 it("csvParse(string) returns the expected objects", () => {

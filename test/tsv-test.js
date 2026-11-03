@@ -1,6 +1,6 @@
+import assert from "node:assert";
+import {readFileSync} from "node:fs";
 import {it} from "vitest";
-import assert from "assert";
-import {readFileSync} from "fs";
 import {tsvFormat, tsvFormatRow, tsvFormatRows, tsvParse, tsvParseRows} from "../src/index.js";
 import {table} from "./table.js";
 

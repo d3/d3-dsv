@@ -1,7 +1,7 @@
+import assert from "node:assert";
+import {readFileSync} from "node:fs";
 import {it} from "vitest";
-import assert from "assert";
 import spectrum from "csv-spectrum";
-import {readFileSync} from "fs";
 import {csvFormat, csvFormatBody, csvFormatRow, csvFormatRows, csvParse, csvParseRows} from "../src/index.js";
 import {table} from "./table.js";
 

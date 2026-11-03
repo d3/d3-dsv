@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import {EOL} from "os";
-import {basename, dirname, resolve} from "path";
-import {readFileSync} from "fs";
-import {fileURLToPath} from "url";
+import {EOL} from "node:os";
+import {basename, dirname, resolve} from "node:path";
+import {readFileSync} from "node:fs";
+import {fileURLToPath} from "node:url";
 import rw from "rw";
 import {program} from "commander";
 import iconv from "iconv-lite";

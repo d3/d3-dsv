@@ -29,7 +29,7 @@ const outFormat = dsvFormat(options.outputDelimiter);
 
 rw.dash.readFile(program.args[0] || "-", (error, text) => {
   if (error) throw error;
-  rw.dash.writeFile("-", iconv.encode(outFormat.format(inFormat.parse(iconv.decode(text, options.inputEncoding))) + EOL, options.outputEncoding), (error) => {
+  rw.dash.writeFile(options.out, iconv.encode(outFormat.format(inFormat.parse(iconv.decode(text, options.inputEncoding))) + EOL, options.outputEncoding), (error) => {
     if (error) throw error;
   });
 });

@@ -35,7 +35,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "commander": "7",
+    "commander": "10.0.0",
     "iconv-lite": "0.6",
     "rw": "1"
   },
